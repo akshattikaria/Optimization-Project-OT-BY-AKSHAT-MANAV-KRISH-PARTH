@@ -1,0 +1,1680 @@
+{
+  "method": "enhanced",
+  "solver_seed": 2,
+  "evaluations": 720,
+  "runtime": 2.510025424999867,
+  "normalization": [
+    175.0,
+    1.0,
+    0.5
+  ],
+  "reference": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "hypervolume": 0.9348605147288807,
+  "spacing": 0.033681610725420384,
+  "archive_size": 8,
+  "objectives": [
+    [
+      0.0,
+      0.2545454545454546,
+      0.12133516482134199
+    ],
+    [
+      0.0,
+      0.2606060606060606,
+      0.06871842709362769
+    ],
+    [
+      0.0,
+      0.27575757575757576,
+      0.05527707983925667
+    ],
+    [
+      0.5,
+      0.2545454545454546,
+      0.06871842709362769
+    ],
+    [
+      3.0,
+      0.27424242424242423,
+      0.04714045207910319
+    ],
+    [
+      8.0,
+      0.2651515151515152,
+      0.04714045207910319
+    ],
+    [
+      10.5,
+      0.2606060606060606,
+      0.05527707983925667
+    ],
+    [
+      11.0,
+      0.2545454545454546,
+      0.05527707983925667
+    ]
+  ],
+  "archive": [
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 14,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 34,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 1,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 15,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 0,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R05"
+        },
+        {
+          "start": 18,
+          "room": "R05"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 16,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R02"
+        },
+        {
+          "start": 24,
+          "room": "R02"
+        },
+        {
+          "start": 7,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R05"
+        },
+        {
+          "start": 38,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F03",
+        "F04",
+        "F01",
+        "F01",
+        "F04",
+        "F03",
+        "F03",
+        "F01",
+        "F06",
+        "F06",
+        "F02",
+        "F05",
+        "F02",
+        "F04",
+        "F06",
+        "F04"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 8,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 1,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R05"
+        },
+        {
+          "start": 2,
+          "room": "R05"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 8,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 14,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 16,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 32,
+          "room": "R05"
+        },
+        {
+          "start": 10,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F05",
+        "F03",
+        "F01",
+        "F04",
+        "F02",
+        "F01",
+        "F03",
+        "F05",
+        "F05",
+        "F06",
+        "F02",
+        "F03",
+        "F04",
+        "F01",
+        "F06",
+        "F04"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 10,
+          "room": "R04"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R03"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R01"
+        },
+        {
+          "start": 0,
+          "room": "R05"
+        },
+        {
+          "start": 30,
+          "room": "R05"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 22,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 33,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 15,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 14,
+          "room": "R02"
+        },
+        {
+          "start": 21,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R05"
+        },
+        {
+          "start": 37,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F01",
+        "F06",
+        "F05",
+        "F02",
+        "F04",
+        "F03",
+        "F06",
+        "F01",
+        "F04",
+        "F01",
+        "F02",
+        "F03",
+        "F05",
+        "F04",
+        "F02",
+        "F06"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 0,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 8,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 1,
+          "room": "R01"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 14,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R05"
+        },
+        {
+          "start": 26,
+          "room": "R05"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 16,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        },
+        {
+          "start": 17,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F01",
+        "F04",
+        "F05",
+        "F02",
+        "F02",
+        "F03",
+        "F01",
+        "F05",
+        "F02",
+        "F01",
+        "F04",
+        "F06",
+        "F03",
+        "F05",
+        "F06",
+        "F03"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 34,
+          "room": "R01"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 21,
+          "room": "R02"
+        },
+        {
+          "start": 33,
+          "room": "R01"
+        },
+        {
+          "start": 23,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 14,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 22,
+          "room": "R01"
+        },
+        {
+          "start": 15,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R05"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 33,
+          "room": "R02"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R03"
+        },
+        {
+          "start": 29,
+          "room": "R04"
+        },
+        {
+          "start": 14,
+          "room": "R02"
+        },
+        {
+          "start": 32,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 7,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 16,
+          "room": "R05"
+        },
+        {
+          "start": 2,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F01",
+        "F06",
+        "F05",
+        "F04",
+        "F04",
+        "F03",
+        "F01",
+        "F06",
+        "F06",
+        "F01",
+        "F02",
+        "F03",
+        "F02",
+        "F05",
+        "F02",
+        "F04"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 0,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R01"
+        },
+        {
+          "start": 1,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 30,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 8,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R05"
+        },
+        {
+          "start": 2,
+          "room": "R05"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 8,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 15,
+          "room": "R02"
+        },
+        {
+          "start": 24,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R03"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 16,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 32,
+          "room": "R05"
+        },
+        {
+          "start": 10,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F05",
+        "F03",
+        "F01",
+        "F04",
+        "F04",
+        "F02",
+        "F03",
+        "F05",
+        "F05",
+        "F06",
+        "F06",
+        "F03",
+        "F02",
+        "F01",
+        "F01",
+        "F04"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 34,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 33,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 15,
+          "room": "R01"
+        },
+        {
+          "start": 30,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R05"
+        },
+        {
+          "start": 13,
+          "room": "R05"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 22,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 8,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 23,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R05"
+        },
+        {
+          "start": 32,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F06",
+        "F01",
+        "F02",
+        "F03",
+        "F02",
+        "F03",
+        "F06",
+        "F01",
+        "F04",
+        "F03",
+        "F04",
+        "F05",
+        "F05",
+        "F01",
+        "F02",
+        "F06"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 15,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 14,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 7,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 11,
+          "room": "R01"
+        },
+        {
+          "start": 39,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 0,
+          "room": "R05"
+        },
+        {
+          "start": 26,
+          "room": "R05"
+        },
+        {
+          "start": 13,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 34,
+          "room": "R02"
+        },
+        {
+          "start": 22,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 33,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 15,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 14,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        },
+        {
+          "start": 17,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F06",
+        "F03",
+        "F01",
+        "F04",
+        "F02",
+        "F01",
+        "F06",
+        "F05",
+        "F04",
+        "F01",
+        "F02",
+        "F05",
+        "F03",
+        "F05",
+        "F06",
+        "F03"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "generation": 0,
+      "evaluations": 24,
+      "feasible_fraction": 0.5,
+      "evaluated_feasible_fraction": 0.5,
+      "min_violation": 0,
+      "hypervolume": 0.9195555464024289
+    },
+    {
+      "generation": 1,
+      "evaluations": 107,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.45794392523364486,
+      "min_violation": 0,
+      "hypervolume": 0.9195555464024289
+    },
+    {
+      "generation": 2,
+      "evaluations": 183,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.453551912568306,
+      "min_violation": 0,
+      "hypervolume": 0.9337554217840726
+    },
+    {
+      "generation": 3,
+      "evaluations": 258,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46511627906976744,
+      "min_violation": 0,
+      "hypervolume": 0.934042626722956
+    },
+    {
+      "generation": 4,
+      "evaluations": 335,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4597014925373134,
+      "min_violation": 0,
+      "hypervolume": 0.93430643792387
+    },
+    {
+      "generation": 5,
+      "evaluations": 406,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4630541871921182,
+      "min_violation": 0,
+      "hypervolume": 0.93430643792387
+    },
+    {
+      "generation": 6,
+      "evaluations": 479,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46764091858037576,
+      "min_violation": 0,
+      "hypervolume": 0.93430643792387
+    },
+    {
+      "generation": 7,
+      "evaluations": 553,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46835443037974683,
+      "min_violation": 0,
+      "hypervolume": 0.9343485657827972
+    },
+    {
+      "generation": 8,
+      "evaluations": 627,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46730462519936206,
+      "min_violation": 0,
+      "hypervolume": 0.9347326182731877
+    },
+    {
+      "generation": 9,
+      "evaluations": 700,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46285714285714286,
+      "min_violation": 0,
+      "hypervolume": 0.9347326182731877
+    },
+    {
+      "generation": 10,
+      "evaluations": 720,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.46111111111111114,
+      "min_violation": 0,
+      "hypervolume": 0.9348605147288807
+    }
+  ],
+  "metadata": {
+    "algorithm": "enhanced_nsga2",
+    "seed": 2,
+    "population_size": 24,
+    "generations_requested": 720,
+    "generations_completed": 10,
+    "budget": 720,
+    "seeded_candidates": 12,
+    "intelligent_initialization": true,
+    "repair_enabled": true,
+    "repairs": 205,
+    "local_search_enabled": true,
+    "local_steps": 2,
+    "local_proposals": 269,
+    "local_accepts": 52,
+    "evaluated_feasible": 332,
+    "minimum_violation": 0,
+    "construction_checks_counted_as_objective_evaluations": false
+  },
+  "best_candidate_diagnostic": {
+    "objectives": [
+      0.0,
+      0.2545454545454546,
+      0.12133516482134199
+    ],
+    "violation": 0,
+    "violations": {},
+    "metrics": {
+      "student_gaps": 0,
+      "faculty_gaps": 0,
+      "average_student_gap_per_day": 0.0,
+      "longest_idle_stretch": 0,
+      "room_utilization": 0.7454545454545454,
+      "faculty_loads": {
+        "F01": 8,
+        "F02": 6,
+        "F03": 8,
+        "F04": 11,
+        "F05": 3,
+        "F06": 8
+      },
+      "faculty_relative_loads": {
+        "F01": 0.4,
+        "F02": 0.3,
+        "F03": 0.4,
+        "F04": 0.55,
+        "F05": 0.15,
+        "F06": 0.4
+      },
+      "max_faculty_daily_load": 5,
+      "consecutive_periods_over_three": 4,
+      "required_teaching_periods": 44
+    }
+  },
+  "feasible_run": true,
+  "feasible_evaluation_fraction": 0.46111111111111114,
+  "minimum_violation": 0,
+  "instance_id": "small_30",
+  "instance_seed": 30,
+  "size": "small",
+  "budget": 720,
+  "population_size": 24,
+  "instance_sha256": "82a12942ad1807640e96eaf2e4ef247d67a094ac841a9189e15b4321f68a9a4e"
+}

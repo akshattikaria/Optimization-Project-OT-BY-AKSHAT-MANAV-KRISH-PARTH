@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "placements": [
+    {
+      "start": 24,
+      "room": "R02"
+    },
+    {
+      "start": 16,
+      "room": "R03"
+    },
+    {
+      "start": 38,
+      "room": "R03"
+    },
+    {
+      "start": 15,
+      "room": "R04"
+    },
+    {
+      "start": 5,
+      "room": "R02"
+    },
+    {
+      "start": 32,
+      "room": "R02"
+    },
+    {
+      "start": 17,
+      "room": "R03"
+    },
+    {
+      "start": 13,
+      "room": "R01"
+    },
+    {
+      "start": 34,
+      "room": "R01"
+    },
+    {
+      "start": 19,
+      "room": "R03"
+    },
+    {
+      "start": 27,
+      "room": "R02"
+    },
+    {
+      "start": 35,
+      "room": "R01"
+    },
+    {
+      "start": 25,
+      "room": "R02"
+    },
+    {
+      "start": 37,
+      "room": "R03"
+    },
+    {
+      "start": 23,
+      "room": "R02"
+    },
+    {
+      "start": 6,
+      "room": "R04"
+    },
+    {
+      "start": 26,
+      "room": "R01"
+    },
+    {
+      "start": 22,
+      "room": "R01"
+    },
+    {
+      "start": 9,
+      "room": "R05"
+    },
+    {
+      "start": 1,
+      "room": "R05"
+    },
+    {
+      "start": 6,
+      "room": "R02"
+    },
+    {
+      "start": 23,
+      "room": "R03"
+    },
+    {
+      "start": 26,
+      "room": "R04"
+    },
+    {
+      "start": 15,
+      "room": "R02"
+    },
+    {
+      "start": 38,
+      "room": "R02"
+    },
+    {
+      "start": 2,
+      "room": "R02"
+    },
+    {
+      "start": 13,
+      "room": "R03"
+    },
+    {
+      "start": 1,
+      "room": "R04"
+    },
+    {
+      "start": 25,
+      "room": "R03"
+    },
+    {
+      "start": 3,
+      "room": "R04"
+    },
+    {
+      "start": 11,
+      "room": "R03"
+    },
+    {
+      "start": 35,
+      "room": "R03"
+    },
+    {
+      "start": 31,
+      "room": "R04"
+    },
+    {
+      "start": 0,
+      "room": "R04"
+    },
+    {
+      "start": 8,
+      "room": "R02"
+    },
+    {
+      "start": 22,
+      "room": "R02"
+    },
+    {
+      "start": 32,
+      "room": "R04"
+    },
+    {
+      "start": 30,
+      "room": "R04"
+    },
+    {
+      "start": 33,
+      "room": "R05"
+    },
+    {
+      "start": 17,
+      "room": "R05"
+    }
+  ],
+  "teachers": [
+    "F06",
+    "F01",
+    "F02",
+    "F04",
+    "F05",
+    "F03",
+    "F05",
+    "F04",
+    "F02",
+    "F05",
+    "F03",
+    "F06",
+    "F01",
+    "F04",
+    "F06",
+    "F01"
+  ]
+}

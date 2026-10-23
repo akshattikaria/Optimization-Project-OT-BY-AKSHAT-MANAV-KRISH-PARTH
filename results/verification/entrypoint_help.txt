@@ -1,0 +1,22 @@
+usage: timetable [-h]
+                 {generate,solve,evaluate,validate,experiment,plot,prove-tradeoffs}
+                 ...
+
+Multi-objective college timetable optimization
+
+positional arguments:
+  {generate,solve,evaluate,validate,experiment,plot,prove-tradeoffs}
+    generate            Generate a synthetic instance and optional separate
+                        feasibility certificate
+    solve               Optimize and export feasible non-dominated timetables
+    evaluate (validate)
+                        Independently check a schedule (nonzero exit if
+                        infeasible)
+    experiment          Run/resume a saved paired benchmark configuration
+    plot                Regenerate summary tables and figures from saved raw
+                        runs
+    prove-tradeoffs     Exhaust tiny synthetic instances to certify genuine
+                        global Pareto fronts
+
+options:
+  -h, --help            show this help message and exit

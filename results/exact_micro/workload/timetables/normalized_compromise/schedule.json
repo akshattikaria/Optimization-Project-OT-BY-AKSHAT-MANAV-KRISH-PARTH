@@ -1,0 +1,44 @@
+{
+  "label": "normalized_compromise",
+  "objectives": [
+    0.0,
+    0.0,
+    0.5
+  ],
+  "violation": 0,
+  "metrics": {
+    "student_gaps": 0,
+    "faculty_gaps": 0,
+    "average_student_gap_per_day": 0.0,
+    "longest_idle_stretch": 0,
+    "room_utilization": 1.0,
+    "faculty_loads": {
+      "A": 2,
+      "B": 0
+    },
+    "faculty_relative_loads": {
+      "A": 1.0,
+      "B": 0.0
+    },
+    "max_faculty_daily_load": 2,
+    "consecutive_periods_over_three": 0,
+    "required_teaching_periods": 2
+  },
+  "schedule": {
+    "schema_version": 1,
+    "placements": [
+      {
+        "start": 0,
+        "room": "classroom"
+      },
+      {
+        "start": 1,
+        "room": "classroom"
+      }
+    ],
+    "teachers": [
+      "A",
+      "A"
+    ]
+  }
+}

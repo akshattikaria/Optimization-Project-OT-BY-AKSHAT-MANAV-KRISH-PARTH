@@ -1,0 +1,236 @@
+{
+  "schedule": {
+    "schema_version": 1,
+    "placements": [
+      {
+        "start": 29,
+        "room": "R01"
+      },
+      {
+        "start": 3,
+        "room": "R01"
+      },
+      {
+        "start": 18,
+        "room": "R01"
+      },
+      {
+        "start": 19,
+        "room": "R01"
+      },
+      {
+        "start": 5,
+        "room": "R01"
+      },
+      {
+        "start": 32,
+        "room": "R01"
+      },
+      {
+        "start": 27,
+        "room": "R01"
+      },
+      {
+        "start": 35,
+        "room": "R01"
+      },
+      {
+        "start": 16,
+        "room": "R01"
+      },
+      {
+        "start": 31,
+        "room": "R01"
+      },
+      {
+        "start": 6,
+        "room": "R01"
+      },
+      {
+        "start": 11,
+        "room": "R01"
+      },
+      {
+        "start": 39,
+        "room": "R01"
+      },
+      {
+        "start": 10,
+        "room": "R01"
+      },
+      {
+        "start": 30,
+        "room": "R01"
+      },
+      {
+        "start": 17,
+        "room": "R04"
+      },
+      {
+        "start": 7,
+        "room": "R01"
+      },
+      {
+        "start": 13,
+        "room": "R01"
+      },
+      {
+        "start": 37,
+        "room": "R05"
+      },
+      {
+        "start": 33,
+        "room": "R05"
+      },
+      {
+        "start": 18,
+        "room": "R04"
+      },
+      {
+        "start": 27,
+        "room": "R04"
+      },
+      {
+        "start": 5,
+        "room": "R03"
+      },
+      {
+        "start": 16,
+        "room": "R04"
+      },
+      {
+        "start": 33,
+        "room": "R04"
+      },
+      {
+        "start": 13,
+        "room": "R04"
+      },
+      {
+        "start": 32,
+        "room": "R04"
+      },
+      {
+        "start": 3,
+        "room": "R04"
+      },
+      {
+        "start": 10,
+        "room": "R04"
+      },
+      {
+        "start": 19,
+        "room": "R03"
+      },
+      {
+        "start": 6,
+        "room": "R04"
+      },
+      {
+        "start": 37,
+        "room": "R04"
+      },
+      {
+        "start": 11,
+        "room": "R04"
+      },
+      {
+        "start": 35,
+        "room": "R04"
+      },
+      {
+        "start": 2,
+        "room": "R04"
+      },
+      {
+        "start": 17,
+        "room": "R02"
+      },
+      {
+        "start": 34,
+        "room": "R04"
+      },
+      {
+        "start": 26,
+        "room": "R04"
+      },
+      {
+        "start": 0,
+        "room": "R05"
+      },
+      {
+        "start": 8,
+        "room": "R05"
+      }
+    ],
+    "teachers": [
+      "F06",
+      "F06",
+      "F04",
+      "F01",
+      "F01",
+      "F02",
+      "F01",
+      "F06",
+      "F02",
+      "F05",
+      "F03",
+      "F02",
+      "F06",
+      "F04",
+      "F04",
+      "F01"
+    ]
+  },
+  "status": "OPTIMAL",
+  "objective_value": 0.0,
+  "best_bound": 0.0,
+  "runtime": 2.746434205000014,
+  "objective": "gaps",
+  "metadata": {
+    "ortools_version": "9.15.6755",
+    "option_variables": 15485,
+    "branches": 93795,
+    "conflicts": 836,
+    "solver_wall_time": 2.5818066490000002,
+    "time_limit": 20.0,
+    "seed": 0,
+    "workers": 1,
+    "objective_scale": 2
+  },
+  "evaluation": {
+    "objectives": [
+      0.0,
+      0.4121212121212121,
+      0.15986105077709067
+    ],
+    "violation": 0,
+    "violations": {},
+    "metrics": {
+      "student_gaps": 0,
+      "faculty_gaps": 0,
+      "average_student_gap_per_day": 0.0,
+      "longest_idle_stretch": 0,
+      "room_utilization": 0.5878787878787879,
+      "faculty_loads": {
+        "F01": 10,
+        "F02": 9,
+        "F03": 3,
+        "F04": 8,
+        "F05": 3,
+        "F06": 11
+      },
+      "faculty_relative_loads": {
+        "F01": 0.5,
+        "F02": 0.45,
+        "F03": 0.15,
+        "F04": 0.4,
+        "F05": 0.15,
+        "F06": 0.55
+      },
+      "max_faculty_daily_load": 4,
+      "consecutive_periods_over_three": 8,
+      "required_teaching_periods": 44
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "benchmark",
+  "population_size": 24,
+  "methods": ["greedy", "nsga2", "seeded", "enhanced"],
+  "scenarios": [
+    {"size": "small", "budget": 720, "instance_seeds": [10, 20, 30], "solver_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]},
+    {"size": "medium", "budget": 360, "instance_seeds": [10, 20], "solver_seeds": [0, 1, 2, 3, 4, 5]},
+    {"size": "large", "budget": 240, "instance_seeds": [10, 20], "solver_seeds": [0, 1, 2]}
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "name": "exact_room_conflict",
+  "days": [
+    "Monday"
+  ],
+  "periods_per_day": 4,
+  "lunch_periods": [],
+  "groups": [
+    {
+      "id": "G",
+      "size": 20
+    }
+  ],
+  "rooms": [
+    {
+      "id": "small",
+      "capacity": 20,
+      "kind": "classroom",
+      "unavailable": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "large",
+      "capacity": 40,
+      "kind": "classroom",
+      "unavailable": [
+        0,
+        2
+      ]
+    }
+  ],
+  "faculty": [
+    {
+      "id": "A",
+      "max_weekly": 2,
+      "max_daily": 2,
+      "unavailable": []
+    },
+    {
+      "id": "B",
+      "max_weekly": 2,
+      "max_daily": 2,
+      "unavailable": []
+    }
+  ],
+  "offerings": [
+    {
+      "id": "S1",
+      "groups": [
+        "G"
+      ],
+      "eligible_faculty": [
+        "A",
+        "B"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": true
+    },
+    {
+      "id": "S2",
+      "groups": [
+        "G"
+      ],
+      "eligible_faculty": [
+        "A",
+        "B"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": true
+    }
+  ],
+  "metadata": {
+    "source": "synthetic analytical conflict example; exhaustive proof possible"
+  }
+}

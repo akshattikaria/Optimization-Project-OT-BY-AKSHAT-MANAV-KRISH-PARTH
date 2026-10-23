@@ -1,0 +1,740 @@
+{
+  "method": "enhanced",
+  "solver_seed": 4,
+  "evaluations": 720,
+  "runtime": 2.3516426740000043,
+  "normalization": [
+    175.0,
+    1.0,
+    0.5
+  ],
+  "reference": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "hypervolume": 0.9352139659465722,
+  "spacing": 0.002277331291357153,
+  "archive_size": 3,
+  "objectives": [
+    [
+      0.0,
+      0.2545454545454546,
+      0.0897527467855751
+    ],
+    [
+      0.0,
+      0.2590909090909091,
+      0.06871842709362769
+    ],
+    [
+      0.5,
+      0.2545454545454546,
+      0.04714045207910319
+    ]
+  ],
+  "archive": [
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 30,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 10,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R01"
+        },
+        {
+          "start": 21,
+          "room": "R01"
+        },
+        {
+          "start": 32,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 8,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 33,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        },
+        {
+          "start": 34,
+          "room": "R05"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 8,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 23,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 24,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 18,
+          "room": "R02"
+        },
+        {
+          "start": 21,
+          "room": "R05"
+        },
+        {
+          "start": 26,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F02",
+        "F06",
+        "F06",
+        "F04",
+        "F06",
+        "F05",
+        "F02",
+        "F06",
+        "F03",
+        "F01",
+        "F03",
+        "F04",
+        "F01",
+        "F05",
+        "F02",
+        "F01"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 21,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 31,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R01"
+        },
+        {
+          "start": 30,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 10,
+          "room": "R01"
+        },
+        {
+          "start": 17,
+          "room": "R01"
+        },
+        {
+          "start": 32,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 26,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R05"
+        },
+        {
+          "start": 33,
+          "room": "R05"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 21,
+          "room": "R02"
+        },
+        {
+          "start": 31,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 13,
+          "room": "R03"
+        },
+        {
+          "start": 23,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 22,
+          "room": "R02"
+        },
+        {
+          "start": 0,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 8,
+          "room": "R05"
+        },
+        {
+          "start": 18,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F04",
+        "F01",
+        "F05",
+        "F04",
+        "F03",
+        "F06",
+        "F05",
+        "F06",
+        "F01",
+        "F06",
+        "F01",
+        "F02",
+        "F03",
+        "F05",
+        "F02",
+        "F04"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 14,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 34,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 29,
+          "room": "R01"
+        },
+        {
+          "start": 21,
+          "room": "R01"
+        },
+        {
+          "start": 15,
+          "room": "R01"
+        },
+        {
+          "start": 1,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 18,
+          "room": "R01"
+        },
+        {
+          "start": 32,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 33,
+          "room": "R01"
+        },
+        {
+          "start": 13,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R05"
+        },
+        {
+          "start": 25,
+          "room": "R05"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 39,
+          "room": "R02"
+        },
+        {
+          "start": 11,
+          "room": "R02"
+        },
+        {
+          "start": 21,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 18,
+          "room": "R02"
+        },
+        {
+          "start": 25,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 15,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 22,
+          "room": "R02"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        },
+        {
+          "start": 13,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F06",
+        "F04",
+        "F02",
+        "F04",
+        "F06",
+        "F05",
+        "F02",
+        "F06",
+        "F01",
+        "F05",
+        "F01",
+        "F02",
+        "F03",
+        "F03",
+        "F05",
+        "F04"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "generation": 0,
+      "evaluations": 24,
+      "feasible_fraction": 0.5,
+      "evaluated_feasible_fraction": 0.5,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 1,
+      "evaluations": 106,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4339622641509434,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 2,
+      "evaluations": 180,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.43333333333333335,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 3,
+      "evaluations": 256,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4296875,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 4,
+      "evaluations": 331,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4471299093655589,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 5,
+      "evaluations": 406,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4408866995073892,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 6,
+      "evaluations": 480,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44375,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 7,
+      "evaluations": 552,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4438405797101449,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 8,
+      "evaluations": 624,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44711538461538464,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 9,
+      "evaluations": 693,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44733044733044736,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    },
+    {
+      "generation": 10,
+      "evaluations": 720,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4444444444444444,
+      "min_violation": 0,
+      "hypervolume": 0.9352139659465722
+    }
+  ],
+  "metadata": {
+    "algorithm": "enhanced_nsga2",
+    "seed": 4,
+    "population_size": 24,
+    "generations_requested": 720,
+    "generations_completed": 10,
+    "budget": 720,
+    "seeded_candidates": 12,
+    "intelligent_initialization": true,
+    "repair_enabled": true,
+    "repairs": 203,
+    "local_search_enabled": true,
+    "local_steps": 2,
+    "local_proposals": 268,
+    "local_accepts": 48,
+    "evaluated_feasible": 320,
+    "minimum_violation": 0,
+    "construction_checks_counted_as_objective_evaluations": false
+  },
+  "best_candidate_diagnostic": {
+    "objectives": [
+      0.0,
+      0.2545454545454546,
+      0.0897527467855751
+    ],
+    "violation": 0,
+    "violations": {},
+    "metrics": {
+      "student_gaps": 0,
+      "faculty_gaps": 0,
+      "average_student_gap_per_day": 0.0,
+      "longest_idle_stretch": 0,
+      "room_utilization": 0.7454545454545454,
+      "faculty_loads": {
+        "F01": 8,
+        "F02": 7,
+        "F03": 6,
+        "F04": 6,
+        "F05": 6,
+        "F06": 11
+      },
+      "faculty_relative_loads": {
+        "F01": 0.4,
+        "F02": 0.35,
+        "F03": 0.3,
+        "F04": 0.3,
+        "F05": 0.3,
+        "F06": 0.55
+      },
+      "max_faculty_daily_load": 4,
+      "consecutive_periods_over_three": 5,
+      "required_teaching_periods": 44
+    }
+  },
+  "feasible_run": true,
+  "feasible_evaluation_fraction": 0.4444444444444444,
+  "minimum_violation": 0,
+  "instance_id": "small_20",
+  "instance_seed": 20,
+  "size": "small",
+  "budget": 720,
+  "population_size": 24,
+  "instance_sha256": "16fe8d0eb3bf4b25e918483b05c9c3a5efea918b806cb2bf83c9f3a84620d90b"
+}

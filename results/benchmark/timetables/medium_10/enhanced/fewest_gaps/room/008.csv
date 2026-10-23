@@ -1,0 +1,6 @@
+room: R09,P1,P2,P3,P4,P5,P6,P7,P8
+Monday,,G01-L2 | R09 / F11,G01-L2 (cont.) | R09 / F11,,LUNCH,,,
+Tuesday,G05-L1 | R09 / F11,G05-L1 (cont.) | R09 / F11,,,LUNCH,,,
+Wednesday,,,,,LUNCH,,G01-L1 | R09 / F05,G01-L1 (cont.) | R09 / F05
+Thursday,G05-L2 | R09 / F01,G05-L2 (cont.) | R09 / F01,,,LUNCH,,,
+Friday,,,,,LUNCH,,,

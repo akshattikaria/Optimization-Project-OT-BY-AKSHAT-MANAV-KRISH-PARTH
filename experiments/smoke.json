@@ -1,0 +1,12 @@
+{
+  "name": "smoke",
+  "population_size": 12,
+  "instance_seeds": [101],
+  "solver_seeds": [0, 1],
+  "methods": ["greedy", "nsga2", "seeded", "enhanced"],
+  "scenarios": [
+    {"size": "small", "budget": 96},
+    {"size": "medium", "budget": 96},
+    {"size": "large", "budget": 96}
+  ]
+}

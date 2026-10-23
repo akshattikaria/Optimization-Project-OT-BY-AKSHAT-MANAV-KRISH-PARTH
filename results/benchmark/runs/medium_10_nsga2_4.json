@@ -1,0 +1,241 @@
+{
+  "method": "nsga2",
+  "solver_seed": 4,
+  "evaluations": 360,
+  "runtime": 0.26495779499987293,
+  "normalization": [
+    630.0,
+    1.0,
+    0.5
+  ],
+  "reference": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "hypervolume": 0.0,
+  "spacing": null,
+  "archive_size": 0,
+  "objectives": [],
+  "archive": [],
+  "history": [
+    {
+      "generation": 0,
+      "evaluations": 24,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 123,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 1,
+      "evaluations": 48,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 107,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 2,
+      "evaluations": 72,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 107,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 3,
+      "evaluations": 96,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 107,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 4,
+      "evaluations": 120,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 99,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 5,
+      "evaluations": 144,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 99,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 6,
+      "evaluations": 168,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 99,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 7,
+      "evaluations": 192,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 97,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 8,
+      "evaluations": 216,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 95,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 9,
+      "evaluations": 240,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 93,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 10,
+      "evaluations": 264,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 91,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 11,
+      "evaluations": 288,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 88,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 12,
+      "evaluations": 312,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 83,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 13,
+      "evaluations": 336,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 83,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 14,
+      "evaluations": 360,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 83,
+      "hypervolume": 0.0
+    }
+  ],
+  "metadata": {
+    "algorithm": "nsga2",
+    "seed": 4,
+    "population_size": 24,
+    "generations_requested": 360,
+    "generations_completed": 14,
+    "budget": 360,
+    "seeded_candidates": 0,
+    "intelligent_initialization": false,
+    "repair_enabled": false,
+    "repairs": 0,
+    "local_search_enabled": false,
+    "local_steps": 2,
+    "local_proposals": 0,
+    "local_accepts": 0,
+    "evaluated_feasible": 0,
+    "minimum_violation": 83,
+    "construction_checks_counted_as_objective_evaluations": false
+  },
+  "best_candidate_diagnostic": {
+    "objectives": [
+      87.0,
+      0.36586345381526103,
+      0.17182840277439584
+    ],
+    "violation": 83,
+    "violations": {
+      "faculty_clash": 9,
+      "faculty_unavailable": 7,
+      "room_clash": 26,
+      "room_unavailable": 3,
+      "same_day_sessions": 14,
+      "student_clash": 24
+    },
+    "metrics": {
+      "student_gaps": 51,
+      "faculty_gaps": 72,
+      "average_student_gap_per_day": 1.275,
+      "longest_idle_stretch": 4,
+      "room_utilization": 0.634136546184739,
+      "faculty_loads": {
+        "F01": 11,
+        "F02": 8,
+        "F03": 5,
+        "F04": 3,
+        "F05": 5,
+        "F06": 15,
+        "F07": 7,
+        "F08": 6,
+        "F09": 7,
+        "F10": 14,
+        "F11": 9,
+        "F12": 6,
+        "F13": 3,
+        "F14": 10,
+        "F15": 9,
+        "F16": 12,
+        "F17": 11,
+        "F18": 7,
+        "F19": 13,
+        "F20": 5
+      },
+      "faculty_relative_loads": {
+        "F01": 0.55,
+        "F02": 0.4,
+        "F03": 0.25,
+        "F04": 0.15,
+        "F05": 0.25,
+        "F06": 0.75,
+        "F07": 0.35,
+        "F08": 0.3,
+        "F09": 0.35,
+        "F10": 0.7,
+        "F11": 0.45,
+        "F12": 0.3,
+        "F13": 0.15,
+        "F14": 0.5,
+        "F15": 0.45,
+        "F16": 0.6,
+        "F17": 0.55,
+        "F18": 0.35,
+        "F19": 0.65,
+        "F20": 0.25
+      },
+      "max_faculty_daily_load": 5,
+      "consecutive_periods_over_three": 6,
+      "required_teaching_periods": 166
+    }
+  },
+  "feasible_run": false,
+  "feasible_evaluation_fraction": 0.0,
+  "minimum_violation": 83,
+  "instance_id": "medium_10",
+  "instance_seed": 10,
+  "size": "medium",
+  "budget": 360,
+  "population_size": 24,
+  "instance_sha256": "d779b04eb27d9423b93602d66c5c833eeaedc65131694d8cdb972e29bd102369"
+}

@@ -1,0 +1,54 @@
+{
+  "status": "COMPLETE",
+  "evaluated": 64,
+  "feasible_candidates": 48,
+  "runtime": 0.002969762000020637,
+  "objectives": [
+    [
+      0.0,
+      0.25,
+      0.0
+    ],
+    [
+      1.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "archive": [
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 0,
+          "room": "small"
+        },
+        {
+          "start": 1,
+          "room": "large"
+        }
+      ],
+      "teachers": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 0,
+          "room": "small"
+        },
+        {
+          "start": 2,
+          "room": "small"
+        }
+      ],
+      "teachers": [
+        "A",
+        "B"
+      ]
+    }
+  ]
+}

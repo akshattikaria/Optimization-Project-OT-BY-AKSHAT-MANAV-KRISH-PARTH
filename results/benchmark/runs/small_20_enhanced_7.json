@@ -1,0 +1,364 @@
+{
+  "method": "enhanced",
+  "solver_seed": 7,
+  "evaluations": 720,
+  "runtime": 2.344065021000006,
+  "normalization": [
+    175.0,
+    1.0,
+    0.5
+  ],
+  "reference": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "hypervolume": 0.9353187591328681,
+  "spacing": null,
+  "archive_size": 1,
+  "objectives": [
+    [
+      0.0,
+      0.2545454545454546,
+      0.04714045207910319
+    ]
+  ],
+  "archive": [
+    {
+      "schema_version": 1,
+      "placements": [
+        {
+          "start": 32,
+          "room": "R01"
+        },
+        {
+          "start": 8,
+          "room": "R01"
+        },
+        {
+          "start": 27,
+          "room": "R01"
+        },
+        {
+          "start": 19,
+          "room": "R01"
+        },
+        {
+          "start": 33,
+          "room": "R01"
+        },
+        {
+          "start": 5,
+          "room": "R01"
+        },
+        {
+          "start": 2,
+          "room": "R01"
+        },
+        {
+          "start": 38,
+          "room": "R01"
+        },
+        {
+          "start": 9,
+          "room": "R01"
+        },
+        {
+          "start": 3,
+          "room": "R01"
+        },
+        {
+          "start": 16,
+          "room": "R01"
+        },
+        {
+          "start": 34,
+          "room": "R01"
+        },
+        {
+          "start": 35,
+          "room": "R01"
+        },
+        {
+          "start": 6,
+          "room": "R01"
+        },
+        {
+          "start": 21,
+          "room": "R01"
+        },
+        {
+          "start": 22,
+          "room": "R01"
+        },
+        {
+          "start": 24,
+          "room": "R01"
+        },
+        {
+          "start": 37,
+          "room": "R01"
+        },
+        {
+          "start": 25,
+          "room": "R05"
+        },
+        {
+          "start": 17,
+          "room": "R05"
+        },
+        {
+          "start": 8,
+          "room": "R02"
+        },
+        {
+          "start": 5,
+          "room": "R02"
+        },
+        {
+          "start": 21,
+          "room": "R02"
+        },
+        {
+          "start": 26,
+          "room": "R02"
+        },
+        {
+          "start": 19,
+          "room": "R02"
+        },
+        {
+          "start": 9,
+          "room": "R02"
+        },
+        {
+          "start": 30,
+          "room": "R02"
+        },
+        {
+          "start": 35,
+          "room": "R02"
+        },
+        {
+          "start": 2,
+          "room": "R02"
+        },
+        {
+          "start": 18,
+          "room": "R02"
+        },
+        {
+          "start": 38,
+          "room": "R02"
+        },
+        {
+          "start": 27,
+          "room": "R02"
+        },
+        {
+          "start": 31,
+          "room": "R02"
+        },
+        {
+          "start": 17,
+          "room": "R02"
+        },
+        {
+          "start": 1,
+          "room": "R02"
+        },
+        {
+          "start": 3,
+          "room": "R02"
+        },
+        {
+          "start": 29,
+          "room": "R02"
+        },
+        {
+          "start": 37,
+          "room": "R02"
+        },
+        {
+          "start": 10,
+          "room": "R05"
+        },
+        {
+          "start": 6,
+          "room": "R05"
+        }
+      ],
+      "teachers": [
+        "F04",
+        "F04",
+        "F05",
+        "F02",
+        "F06",
+        "F03",
+        "F03",
+        "F02",
+        "F03",
+        "F06",
+        "F02",
+        "F01",
+        "F05",
+        "F01",
+        "F05",
+        "F04"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "generation": 0,
+      "evaluations": 24,
+      "feasible_fraction": 0.5,
+      "evaluated_feasible_fraction": 0.5,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 1,
+      "evaluations": 102,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4215686274509804,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 2,
+      "evaluations": 184,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.43478260869565216,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 3,
+      "evaluations": 256,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.42578125,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 4,
+      "evaluations": 335,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.43283582089552236,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 5,
+      "evaluations": 411,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44038929440389296,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 6,
+      "evaluations": 487,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44763860369609854,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 7,
+      "evaluations": 561,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44563279857397503,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 8,
+      "evaluations": 638,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4482758620689655,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 9,
+      "evaluations": 717,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.4407252440725244,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    },
+    {
+      "generation": 10,
+      "evaluations": 720,
+      "feasible_fraction": 1.0,
+      "evaluated_feasible_fraction": 0.44027777777777777,
+      "min_violation": 0,
+      "hypervolume": 0.9353187591328681
+    }
+  ],
+  "metadata": {
+    "algorithm": "enhanced_nsga2",
+    "seed": 7,
+    "population_size": 24,
+    "generations_requested": 720,
+    "generations_completed": 10,
+    "budget": 720,
+    "seeded_candidates": 12,
+    "intelligent_initialization": true,
+    "repair_enabled": true,
+    "repairs": 198,
+    "local_search_enabled": true,
+    "local_steps": 2,
+    "local_proposals": 280,
+    "local_accepts": 43,
+    "evaluated_feasible": 317,
+    "minimum_violation": 0,
+    "construction_checks_counted_as_objective_evaluations": false
+  },
+  "best_candidate_diagnostic": {
+    "objectives": [
+      0.0,
+      0.2545454545454546,
+      0.04714045207910319
+    ],
+    "violation": 0,
+    "violations": {},
+    "metrics": {
+      "student_gaps": 0,
+      "faculty_gaps": 0,
+      "average_student_gap_per_day": 0.0,
+      "longest_idle_stretch": 0,
+      "room_utilization": 0.7454545454545454,
+      "faculty_loads": {
+        "F01": 6,
+        "F02": 8,
+        "F03": 8,
+        "F04": 8,
+        "F05": 8,
+        "F06": 6
+      },
+      "faculty_relative_loads": {
+        "F01": 0.3,
+        "F02": 0.4,
+        "F03": 0.4,
+        "F04": 0.4,
+        "F05": 0.4,
+        "F06": 0.3
+      },
+      "max_faculty_daily_load": 3,
+      "consecutive_periods_over_three": 4,
+      "required_teaching_periods": 44
+    }
+  },
+  "feasible_run": true,
+  "feasible_evaluation_fraction": 0.44027777777777777,
+  "minimum_violation": 0,
+  "instance_id": "small_20",
+  "instance_seed": 20,
+  "size": "small",
+  "budget": 720,
+  "population_size": 24,
+  "instance_sha256": "16fe8d0eb3bf4b25e918483b05c9c3a5efea918b806cb2bf83c9f3a84620d90b"
+}

@@ -1,0 +1,330 @@
+{
+  "method": "nsga2",
+  "solver_seed": 0,
+  "evaluations": 720,
+  "runtime": 0.16007239999999,
+  "normalization": [
+    175.0,
+    1.0,
+    0.5
+  ],
+  "reference": [
+    1.1,
+    1.1,
+    1.1
+  ],
+  "hypervolume": 0.0,
+  "spacing": null,
+  "archive_size": 0,
+  "objectives": [],
+  "archive": [],
+  "history": [
+    {
+      "generation": 0,
+      "evaluations": 24,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 21,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 1,
+      "evaluations": 48,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 21,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 2,
+      "evaluations": 72,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 21,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 3,
+      "evaluations": 96,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 20,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 4,
+      "evaluations": 120,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 16,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 5,
+      "evaluations": 144,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 15,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 6,
+      "evaluations": 168,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 14,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 7,
+      "evaluations": 192,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 14,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 8,
+      "evaluations": 216,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 14,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 9,
+      "evaluations": 240,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 14,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 10,
+      "evaluations": 264,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 12,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 11,
+      "evaluations": 288,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 11,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 12,
+      "evaluations": 312,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 11,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 13,
+      "evaluations": 336,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 11,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 14,
+      "evaluations": 360,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 11,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 15,
+      "evaluations": 384,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 11,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 16,
+      "evaluations": 408,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 10,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 17,
+      "evaluations": 432,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 9,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 18,
+      "evaluations": 456,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 9,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 19,
+      "evaluations": 480,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 9,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 20,
+      "evaluations": 504,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 9,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 21,
+      "evaluations": 528,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 9,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 22,
+      "evaluations": 552,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 8,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 23,
+      "evaluations": 576,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 8,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 24,
+      "evaluations": 600,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 8,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 25,
+      "evaluations": 624,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 6,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 26,
+      "evaluations": 648,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 6,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 27,
+      "evaluations": 672,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 6,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 28,
+      "evaluations": 696,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 6,
+      "hypervolume": 0.0
+    },
+    {
+      "generation": 29,
+      "evaluations": 720,
+      "feasible_fraction": 0.0,
+      "evaluated_feasible_fraction": 0.0,
+      "min_violation": 6,
+      "hypervolume": 0.0
+    }
+  ],
+  "metadata": {
+    "algorithm": "nsga2",
+    "seed": 0,
+    "population_size": 24,
+    "generations_requested": 720,
+    "generations_completed": 29,
+    "budget": 720,
+    "seeded_candidates": 0,
+    "intelligent_initialization": false,
+    "repair_enabled": false,
+    "repairs": 0,
+    "local_search_enabled": false,
+    "local_steps": 2,
+    "local_proposals": 0,
+    "local_accepts": 0,
+    "evaluated_feasible": 0,
+    "minimum_violation": 6,
+    "construction_checks_counted_as_objective_evaluations": false
+  },
+  "best_candidate_diagnostic": {
+    "objectives": [
+      25.5,
+      0.47575757575757577,
+      0.16749792701868152
+    ],
+    "violation": 6,
+    "violations": {
+      "faculty_unavailable": 1,
+      "same_day_sessions": 4,
+      "student_clash": 1
+    },
+    "metrics": {
+      "student_gaps": 11,
+      "faculty_gaps": 29,
+      "average_student_gap_per_day": 1.1,
+      "longest_idle_stretch": 5,
+      "room_utilization": 0.5242424242424242,
+      "faculty_loads": {
+        "F01": 6,
+        "F02": 8,
+        "F03": 13,
+        "F04": 6,
+        "F05": 9,
+        "F06": 2
+      },
+      "faculty_relative_loads": {
+        "F01": 0.3,
+        "F02": 0.4,
+        "F03": 0.65,
+        "F04": 0.3,
+        "F05": 0.45,
+        "F06": 0.1
+      },
+      "max_faculty_daily_load": 5,
+      "consecutive_periods_over_three": 1,
+      "required_teaching_periods": 44
+    }
+  },
+  "feasible_run": false,
+  "feasible_evaluation_fraction": 0.0,
+  "minimum_violation": 6,
+  "instance_id": "small_30",
+  "instance_seed": 30,
+  "size": "small",
+  "budget": 720,
+  "population_size": 24,
+  "instance_sha256": "82a12942ad1807640e96eaf2e4ef247d67a094ac841a9189e15b4321f68a9a4e"
+}

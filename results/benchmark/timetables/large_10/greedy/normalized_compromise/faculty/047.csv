@@ -1,0 +1,6 @@
+faculty: F48,P1,P2,P3,P4,P5,P6,P7,P8
+Monday,G05-T3 | R01 / F48,,,,LUNCH,,,
+Tuesday,,,,G11-T5 | R15 / F48,LUNCH,G05-T3 | R01 / F48,,
+Wednesday,,,,,LUNCH,G11-T5 | R03 / F48,,
+Thursday,,,,,LUNCH,G05-T3 | R13 / F48,G17-L2 | R21 / F48,G17-L2 (cont.) | R21 / F48
+Friday,,,G11-T5 | R11 / F48,,LUNCH,,,

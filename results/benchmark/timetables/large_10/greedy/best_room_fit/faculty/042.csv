@@ -1,0 +1,6 @@
+faculty: F43,P1,P2,P3,P4,P5,P6,P7,P8
+Monday,,,,,LUNCH,G02-T6 | R10 / F43,G20-T3 | R15 / F43,
+Tuesday,,G02-T6 | R10 / F43,,G20-T3 | R15 / F43,LUNCH,,,
+Wednesday,,,G20-T2 | R11 / F43,,LUNCH,,,
+Thursday,,,,,LUNCH,,G20-T2 | R03 / F43,G02-T6 | R10 / F43
+Friday,,,,G20-T3 | R07 / F43,LUNCH,G20-T2 | R11 / F43,,

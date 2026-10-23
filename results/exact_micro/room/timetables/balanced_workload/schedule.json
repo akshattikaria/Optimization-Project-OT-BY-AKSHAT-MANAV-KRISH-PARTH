@@ -1,0 +1,44 @@
+{
+  "label": "balanced_workload",
+  "objectives": [
+    0.0,
+    0.25,
+    0.0
+  ],
+  "violation": 0,
+  "metrics": {
+    "student_gaps": 0,
+    "faculty_gaps": 0,
+    "average_student_gap_per_day": 0.0,
+    "longest_idle_stretch": 0,
+    "room_utilization": 0.75,
+    "faculty_loads": {
+      "A": 1,
+      "B": 1
+    },
+    "faculty_relative_loads": {
+      "A": 0.5,
+      "B": 0.5
+    },
+    "max_faculty_daily_load": 1,
+    "consecutive_periods_over_three": 0,
+    "required_teaching_periods": 2
+  },
+  "schedule": {
+    "schema_version": 1,
+    "placements": [
+      {
+        "start": 0,
+        "room": "small"
+      },
+      {
+        "start": 1,
+        "room": "large"
+      }
+    ],
+    "teachers": [
+      "A",
+      "B"
+    ]
+  }
+}

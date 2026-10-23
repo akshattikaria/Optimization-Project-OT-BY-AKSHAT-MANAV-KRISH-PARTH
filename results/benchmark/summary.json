@@ -1,0 +1,706 @@
+{
+  "summary": [
+    {
+      "size": "large",
+      "method": "enhanced",
+      "runs": 6,
+      "feasible_runs": 6,
+      "hypervolume_mean": 0.9093219377887093,
+      "hypervolume_sd": 0.009553817583383199,
+      "runtime_mean": 16.23609510416664,
+      "runtime_sd": 2.1167845102424065,
+      "archive_size_mean": 8.666666666666666,
+      "archive_size_sd": 3.0767948691238205,
+      "feasible_evaluation_fraction_mean": 0.39722222222222225,
+      "feasible_evaluation_fraction_sd": 0.010758287072798368,
+      "best_objectives": [
+        3.0,
+        0.2037878787878788,
+        0.07874007874011811
+      ],
+      "mean_run_best_objectives": [
+        4.166666666666667,
+        0.20527777777777778,
+        0.08669299772708078
+      ],
+      "mean_front_objectives_per_run": [
+        26.770171957671955,
+        0.20914051226551228,
+        0.11314133734318596
+      ]
+    },
+    {
+      "size": "large",
+      "method": "greedy",
+      "runs": 6,
+      "feasible_runs": 6,
+      "hypervolume_mean": 0.9372413078702113,
+      "hypervolume_sd": 0.0037335071802108853,
+      "runtime_mean": 48.51981379649995,
+      "runtime_sd": 1.8451257338511646,
+      "archive_size_mean": 19.833333333333332,
+      "archive_size_sd": 4.445971959725642,
+      "feasible_evaluation_fraction_mean": 1.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": [
+        1.0,
+        0.20318181818181819,
+        0.07071067811865477
+      ],
+      "mean_run_best_objectives": [
+        1.75,
+        0.20444444444444446,
+        0.073696584315347
+      ],
+      "mean_front_objectives_per_run": [
+        5.479833459024635,
+        0.20859303879671529,
+        0.09388309051670868
+      ]
+    },
+    {
+      "size": "large",
+      "method": "nsga2",
+      "runs": 6,
+      "feasible_runs": 0,
+      "hypervolume_mean": 0.0,
+      "hypervolume_sd": 0.0,
+      "runtime_mean": 0.45192178183337245,
+      "runtime_sd": 0.012412671585012301,
+      "archive_size_mean": 0,
+      "archive_size_sd": 0.0,
+      "feasible_evaluation_fraction_mean": 0.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": null,
+      "mean_run_best_objectives": null,
+      "mean_front_objectives_per_run": null
+    },
+    {
+      "size": "large",
+      "method": "seeded",
+      "runs": 6,
+      "feasible_runs": 6,
+      "hypervolume_mean": 0.9076198720587229,
+      "hypervolume_sd": 0.00901903020499238,
+      "runtime_mean": 2.900696615999967,
+      "runtime_sd": 0.2569755946104696,
+      "archive_size_mean": 6.166666666666667,
+      "archive_size_sd": 1.834847859269718,
+      "feasible_evaluation_fraction_mean": 0.08472222222222223,
+      "feasible_evaluation_fraction_sd": 0.010092167846991639,
+      "best_objectives": [
+        3.0,
+        0.2046969696969697,
+        0.07874007874011811
+      ],
+      "mean_run_best_objectives": [
+        4.166666666666667,
+        0.20729797979797981,
+        0.08669299772708078
+      ],
+      "mean_front_objectives_per_run": [
+        6.739583333333333,
+        0.2102337361712362,
+        0.09831159357594364
+      ]
+    },
+    {
+      "size": "medium",
+      "method": "enhanced",
+      "runs": 12,
+      "feasible_runs": 12,
+      "hypervolume_mean": 0.9812133221782646,
+      "hypervolume_sd": 0.021309795427432394,
+      "runtime_mean": 6.0870577204166425,
+      "runtime_sd": 1.0588852326088536,
+      "archive_size_mean": 7.333333333333333,
+      "archive_size_sd": 3.200378765462651,
+      "feasible_evaluation_fraction_mean": 0.4321759259259259,
+      "feasible_evaluation_fraction_sd": 0.012945665467476363,
+      "best_objectives": [
+        0.0,
+        0.1823293172690763,
+        0.045
+      ],
+      "mean_run_best_objectives": [
+        0.20833333333333334,
+        0.18559236947791166,
+        0.061778394557509095
+      ],
+      "mean_front_objectives_per_run": [
+        6.099119861619862,
+        0.19185134769848627,
+        0.0839517606230792
+      ]
+    },
+    {
+      "size": "medium",
+      "method": "greedy",
+      "runs": 12,
+      "feasible_runs": 12,
+      "hypervolume_mean": 1.0170294824292343,
+      "hypervolume_sd": 0.01188602453572165,
+      "runtime_mean": 18.54960322058332,
+      "runtime_sd": 0.45984272333612053,
+      "archive_size_mean": 13.75,
+      "archive_size_sd": 4.330127018922194,
+      "feasible_evaluation_fraction_mean": 1.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": [
+        0.0,
+        0.18032128514056225,
+        0.032015621187164243
+      ],
+      "mean_run_best_objectives": [
+        0.0,
+        0.18142570281124498,
+        0.046471015294155434
+      ],
+      "mean_front_objectives_per_run": [
+        0.8521650326797385,
+        0.1885892900500227,
+        0.07003565134871571
+      ]
+    },
+    {
+      "size": "medium",
+      "method": "nsga2",
+      "runs": 12,
+      "feasible_runs": 0,
+      "hypervolume_mean": 0.0,
+      "hypervolume_sd": 0.0,
+      "runtime_mean": 0.26140373491667407,
+      "runtime_sd": 0.009115324601468296,
+      "archive_size_mean": 0,
+      "archive_size_sd": 0.0,
+      "feasible_evaluation_fraction_mean": 0.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": null,
+      "mean_run_best_objectives": null,
+      "mean_front_objectives_per_run": null
+    },
+    {
+      "size": "medium",
+      "method": "seeded",
+      "runs": 12,
+      "feasible_runs": 12,
+      "hypervolume_mean": 0.9761262813019578,
+      "hypervolume_sd": 0.020200358482428103,
+      "runtime_mean": 0.943164805416643,
+      "runtime_sd": 0.22570753087724327,
+      "archive_size_mean": 5.083333333333333,
+      "archive_size_sd": 2.391588796113782,
+      "feasible_evaluation_fraction_mean": 0.08865740740740741,
+      "feasible_evaluation_fraction_sd": 0.015644511760453582,
+      "best_objectives": [
+        0.0,
+        0.1823293172690763,
+        0.045
+      ],
+      "mean_run_best_objectives": [
+        0.20833333333333334,
+        0.18714859437751005,
+        0.06364098333977873
+      ],
+      "mean_front_objectives_per_run": [
+        1.0315476190476192,
+        0.19218178268630076,
+        0.07625652201379128
+      ]
+    },
+    {
+      "size": "small",
+      "method": "enhanced",
+      "runs": 30,
+      "feasible_runs": 30,
+      "hypervolume_mean": 0.9351731492960071,
+      "hypervolume_sd": 0.00016851871020411344,
+      "runtime_mean": 2.432059860566638,
+      "runtime_sd": 0.06884151151256399,
+      "archive_size_mean": 4.266666666666667,
+      "archive_size_sd": 2.715642215697451,
+      "feasible_evaluation_fraction_mean": 0.45912037037037035,
+      "feasible_evaluation_fraction_sd": 0.01632668618705072,
+      "best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ],
+      "mean_run_best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ],
+      "mean_front_objectives_per_run": [
+        1.482361111111111,
+        0.2590152116402117,
+        0.056690192154842264
+      ]
+    },
+    {
+      "size": "small",
+      "method": "greedy",
+      "runs": 30,
+      "feasible_runs": 30,
+      "hypervolume_mean": 0.9353187591328681,
+      "hypervolume_sd": 0.0,
+      "runtime_mean": 7.917568341966641,
+      "runtime_sd": 0.16062644959688113,
+      "archive_size_mean": 1,
+      "archive_size_sd": 0.0,
+      "feasible_evaluation_fraction_mean": 1.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ],
+      "mean_run_best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ],
+      "mean_front_objectives_per_run": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ]
+    },
+    {
+      "size": "small",
+      "method": "nsga2",
+      "runs": 30,
+      "feasible_runs": 0,
+      "hypervolume_mean": 0.0,
+      "hypervolume_sd": 0.0,
+      "runtime_mean": 0.17025443636668644,
+      "runtime_sd": 0.03466000788006096,
+      "archive_size_mean": 0,
+      "archive_size_sd": 0.0,
+      "feasible_evaluation_fraction_mean": 0.0,
+      "feasible_evaluation_fraction_sd": 0.0,
+      "best_objectives": null,
+      "mean_run_best_objectives": null,
+      "mean_front_objectives_per_run": null
+    },
+    {
+      "size": "small",
+      "method": "seeded",
+      "runs": 30,
+      "feasible_runs": 30,
+      "hypervolume_mean": 0.9313000197453186,
+      "hypervolume_sd": 0.010545943681683696,
+      "runtime_mean": 0.31836299106666577,
+      "runtime_sd": 0.05065665704892309,
+      "archive_size_mean": 2.966666666666667,
+      "archive_size_sd": 1.8659070704090006,
+      "feasible_evaluation_fraction_mean": 0.17185185185185184,
+      "feasible_evaluation_fraction_sd": 0.04812210711442121,
+      "best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04714045207910319
+      ],
+      "mean_run_best_objectives": [
+        0.0,
+        0.2545454545454546,
+        0.04912142559741505
+      ],
+      "mean_front_objectives_per_run": [
+        0.41117063492063494,
+        0.25892045454545454,
+        0.06085613327365987
+      ]
+    }
+  ],
+  "comparisons": {
+    "large/enhanced_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 6,
+        "wins": 0,
+        "losses": 6,
+        "ties": 0,
+        "median_difference": -0.027476755701304256,
+        "mean_difference": -0.027919370081502026,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.03125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -0.027919370081502026,
+        "mean_difference": -0.027919370081502026,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.020277777777777777,
+      "coverage_greedy_over_method_mean": 0.9814814814814815
+    },
+    "large/nsga2_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 6,
+        "wins": 0,
+        "losses": 6,
+        "ties": 0,
+        "median_difference": -0.9366830098747394,
+        "mean_difference": -0.9372413078702113,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.03125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -0.9372413078702113,
+        "mean_difference": -0.9372413078702113,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0,
+      "coverage_greedy_over_method_mean": 0
+    },
+    "large/seeded_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 6,
+        "wins": 0,
+        "losses": 6,
+        "ties": 0,
+        "median_difference": -0.02954016445627583,
+        "mean_difference": -0.029621435811488406,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.03125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -0.029621435811488406,
+        "mean_difference": -0.029621435811488406,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.020277777777777777,
+      "coverage_greedy_over_method_mean": 1.0
+    },
+    "medium/enhanced_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 12,
+        "wins": 0,
+        "losses": 12,
+        "ties": 0,
+        "median_difference": -0.0365662509567371,
+        "mean_difference": -0.035816160250969724,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.00048828125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -0.03581616025096973,
+        "mean_difference": -0.03581616025096973,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.031746031746031744,
+      "coverage_greedy_over_method_mean": 1.0
+    },
+    "medium/nsga2_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 12,
+        "wins": 0,
+        "losses": 12,
+        "ties": 0,
+        "median_difference": -1.015786525916753,
+        "mean_difference": -1.0170294824292343,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.00048828125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -1.0170294824292343,
+        "mean_difference": -1.0170294824292343,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0,
+      "coverage_greedy_over_method_mean": 0
+    },
+    "medium/seeded_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 12,
+        "wins": 0,
+        "losses": 12,
+        "ties": 0,
+        "median_difference": -0.04091561708473562,
+        "mean_difference": -0.04090320112727655,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.00048828125
+      },
+      "instance_mean_sign_test": {
+        "pairs": 2,
+        "wins": 0,
+        "losses": 2,
+        "ties": 0,
+        "median_difference": -0.04090320112727658,
+        "mean_difference": -0.04090320112727658,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.5
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.031746031746031744,
+      "coverage_greedy_over_method_mean": 1.0
+    },
+    "small/enhanced_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 30,
+        "wins": 0,
+        "losses": 23,
+        "ties": 7,
+        "median_difference": -9.972848932876532e-05,
+        "mean_difference": -0.00014560983686100112,
+        "paired_superiority": 0.11666666666666667,
+        "sign_test_p_two_sided": 2.384185791015625e-07
+      },
+      "instance_mean_sign_test": {
+        "pairs": 3,
+        "wins": 0,
+        "losses": 3,
+        "ties": 0,
+        "median_difference": -0.00011959115745796556,
+        "mean_difference": -0.0001456098368609974,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.25
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.23333333333333334,
+      "coverage_greedy_over_method_mean": 1.0
+    },
+    "small/nsga2_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 30,
+        "wins": 0,
+        "losses": 30,
+        "ties": 0,
+        "median_difference": -0.9353187591328681,
+        "mean_difference": -0.9353187591328681,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 1.862645149230957e-09
+      },
+      "instance_mean_sign_test": {
+        "pairs": 3,
+        "wins": 0,
+        "losses": 3,
+        "ties": 0,
+        "median_difference": -0.9353187591328681,
+        "mean_difference": -0.9353187591328681,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.25
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0,
+      "coverage_greedy_over_method_mean": 0
+    },
+    "small/seeded_vs_greedy": {
+      "paired_run_descriptive": {
+        "pairs": 30,
+        "wins": 0,
+        "losses": 23,
+        "ties": 7,
+        "median_difference": -0.00018814887772927724,
+        "mean_difference": -0.004018739387549475,
+        "paired_superiority": 0.11666666666666667,
+        "sign_test_p_two_sided": 2.384185791015625e-07
+      },
+      "instance_mean_sign_test": {
+        "pairs": 3,
+        "wins": 0,
+        "losses": 3,
+        "ties": 0,
+        "median_difference": -0.004295104449138387,
+        "mean_difference": -0.004018739387549486,
+        "paired_superiority": 0.0,
+        "sign_test_p_two_sided": 0.25
+      },
+      "note": "Runs within an instance are clustered; use instance means for inference. Few instances => low power.",
+      "coverage_method_over_greedy_mean": 0.23333333333333334,
+      "coverage_greedy_over_method_mean": 1.0
+    }
+  },
+  "tradeoffs": {
+    "large_10": {
+      "pooled_nondominated_vectors": 32,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 280,
+        "f1_vs_f3": 320,
+        "f2_vs_f3": 362
+      },
+      "objective_ranges": [
+        [
+          1.0,
+          101.0
+        ],
+        [
+          0.20492424242424243,
+          0.22136363636363637
+        ],
+        [
+          0.07348469228349534,
+          0.1503329637837291
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "large_20": {
+      "pooled_nondominated_vectors": 23,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 172,
+        "f1_vs_f3": 174,
+        "f2_vs_f3": 140
+      },
+      "objective_ranges": [
+        [
+          1.5,
+          10.5
+        ],
+        [
+          0.20318181818181819,
+          0.2150757575757576
+        ],
+        [
+          0.07071067811865477,
+          0.12083045973594572
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "medium_10": {
+      "pooled_nondominated_vectors": 25,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 136,
+        "f1_vs_f3": 157,
+        "f2_vs_f3": 237
+      },
+      "objective_ranges": [
+        [
+          0.0,
+          3.5
+        ],
+        [
+          0.18052208835341366,
+          0.1983935742971888
+        ],
+        [
+          0.032015621187164243,
+          0.088175960442742
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "medium_20": {
+      "pooled_nondominated_vectors": 7,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 12,
+        "f1_vs_f3": 9,
+        "f2_vs_f3": 18
+      },
+      "objective_ranges": [
+        [
+          0.0,
+          3.0
+        ],
+        [
+          0.18032128514056225,
+          0.19096385542168676
+        ],
+        [
+          0.0421307488658818,
+          0.10851267207105353
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "small_10": {
+      "pooled_nondominated_vectors": 1,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 0,
+        "f1_vs_f3": 0,
+        "f2_vs_f3": 0
+      },
+      "objective_ranges": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2545454545454546,
+          0.2545454545454546
+        ],
+        [
+          0.04714045207910319,
+          0.04714045207910319
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "small_20": {
+      "pooled_nondominated_vectors": 1,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 0,
+        "f1_vs_f3": 0,
+        "f2_vs_f3": 0
+      },
+      "objective_ranges": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2545454545454546,
+          0.2545454545454546
+        ],
+        [
+          0.04714045207910319,
+          0.04714045207910319
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    },
+    "small_30": {
+      "pooled_nondominated_vectors": 1,
+      "opposing_pair_counts": {
+        "f1_vs_f2": 0,
+        "f1_vs_f3": 0,
+        "f2_vs_f3": 0
+      },
+      "objective_ranges": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2545454545454546,
+          0.2545454545454546
+        ],
+        [
+          0.04714045207910319,
+          0.04714045207910319
+        ]
+      ],
+      "scope": "empirical pooled archives on this instance; no global optimality claim"
+    }
+  }
+}

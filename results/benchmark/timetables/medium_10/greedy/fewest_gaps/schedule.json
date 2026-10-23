@@ -1,0 +1,734 @@
+{
+  "label": "fewest_gaps",
+  "objectives": [
+    0.0,
+    0.18393574297188756,
+    0.08231038816577164
+  ],
+  "violation": 0,
+  "metrics": {
+    "student_gaps": 0,
+    "faculty_gaps": 0,
+    "average_student_gap_per_day": 0.0,
+    "longest_idle_stretch": 0,
+    "room_utilization": 0.8160642570281125,
+    "faculty_loads": {
+      "F01": 11,
+      "F02": 10,
+      "F03": 9,
+      "F04": 6,
+      "F05": 7,
+      "F06": 8,
+      "F07": 6,
+      "F08": 8,
+      "F09": 8,
+      "F10": 8,
+      "F11": 8,
+      "F12": 5,
+      "F13": 8,
+      "F14": 10,
+      "F15": 7,
+      "F16": 10,
+      "F17": 7,
+      "F18": 11,
+      "F19": 9,
+      "F20": 10
+    },
+    "faculty_relative_loads": {
+      "F01": 0.55,
+      "F02": 0.5,
+      "F03": 0.45,
+      "F04": 0.3,
+      "F05": 0.35,
+      "F06": 0.4,
+      "F07": 0.3,
+      "F08": 0.4,
+      "F09": 0.4,
+      "F10": 0.4,
+      "F11": 0.4,
+      "F12": 0.25,
+      "F13": 0.4,
+      "F14": 0.5,
+      "F15": 0.35,
+      "F16": 0.5,
+      "F17": 0.35,
+      "F18": 0.55,
+      "F19": 0.45,
+      "F20": 0.5
+    },
+    "max_faculty_daily_load": 4,
+    "consecutive_periods_over_three": 9,
+    "required_teaching_periods": 166
+  },
+  "schedule": {
+    "schema_version": 1,
+    "placements": [
+      {
+        "start": 7,
+        "room": "R01"
+      },
+      {
+        "start": 37,
+        "room": "R05"
+      },
+      {
+        "start": 27,
+        "room": "R05"
+      },
+      {
+        "start": 3,
+        "room": "R01"
+      },
+      {
+        "start": 17,
+        "room": "R01"
+      },
+      {
+        "start": 11,
+        "room": "R01"
+      },
+      {
+        "start": 19,
+        "room": "R01"
+      },
+      {
+        "start": 39,
+        "room": "R05"
+      },
+      {
+        "start": 14,
+        "room": "R01"
+      },
+      {
+        "start": 18,
+        "room": "R05"
+      },
+      {
+        "start": 13,
+        "room": "R05"
+      },
+      {
+        "start": 26,
+        "room": "R01"
+      },
+      {
+        "start": 38,
+        "room": "R01"
+      },
+      {
+        "start": 21,
+        "room": "R05"
+      },
+      {
+        "start": 15,
+        "room": "R05"
+      },
+      {
+        "start": 35,
+        "room": "R05"
+      },
+      {
+        "start": 10,
+        "room": "R05"
+      },
+      {
+        "start": 24,
+        "room": "R09"
+      },
+      {
+        "start": 5,
+        "room": "R09"
+      },
+      {
+        "start": 5,
+        "room": "R06"
+      },
+      {
+        "start": 16,
+        "room": "R02"
+      },
+      {
+        "start": 35,
+        "room": "R02"
+      },
+      {
+        "start": 3,
+        "room": "R02"
+      },
+      {
+        "start": 38,
+        "room": "R02"
+      },
+      {
+        "start": 14,
+        "room": "R06"
+      },
+      {
+        "start": 37,
+        "room": "R06"
+      },
+      {
+        "start": 29,
+        "room": "R06"
+      },
+      {
+        "start": 15,
+        "room": "R06"
+      },
+      {
+        "start": 2,
+        "room": "R02"
+      },
+      {
+        "start": 25,
+        "room": "R02"
+      },
+      {
+        "start": 39,
+        "room": "R02"
+      },
+      {
+        "start": 31,
+        "room": "R06"
+      },
+      {
+        "start": 34,
+        "room": "R06"
+      },
+      {
+        "start": 19,
+        "room": "R02"
+      },
+      {
+        "start": 1,
+        "room": "R02"
+      },
+      {
+        "start": 30,
+        "room": "R02"
+      },
+      {
+        "start": 26,
+        "room": "R10"
+      },
+      {
+        "start": 17,
+        "room": "R10"
+      },
+      {
+        "start": 39,
+        "room": "R07"
+      },
+      {
+        "start": 13,
+        "room": "R07"
+      },
+      {
+        "start": 16,
+        "room": "R07"
+      },
+      {
+        "start": 38,
+        "room": "R03"
+      },
+      {
+        "start": 8,
+        "room": "R03"
+      },
+      {
+        "start": 26,
+        "room": "R03"
+      },
+      {
+        "start": 11,
+        "room": "R07"
+      },
+      {
+        "start": 25,
+        "room": "R03"
+      },
+      {
+        "start": 2,
+        "room": "R03"
+      },
+      {
+        "start": 14,
+        "room": "R07"
+      },
+      {
+        "start": 3,
+        "room": "R03"
+      },
+      {
+        "start": 21,
+        "room": "R07"
+      },
+      {
+        "start": 10,
+        "room": "R07"
+      },
+      {
+        "start": 24,
+        "room": "R03"
+      },
+      {
+        "start": 19,
+        "room": "R03"
+      },
+      {
+        "start": 22,
+        "room": "R03"
+      },
+      {
+        "start": 9,
+        "room": "R03"
+      },
+      {
+        "start": 17,
+        "room": "R11"
+      },
+      {
+        "start": 0,
+        "room": "R11"
+      },
+      {
+        "start": 5,
+        "room": "R07"
+      },
+      {
+        "start": 25,
+        "room": "R07"
+      },
+      {
+        "start": 18,
+        "room": "R07"
+      },
+      {
+        "start": 27,
+        "room": "R07"
+      },
+      {
+        "start": 0,
+        "room": "R07"
+      },
+      {
+        "start": 21,
+        "room": "R03"
+      },
+      {
+        "start": 8,
+        "room": "R07"
+      },
+      {
+        "start": 1,
+        "room": "R07"
+      },
+      {
+        "start": 32,
+        "room": "R03"
+      },
+      {
+        "start": 26,
+        "room": "R07"
+      },
+      {
+        "start": 19,
+        "room": "R07"
+      },
+      {
+        "start": 3,
+        "room": "R07"
+      },
+      {
+        "start": 6,
+        "room": "R07"
+      },
+      {
+        "start": 9,
+        "room": "R07"
+      },
+      {
+        "start": 30,
+        "room": "R07"
+      },
+      {
+        "start": 29,
+        "room": "R03"
+      },
+      {
+        "start": 2,
+        "room": "R07"
+      },
+      {
+        "start": 22,
+        "room": "R11"
+      },
+      {
+        "start": 33,
+        "room": "R11"
+      },
+      {
+        "start": 6,
+        "room": "R01"
+      },
+      {
+        "start": 27,
+        "room": "R01"
+      },
+      {
+        "start": 22,
+        "room": "R01"
+      },
+      {
+        "start": 5,
+        "room": "R01"
+      },
+      {
+        "start": 31,
+        "room": "R05"
+      },
+      {
+        "start": 34,
+        "room": "R01"
+      },
+      {
+        "start": 37,
+        "room": "R01"
+      },
+      {
+        "start": 18,
+        "room": "R01"
+      },
+      {
+        "start": 26,
+        "room": "R06"
+      },
+      {
+        "start": 15,
+        "room": "R01"
+      },
+      {
+        "start": 32,
+        "room": "R05"
+      },
+      {
+        "start": 19,
+        "room": "R05"
+      },
+      {
+        "start": 21,
+        "room": "R01"
+      },
+      {
+        "start": 7,
+        "room": "R05"
+      },
+      {
+        "start": 33,
+        "room": "R05"
+      },
+      {
+        "start": 23,
+        "room": "R05"
+      },
+      {
+        "start": 35,
+        "room": "R01"
+      },
+      {
+        "start": 29,
+        "room": "R09"
+      },
+      {
+        "start": 13,
+        "room": "R09"
+      },
+      {
+        "start": 23,
+        "room": "R06"
+      },
+      {
+        "start": 39,
+        "room": "R06"
+      },
+      {
+        "start": 5,
+        "room": "R02"
+      },
+      {
+        "start": 2,
+        "room": "R06"
+      },
+      {
+        "start": 27,
+        "room": "R06"
+      },
+      {
+        "start": 13,
+        "room": "R06"
+      },
+      {
+        "start": 11,
+        "room": "R02"
+      },
+      {
+        "start": 7,
+        "room": "R06"
+      },
+      {
+        "start": 18,
+        "room": "R06"
+      },
+      {
+        "start": 14,
+        "room": "R02"
+      },
+      {
+        "start": 19,
+        "room": "R06"
+      },
+      {
+        "start": 29,
+        "room": "R02"
+      },
+      {
+        "start": 26,
+        "room": "R02"
+      },
+      {
+        "start": 35,
+        "room": "R06"
+      },
+      {
+        "start": 3,
+        "room": "R06"
+      },
+      {
+        "start": 6,
+        "room": "R02"
+      },
+      {
+        "start": 15,
+        "room": "R02"
+      },
+      {
+        "start": 37,
+        "room": "R10"
+      },
+      {
+        "start": 21,
+        "room": "R10"
+      },
+      {
+        "start": 10,
+        "room": "R03"
+      },
+      {
+        "start": 1,
+        "room": "R03"
+      },
+      {
+        "start": 27,
+        "room": "R03"
+      },
+      {
+        "start": 35,
+        "room": "R07"
+      },
+      {
+        "start": 11,
+        "room": "R03"
+      },
+      {
+        "start": 21,
+        "room": "R04"
+      },
+      {
+        "start": 30,
+        "room": "R03"
+      },
+      {
+        "start": 14,
+        "room": "R03"
+      },
+      {
+        "start": 34,
+        "room": "R07"
+      },
+      {
+        "start": 23,
+        "room": "R03"
+      },
+      {
+        "start": 24,
+        "room": "R07"
+      },
+      {
+        "start": 0,
+        "room": "R03"
+      },
+      {
+        "start": 22,
+        "room": "R07"
+      },
+      {
+        "start": 39,
+        "room": "R03"
+      },
+      {
+        "start": 13,
+        "room": "R03"
+      },
+      {
+        "start": 29,
+        "room": "R07"
+      },
+      {
+        "start": 37,
+        "room": "R11"
+      },
+      {
+        "start": 25,
+        "room": "R11"
+      },
+      {
+        "start": 5,
+        "room": "R03"
+      },
+      {
+        "start": 37,
+        "room": "R03"
+      },
+      {
+        "start": 18,
+        "room": "R03"
+      },
+      {
+        "start": 38,
+        "room": "R07"
+      },
+      {
+        "start": 31,
+        "room": "R07"
+      },
+      {
+        "start": 15,
+        "room": "R03"
+      },
+      {
+        "start": 17,
+        "room": "R03"
+      },
+      {
+        "start": 35,
+        "room": "R04"
+      },
+      {
+        "start": 11,
+        "room": "R04"
+      },
+      {
+        "start": 6,
+        "room": "R03"
+      },
+      {
+        "start": 33,
+        "room": "R07"
+      },
+      {
+        "start": 30,
+        "room": "R08"
+      },
+      {
+        "start": 16,
+        "room": "R03"
+      },
+      {
+        "start": 34,
+        "room": "R03"
+      },
+      {
+        "start": 32,
+        "room": "R07"
+      },
+      {
+        "start": 7,
+        "room": "R03"
+      },
+      {
+        "start": 13,
+        "room": "R11"
+      },
+      {
+        "start": 2,
+        "room": "R11"
+      }
+    ],
+    "teachers": [
+      "F20",
+      "F09",
+      "F14",
+      "F05",
+      "F19",
+      "F13",
+      "F05",
+      "F16",
+      "F04",
+      "F02",
+      "F10",
+      "F11",
+      "F16",
+      "F19",
+      "F09",
+      "F17",
+      "F06",
+      "F20",
+      "F17",
+      "F18",
+      "F11",
+      "F16",
+      "F01",
+      "F11",
+      "F09",
+      "F10",
+      "F07",
+      "F13",
+      "F04",
+      "F15",
+      "F15",
+      "F18",
+      "F08",
+      "F01",
+      "F03",
+      "F18",
+      "F16",
+      "F20",
+      "F02",
+      "F10",
+      "F02",
+      "F18",
+      "F14",
+      "F01",
+      "F06",
+      "F02",
+      "F14",
+      "F20",
+      "F03",
+      "F08",
+      "F15",
+      "F07",
+      "F19",
+      "F14",
+      "F06",
+      "F08",
+      "F13",
+      "F12",
+      "F03",
+      "F01",
+      "F17",
+      "F05",
+      "F19",
+      "F12"
+    ]
+  }
+}

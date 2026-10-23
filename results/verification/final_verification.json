@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "automated_tests": 136,
+  "fresh_environment_tests": 136,
+  "benchmark_runs": 192,
+  "search_evaluations": 109440,
+  "saved_validation": {
+    "study": "benchmark",
+    "certificates_validated": 7,
+    "runs_validated": 192,
+    "feasible_archived_schedules_validated": 769,
+    "empty_archives_reported": 48,
+    "expected_runs": 192,
+    "status": "PASS"
+  },
+  "fresh_saved_validation": {
+    "study": "benchmark",
+    "certificates_validated": 7,
+    "runs_validated": 192,
+    "feasible_archived_schedules_validated": 769,
+    "empty_archives_reported": 48,
+    "expected_runs": 192,
+    "status": "PASS"
+  },
+  "dependency_check": "No broken requirements found.",
+  "source_matches_benchmark_manifest": true,
+  "small_global_ideal_statuses": {
+    "small_10": "CERTIFIED_GLOBAL_IDEAL_VECTOR",
+    "small_20": "CERTIFIED_GLOBAL_IDEAL_VECTOR",
+    "small_30": "CERTIFIED_GLOBAL_IDEAL_VECTOR"
+  },
+  "file_groups": {
+    "src": {
+      "files": 15,
+      "bytes": 130521
+    },
+    "tests": {
+      "files": 12,
+      "bytes": 55001
+    },
+    "experiments": {
+      "files": 8,
+      "bytes": 47735
+    },
+    "docs": {
+      "files": 3,
+      "bytes": 22660
+    },
+    "problem": {
+      "files": 4,
+      "bytes": 376593
+    },
+    "literature": {
+      "files": 1,
+      "bytes": 8185
+    },
+    "formulation": {
+      "files": 1,
+      "bytes": 16218
+    },
+    "report": {
+      "files": 1,
+      "bytes": 24297
+    },
+    "presentation": {
+      "files": 1,
+      "bytes": 8318
+    },
+    "data": {
+      "files": 17,
+      "bytes": 262483
+    },
+    "results": {
+      "files": 1572,
+      "bytes": 18971713
+    },
+    "figures": {
+      "files": 43,
+      "bytes": 4516000
+    }
+  },
+  "git_operations": "No commits, pushes, pull requests, merges or access changes performed."
+}

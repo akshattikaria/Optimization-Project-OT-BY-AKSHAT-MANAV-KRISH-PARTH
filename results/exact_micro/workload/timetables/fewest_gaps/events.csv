@@ -1,0 +1,3 @@
+event,offering,groups,students,day,start_period,duration,room,faculty
+S1:1,S1,G,20,Monday,1,1,classroom,A
+S2:1,S2,G,20,Monday,2,1,classroom,A
