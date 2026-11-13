@@ -64,3 +64,22 @@ compared with the evaluator before it is returned.
 For all three executed small instance seeds (10,20,30), archived feasible schedules attain the bounds simultaneously. The script checks integer gaps, exact rational seat wastage and integer squared loads. Consequently each global three-objective front is the singleton ideal vector `(0,14/55,sqrt(1/450))`; distinct schedules may have that same vector. This is stronger than a discovered front and explains why inventing a broad small-instance Pareto front would be wrong. It does not say suboptimal schedules never exhibit opposing objective changes. Bounds and exact attaining archive references are saved in `results/benchmark/small_ideal_certificates.json`.
 
 This analysis is deliberately limited to small counts and equal allowances. General unequal-allowance workload optimization remains outside the CP-SAT API. The dynamic program is validated against exhaustive labeled teacher assignments in `tests/test_ideal_bound.py`.
+
+## Two-objective trade-off: epsilon-constraint and weighted sum
+
+The CP-SAT model holds weighted gaps (f1) and room wastage (f2) only. Three
+routines build on it, and all three are statements about the pair (f1, f2):
+
+- `epsilon_constraint_cp_sat` minimizes one of the two objectives for a grid of
+  bounds on the other. Each `OPTIMAL` step proves that minimum for that bound.
+  The output is a set of trade-off points, not a complete front.
+- `exact_gaps_room_front` uses a lexicographic epsilon-constraint with bounds in
+  exact integer units and reports `complete = True` only when every solve ended
+  with an optimality or infeasibility proof. Only then is the result the
+  complete Pareto front of (f1, f2).
+- `weighted_sum_cp_sat` minimizes positive weighted sums of f1 and f2. Its
+  optima are Pareto-optimal for (f1, f2) but can only be supported points.
+
+None of them optimizes workload balance (f3), so none of them yields or
+certifies a three-objective Pareto front. The f3 values shown next to these
+points are those of the particular schedules CP-SAT returned.

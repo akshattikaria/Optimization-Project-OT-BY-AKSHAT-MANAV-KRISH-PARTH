@@ -56,21 +56,26 @@ Implemented in [`src/timetable/amosa.py`](../src/timetable/amosa.py):
 
 ## 3. The $\epsilon$-Constraint Method in CP-SAT
 
-Implemented in [`src/timetable/exact.py`](../src/timetable/exact.py):
+Implemented in [`src/timetable/exact.py`](../src/timetable/exact.py).
 
-Unlike metaheuristics which find *empirical* fronts, the $\epsilon$-constraint method coupled with Google OR-Tools CP-SAT yields **mathematically proven Pareto boundaries**.
+A metaheuristic returns the best front it happened to find. CP-SAT can instead *prove* an optimum, but only for what its model contains. The CP-SAT model here contains two of the three objectives: weighted gaps ($f_1$) and room seat wastage ($f_2$). The workload standard deviation ($f_3$) is nonlinear and is **not** modeled.
 
-### Mathematical Formulation
+### Formulation
 $$\begin{aligned}
-\min \quad & f_1(\text{Gaps}) \\
-\text{s.t.} \quad & f_2(\text{Room Seat Wastage}) \le \epsilon_k \\
-& \text{All Hard Constraints Satisfied (no clashes, availability, daily/weekly limits)}
+\min \quad & f_1(\text{gaps}) \\
+\text{s.t.} \quad & f_2(\text{room seat wastage}) \le \epsilon_k \\
+& \text{all hard constraints (no clashes, availability, daily/weekly limits)}
 \end{aligned}$$
 
-By systematically dividing the range of $f_2$ into a grid $[\epsilon_1, \epsilon_2, \dots, \epsilon_K]$ and solving each constrained MIP to `OPTIMAL`, CP-SAT guarantees:
-1. No heuristic search bias.
-2. Complete capture of unsupported non-convex trade-offs.
-3. Proven lower bounds and optimality certificates.
+### What it certifies, precisely
+
+* `epsilon_constraint_cp_sat` solves this model for a grid $\epsilon_1, \dots, \epsilon_K$. A step that ends with status `OPTIMAL` proves the minimum of $f_1$ for that bound on $f_2$. A step that stops at the time limit proves nothing. The grid can step over front points, so the output is a set of **gaps-versus-room trade-off points**, in general a subset of the $(f_1, f_2)$ front.
+* `exact_gaps_room_front` removes both gaps in that argument. For each point it minimizes $f_1$ under the bound and then minimizes $f_2$ with $f_1$ fixed at that optimum (lexicographic step), and it tightens the bound by one exact integer unit each time until the model is proven infeasible. If every solve ends with a proof, the result is the **complete Pareto front of the two-objective problem $(f_1, f_2)$**.
+* Neither routine optimizes $f_3$. The $f_3$ value of each returned schedule is reported, but **this is not a certified three-objective Pareto front**, and a schedule on the $(f_1, f_2)$ front can be improved in $f_3$ at no cost in the other two.
+* The method does reach unsupported points of the $(f_1, f_2)$ front, which a weighted sum cannot (measured in section 6).
+* It is practical only for small instances; proofs for the 150- and 400-event instances are out of reach.
+
+Complete three-objective fronts are available only for the two-event micro instances, by exhaustive enumeration (`enumerate_pareto`), and the three-objective *ideal point* of the 40-event instances is certified separately (see [exact.md](exact.md)).
 
 ---
 

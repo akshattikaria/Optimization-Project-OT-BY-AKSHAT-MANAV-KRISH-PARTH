@@ -1,9 +1,12 @@
-"""Optional CP-SAT reference with exact feasibility, single-objective models, and epsilon-constraint.
+"""Optional CP-SAT reference: feasibility, single objectives and the gaps/room trade-off.
 
 CP-SAT proves a *single-objective* optimum only when its status is OPTIMAL.
-The epsilon-constraint method enables generating true exact Pareto trade-offs
-by minimizing one objective while placing explicit upper bounds (epsilon) on the
-other objective, bypassing the non-convexity limitations of weighted-sum scalarization.
+The model contains two of the project's three objectives: weighted gaps (f1)
+and room seat wastage (f2).  The workload standard deviation (f3) is not
+modeled.  The epsilon-constraint and weighted-sum routines therefore describe
+the **two-objective (f1, f2) trade-off only**; they do not produce or certify
+the three-objective Pareto front.  ``exact_gaps_room_front`` returns the
+complete (f1, f2) front when every solve ends with a proof.
 """
 
 from __future__ import annotations
@@ -55,7 +58,13 @@ class EnumerationResult:
 
 @dataclass
 class EpsilonParetoResult:
-    """Exact trade-off front discovered via the epsilon-constraint method with CP-SAT."""
+    """Gaps-versus-room trade-off points from an epsilon grid with CP-SAT.
+
+    Each grid step that ends OPTIMAL (``optimal_steps``) proves the minimum of
+    the primary objective under that bound on the other one.  The result is a
+    set of trade-off points for (f1, f2), not a certified complete front, and
+    says nothing about workload balance (f3).
+    """
 
     archive: list[Schedule]
     objectives: list[tuple[float, float, float]]
@@ -467,20 +476,33 @@ def epsilon_constraint_cp_sat(
     time_limit_per_step: float = 10.0,
     seed: int = 0,
 ) -> EpsilonParetoResult:
-    """Generate exact Pareto trade-offs using the epsilon-constraint method with CP-SAT.
+    """Trade-off points between gaps (f1) and room wastage (f2) by epsilon-constraint.
 
-    OT Concept:
-    Unlike weighted sum scalarization, which fails to find non-convex Pareto points,
-    the epsilon-constraint method minimizes one objective f_1(x) while constraining
-    the second objective: f_2(x) <= eps_2. By systematically varying eps_2 across its
-    feasible range, the exact Pareto boundary is traced out without bias.
+    The method minimizes one objective while the other is bounded,
+    ``f_other <= eps``, for ``steps`` values of ``eps`` spread evenly between
+    the two single-objective anchor solutions.  A weighted sum can only return
+    supported points; a bounded objective can also return unsupported ones.
+
+    What is and is not proven:
+
+    * a step with status OPTIMAL proves the minimum of the primary objective
+      for that bound; steps that hit the time limit prove nothing;
+    * the bounded objective is not minimized afterwards, so a returned point
+      can be only weakly efficient until the final dominance filter;
+    * a fixed grid can step over front points, so the result is generally a
+      subset of the (f1, f2) front;
+    * workload balance (f3) is not in the CP-SAT model.  Its value is reported
+      for each schedule and used by the final dominance filter, but it is not
+      optimized: this is not a three-objective Pareto front.
+
+    Use ``exact_gaps_room_front`` for the complete, certified (f1, f2) front.
 
     Parameters:
         problem: Target instance.
         primary_objective: Objective to minimize ('gaps' or 'room').
         epsilon_objective: Objective to bound ('room' or 'gaps').
-        steps: Number of grid subdivisions between minimum and maximum epsilon.
-        time_limit_per_step: Solver time limit (seconds) for each epsilon iteration.
+        steps: Number of grid points between the minimum and maximum bound.
+        time_limit_per_step: Solver time limit (seconds) for each step.
         seed: Solver seed.
     """
     from .evaluation import evaluate
@@ -499,13 +521,13 @@ def epsilon_constraint_cp_sat(
     # Step 1: Find lower bound of epsilon_objective (anchor point 1)
     min_res = cp_sat(problem, objective=epsilon_objective, time_limit=time_limit_per_step, seed=seed)
     if min_res.schedule is None:
-        return EpsilonParetoResult([], [], 0, 0, 0, perf_counter() - started, [], {"error": "Infeasible anchor 1"})
+        return EpsilonParetoResult([], [], 0, 0, 0, perf_counter() - started, [], {"error": f"No solution for the {epsilon_objective} anchor within the time limit (status {min_res.status}); this is not an infeasibility proof unless the status is INFEASIBLE"})
     min_eps = min_res.objective_value
 
     # Step 2: Find anchor point 2 (minimizing primary_objective)
     prim_res = cp_sat(problem, objective=primary_objective, time_limit=time_limit_per_step, seed=seed)
     if prim_res.schedule is None:
-        return EpsilonParetoResult([], [], 0, 0, 0, perf_counter() - started, [], {"error": "Infeasible anchor 2"})
+        return EpsilonParetoResult([], [], 0, 0, 0, perf_counter() - started, [], {"error": f"No solution for the {primary_objective} anchor within the time limit (status {prim_res.status}); this is not an infeasibility proof unless the status is INFEASIBLE"})
     
     ev_prim = evaluate(problem, prim_res.schedule)
     max_eps = ev_prim.objectives[1 if epsilon_objective == "room" else 0]
@@ -547,7 +569,7 @@ def epsilon_constraint_cp_sat(
                 discovered_schedules.append(step_res.schedule)
                 discovered_objectives.append(ev.objectives)
 
-    # Step 5: Filter mathematically non-dominated solutions
+    # Step 5: keep the points not dominated by another point found here
     def dominates(a, b):
         return all(x <= y for x, y in zip(a, b)) and any(x < y for x, y in zip(a, b))
 

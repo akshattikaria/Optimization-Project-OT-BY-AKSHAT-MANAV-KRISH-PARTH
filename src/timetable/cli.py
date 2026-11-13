@@ -45,7 +45,7 @@ def parser() -> argparse.ArgumentParser:
     solve.add_argument("--search-seconds", type=float, help="Optional total search deadline for the memetic/moead/amosa method")
     solve.add_argument("--scalarization", choices=["tchebycheff", "augmented_tchebycheff", "weighted_sum"], default="tchebycheff", help="MOEA/D scalarization function")
     solve.add_argument("--neighborhood", type=int, default=6, help="MOEA/D subproblem neighborhood size")
-    solve.add_argument("--eps-steps", type=int, default=5, help="Number of epsilon grid points for CP-SAT epsilon-constraint")
+    solve.add_argument("--eps-steps", type=int, default=5, help="Number of epsilon grid points for the CP-SAT gaps-versus-room trade-off (workload balance is not optimized)")
 
     val = sub.add_parser("evaluate", aliases=["validate"], help="Independently check a schedule (nonzero exit if infeasible)")
     val.add_argument("instance")
@@ -238,6 +238,8 @@ def main(argv=None) -> int:
                 )
                 payload = {
                     "method": "cpsat_epsilon_constraint",
+                    "scope": "Trade-off points for (f1 gaps, f2 room wastage). f3 is reported, not optimized; "
+                             "not a certified three-objective Pareto front.",
                     "runtime": eps_res.runtime,
                     "evaluated_steps": eps_res.evaluated_steps,
                     "optimal_steps": eps_res.optimal_steps,
@@ -247,9 +249,9 @@ def main(argv=None) -> int:
                     "epsilons": eps_res.epsilons,
                     "metadata": eps_res.metadata,
                 }
-                _write(out / "exact_pareto.json", payload)
+                _write(out / "gaps_room_tradeoff.json", payload)
                 export_representatives(problem, eps_res.archive, out / "timetables", figures)
-                plot_fronts([{"method": "cpsat_eps", "objectives": v} for v in eps_res.objectives], figures / "exact_pareto.png", "Exact Pareto Front via Epsilon-Constraint CP-SAT", certified=True)
+                plot_fronts([{"method": "cpsat_eps", "objectives": v} for v in eps_res.objectives], figures / "gaps_room_tradeoff.png", "Gaps vs room-wastage trade-off (CP-SAT epsilon-constraint; f3 not optimized)", certified=True)
                 print(json.dumps({key: payload[key] for key in ["method", "runtime", "archive_size", "objectives"]}, indent=2))
                 return 0 if eps_res.archive else 2
 
