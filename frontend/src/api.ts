@@ -1,4 +1,4 @@
-import type { RunParams, RunProgress, RunResult, ScenarioInfo } from './types';
+import type { DecisionResult, RunParams, RunProgress, RunResult, ScenarioInfo } from './types';
 import { useAuth } from './auth';
 
 const authHeader = (): Record<string, string> => {
@@ -60,4 +60,15 @@ export async function optimise(params: RunParams, onProgress: (p: RunProgress) =
     if (st.status === 'done' && st.result) return st.result;
     if (st.status === 'error') throw new Error(st.error ?? 'Optimiser failed');
   }
+}
+
+/** TOPSIS recommendation for a front. Give either `weights` (gaps, room fit, workload) or three AHP judgements. */
+export async function fetchDecision(objectives: number[][], weights: number[] | null, ahp: number[] | null): Promise<DecisionResult> {
+  return json<DecisionResult>(
+    await fetch(`${BASE}/mcdm`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...authHeader() },
+      body: JSON.stringify({ objectives, weights: ahp ? null : weights, ahp }),
+    }),
+  );
 }

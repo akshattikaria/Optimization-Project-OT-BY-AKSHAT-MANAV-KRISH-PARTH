@@ -186,3 +186,39 @@ export interface ScenarioInfo {
 }
 
 export type ViewKind = 'group' | 'faculty' | 'room';
+
+/** TOPSIS decision support for a Pareto front (POST /api/mcdm). Indices refer to the order of the objectives sent. */
+export interface DecisionRanking {
+  rank: number;
+  index: number;
+  score: number;
+  objectives: number[];
+  distanceIdeal: number;
+  distanceNadir: number;
+}
+
+export interface DecisionSweep {
+  objective: 'gaps' | 'room' | 'workload';
+  base_weight: number;
+  segments: { index: number; from: number; to: number }[];
+  switches: { between: [number, number]; from: number; to: number }[];
+}
+
+export interface DecisionResult {
+  weights: number[];
+  weightSource: 'ahp' | 'weights' | 'balanced';
+  ahp: { weights: number[]; lambdaMax: number; consistencyIndex: number; consistencyRatio: number; consistent: boolean } | null;
+  recommended: number | null;
+  ranking: DecisionRanking[];
+  profiles: Record<string, { weights: number[]; index: number | null; score: number | null }>;
+  sensitivity: {
+    base_weights: number[];
+    base_choice: number | null;
+    weight_space: { index: number; objectives: number[]; share: number }[];
+    distinct_choices: number;
+    grid_points: number;
+    divisions: number;
+    sweeps: DecisionSweep[];
+    stability: number | null;
+  } | null;
+}

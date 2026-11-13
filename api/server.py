@@ -9,6 +9,7 @@ Optimisation runs take seconds to minutes, so they run as background jobs:
   POST /api/runs           start a run (admin), returns {"runId": ...}
   GET  /api/runs/latest    the most recent finished run, kept in the database
   GET  /api/runs/{id}      status + live progress; includes the result when done
+  POST /api/mcdm           TOPSIS recommendation for a front (optional AHP weights) + weight sensitivity
 Everything else (accounts, published timetable, calendar, leave, substitutes, quizzes, assessments, holidays,
 syllabus, requests, notifications, teacher constraints) is in api/campus/routes.py.
 """
@@ -157,6 +158,27 @@ def start_run(req: RunRequest, user=Depends(ADMIN)):
                          "progress": {"phase": "queued", "evaluations": 0, "budget": req.budget}}
     _executor.submit(_work, job_id, problem, cfg, user["username"], req.scenario, changes)
     return {"runId": job_id, "events": len(problem.events), "constraintChanges": changes}
+
+
+class DecisionRequest(BaseModel):
+    objectives: list[list[float]] = Field(..., max_length=2000, description="one [f1, f2, f3] row per timetable of the front")
+    weights: list[float] | None = Field(None, description="importance of gaps, room fit, workload balance")
+    ahp: list[float] | None = Field(None, description="AHP judgements: gaps vs room, gaps vs workload, room vs workload")
+
+
+@app.post("/api/mcdm")
+def decision_support(req: DecisionRequest, user=Depends(ADMIN)):
+    """TOPSIS recommendation from a Pareto front, with AHP weights and a weight-sensitivity analysis."""
+    from timetable.mcdm import recommend
+
+    try:
+        if req.weights is not None and (len(req.weights) != 3 or min(req.weights) < 0 or sum(req.weights) <= 0):
+            raise ValueError("weights must be three nonnegative numbers with a positive sum")
+        if req.ahp is not None and len(req.ahp) != 3:
+            raise ValueError("ahp needs three pairwise judgements")
+        return recommend([tuple(v) for v in req.objectives], req.weights, req.ahp)
+    except (ValueError, TypeError) as e:
+        raise HTTPException(400, str(e)) from e
 
 
 @app.get("/api/runs/latest")

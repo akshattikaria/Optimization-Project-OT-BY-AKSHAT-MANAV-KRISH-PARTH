@@ -55,6 +55,10 @@ def parser() -> argparse.ArgumentParser:
     mcdm.add_argument("instance")
     mcdm.add_argument("run", help="Path to run.json containing Pareto archive")
     mcdm.add_argument("--profile", choices=["balanced", "student_first", "admin_room_fit", "faculty_fairness"], default="balanced")
+    mcdm.add_argument("--weights", help="comma-separated weights for gaps,room,workload (overrides --profile)")
+    mcdm.add_argument("--ahp", help="comma-separated AHP judgements: gaps-vs-room,gaps-vs-workload,room-vs-workload "
+                                    "(Saaty 1-9 scale, fractions like 1/3 allowed; overrides --weights)")
+    mcdm.add_argument("--sensitivity", action="store_true", help="also print how the choice changes with the weights")
 
     exp = sub.add_parser("experiment", help="Run/resume a saved paired benchmark configuration")
     exp.add_argument("--config", default="experiments/benchmark.json")
@@ -109,6 +113,30 @@ def main(argv=None) -> int:
             if not objectives:
                 print("Error: No objectives found in run file.", file=sys.stderr)
                 return 1
+            if args.weights or args.ahp or args.sensitivity:
+                from fractions import Fraction
+                from .mcdm import STAKEHOLDER_PROFILES, recommend
+                parse = lambda text: [float(Fraction(x.strip())) for x in text.split(",")]  # noqa: E731
+                out = recommend(objectives, parse(args.weights) if args.weights else list(STAKEHOLDER_PROFILES[args.profile]),
+                                parse(args.ahp) if args.ahp else None)
+                print(f"--- TOPSIS decision analysis (weights from {out['weightSource']}) ---")
+                print("Weights (gaps, room, workload): " + ", ".join(f"{w:.4f}" for w in out["weights"]))
+                if out["ahp"]:
+                    print(f"AHP consistency ratio: {out['ahp']['consistencyRatio']:.4f} "
+                          f"({'acceptable' if out['ahp']['consistent'] else 'INCONSISTENT judgements (> 0.10)'})")
+                for item in out["ranking"]:
+                    print(f"  Rank {item['rank']}: Sol #{item['index']} | Score: {item['score']} | Obj: {item['objectives']}")
+                sens = out["sensitivity"]
+                print()
+                print(f"Sensitivity over {sens['grid_points']} weight combinations: {sens['distinct_choices']} different top choice(s)")
+                for row in sens["weight_space"]:
+                    print(f"  Sol #{row['index']} ranks first for {100 * row['share']:.1f}% of the weight space")
+                for sweep in sens["sweeps"]:
+                    path = " -> ".join(f"#{seg['index']} [{seg['from']:.2f}-{seg['to']:.2f}]" for seg in sweep["segments"])
+                    print(f"  weight on {sweep['objective']} from 0 to 1: {path}")
+                print("  Smallest single-weight change that alters the recommendation: "
+                      + ("none (stable)" if sens["stability"] is None else f"{sens['stability']:.3f}"))
+                return 0
             analysis = analyze_stakeholder_profiles(objectives)
             print(f"--- TOPSIS Decision Analysis ({args.profile.upper()} profile) ---")
             profile_data = analysis[args.profile]

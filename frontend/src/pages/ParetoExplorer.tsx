@@ -4,6 +4,7 @@ import { useSelectedSolution, useStore } from '../store';
 import { pickLabels, representativePicks, type PickKind } from '../mock/solutions';
 import type { Objectives, Solution } from '../types';
 import { ObjectiveBars } from './Dashboard';
+import DecisionPanel from '../components/DecisionPanel';
 
 interface AxisMeta {
   short: string;
@@ -480,6 +481,9 @@ export default function ParetoExplorer() {
           </tbody>
         </table>
       </div>
+
+      {/* TOPSIS / AHP decision support on the memetic front */}
+      <DecisionPanel front={front} selectedId={selectedId} onSelect={select} />
 
       {/* Selected Timetable Inspector */}
       <div className="grid split">

@@ -167,6 +167,8 @@ def cp_sat(
     seed: int = 0,
     epsilon_objective: str | None = None,
     epsilon_bound: float | None = None,
+    epsilon_bound_units: int | None = None,
+    weights: tuple[int, int] | None = None,
 ) -> ExactResult:
     """Solve a small instance without consulting its generation witness.
 
@@ -177,6 +179,17 @@ def cp_sat(
 
     When ``epsilon_objective`` and ``epsilon_bound`` are supplied, the solver
     minimizes ``objective`` subject to ``epsilon_objective <= epsilon_bound``.
+    ``epsilon_bound_units`` states the same bound in the model's exact integer
+    units (half-periods for gaps, ``room_scale`` units for room wastage) and
+    avoids any floating-point rounding of the bound.
+
+    ``objective="weighted"`` minimizes ``weights[0] * gap_units + weights[1] *
+    room_units`` for nonnegative integer weights: a weighted-sum scalarization
+    of the gaps and room objectives in exact integer arithmetic.
+
+    Whenever the gap or room terms are part of the model, their exact integer
+    values for the returned schedule are reported in the metadata as
+    ``gap_units`` / ``room_units`` with ``gap_scale`` / ``room_scale``.
 
     One Boolean alternative jointly fixes an event's start, room and teacher;
     offering-level teacher variables enforce teaching consistency.  Resource
@@ -184,8 +197,20 @@ def cp_sat(
 
     OR-Tools is optional and imported only when this function is called.
     """
-    if objective not in {"feasibility", "gaps", "room"}:
-        raise ValueError("objective must be 'feasibility', 'gaps' or 'room'")
+    if objective not in {"feasibility", "gaps", "room", "weighted"}:
+        raise ValueError("objective must be 'feasibility', 'gaps', 'room' or 'weighted'")
+    if objective == "weighted":
+        if (weights is None or len(weights) != 2
+                or any(isinstance(w, bool) or not isinstance(w, int) or w < 0 for w in weights)
+                or sum(weights) == 0):
+            raise ValueError("weighted objective needs two nonnegative integer weights, not both zero")
+    elif weights is not None:
+        raise ValueError("weights are only used with objective='weighted'")
+    if epsilon_bound is not None and epsilon_bound_units is not None:
+        raise ValueError("give epsilon_bound or epsilon_bound_units, not both")
+    if epsilon_bound_units is not None and (isinstance(epsilon_bound_units, bool)
+                                            or not isinstance(epsilon_bound_units, int)):
+        raise ValueError("epsilon_bound_units must be an integer")
     if epsilon_objective is not None and epsilon_objective not in {"gaps", "room"}:
         raise ValueError("epsilon_objective must be 'gaps' or 'room'")
     if not isfinite(time_limit) or time_limit <= 0:
@@ -242,8 +267,8 @@ def cp_sat(
     capacity_lcm = lcm(*(r.capacity for r in problem.rooms))
     room_scale = capacity_lcm * max(total_duration, 1)
 
-    need_room_terms = (objective == "room" or epsilon_objective == "room")
-    need_gap_terms = (objective == "gaps" or epsilon_objective == "gaps")
+    need_room_terms = objective in {"room", "weighted"} or epsilon_objective == "room"
+    need_gap_terms = objective in {"gaps", "weighted"} or epsilon_objective == "gaps"
 
     if need_room_terms and room_scale > 2**60:
         raise ValueError(
@@ -354,16 +379,18 @@ def cp_sat(
                         gap_terms.append(weight * gap)
 
     # Apply Epsilon Constraint if requested
-    if epsilon_objective is not None and epsilon_bound is not None:
-        if epsilon_objective == "room":
-            scaled_bound = int(round(epsilon_bound * room_scale))
-            model.Add(sum(room_terms) <= scaled_bound)
-        elif epsilon_objective == "gaps":
-            scaled_bound = int(round(epsilon_bound * gap_scale))
-            model.Add(sum(gap_terms) <= scaled_bound)
+    if epsilon_objective is not None and (epsilon_bound is not None or epsilon_bound_units is not None):
+        scale = room_scale if epsilon_objective == "room" else gap_scale
+        scaled_bound = (epsilon_bound_units if epsilon_bound_units is not None
+                        else int(round(epsilon_bound * scale)))
+        model.Add(sum(room_terms if epsilon_objective == "room" else gap_terms) <= scaled_bound)
 
     objective_scale = 1
-    if objective == "room":
+    if objective == "weighted":
+        if weights[0] * gap_scale * len(gap_terms) + weights[1] * room_coefficient_sum > 2**60:
+            raise ValueError("Weighted objective coefficients exceed the safe exact integer range.")
+        model.Minimize(weights[0] * sum(gap_terms) + weights[1] * sum(room_terms))
+    elif objective == "room":
         objective_scale = room_scale
         model.Minimize(sum(room_terms))
     elif objective == "gaps":
@@ -411,9 +438,19 @@ def cp_sat(
         raise RuntimeError(
             f"CP-SAT extracted an invalid schedule: {assessment.violations}"
         )
+    if need_gap_terms:
+        metadata["gap_units"] = sum(int(solver.Value(term)) for term in gap_terms)
+        metadata["gap_scale"] = gap_scale
+        if abs(metadata["gap_units"] / gap_scale - assessment.objectives[0]) > 1e-6:
+            raise RuntimeError("CP-SAT gap units and evaluation disagree")
+    if need_room_terms:
+        metadata["room_units"] = sum(int(solver.Value(term)) for term in room_terms)
+        metadata["room_scale"] = room_scale
+        if abs(metadata["room_units"] / room_scale - assessment.objectives[1]) > 1e-6:
+            raise RuntimeError("CP-SAT room units and evaluation disagree")
     value = solver.ObjectiveValue() / objective_scale
     bound = solver.BestObjectiveBound() / objective_scale
-    if objective != "feasibility":
+    if objective in {"gaps", "room"}:
         expected = assessment.objectives[0 if objective == "gaps" else 1]
         if abs(value - expected) > 1e-6:
             raise RuntimeError(f"CP-SAT objective ({value}) and evaluation ({expected}) disagree")
@@ -539,3 +576,184 @@ def epsilon_constraint_cp_sat(
             "grid_points": len(eps_grid),
         },
     )
+
+
+@dataclass
+class BiObjectivePoint:
+    """One point of the (gaps, room wastage) trade-off with its exact integer coordinates."""
+
+    schedule: Schedule
+    objectives: tuple[float, float, float]
+    gap_units: int
+    room_units: int
+    proven: bool
+
+
+@dataclass
+class BiObjectiveFront:
+    """Trade-off between weighted gaps (f1) and room wastage (f2) from CP-SAT.
+
+    ``complete`` is true only when every solve finished with an optimality (or
+    infeasibility) proof.  Then ``points`` is the entire Pareto front of the
+    *two-objective* problem (f1, f2).  Workload balance (f3) is reported for
+    each schedule but is not optimized, so this is not a three-objective front.
+    """
+
+    points: list[BiObjectivePoint]
+    complete: bool
+    solves: int
+    runtime: float
+    gap_scale: int
+    room_scale: int
+    method: str
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def objectives(self) -> list[tuple[float, float, float]]:
+        return [p.objectives for p in self.points]
+
+
+def exact_gaps_room_front(
+    problem: Problem,
+    time_limit_per_solve: float = 20.0,
+    seed: int = 0,
+    max_points: int = 200,
+) -> BiObjectiveFront:
+    """Complete (gaps, room wastage) Pareto front by lexicographic epsilon-constraint.
+
+    Each front point takes two CP-SAT solves in exact integer units:
+
+    1. minimize gaps subject to ``room <= bound`` (initially unbounded);
+    2. minimize room subject to ``gaps <=`` the optimum of step 1.
+
+    Step 2 removes weakly efficient solutions, so the pair is Pareto-optimal
+    for (f1, f2).  The bound is then tightened to one integer unit below the
+    room value just found and the two steps repeat until the model is proven
+    infeasible.  Unlike a fixed epsilon grid this cannot skip a front point,
+    and unlike a weighted sum it also returns unsupported points.
+
+    The front is certified only if every solve returns OPTIMAL and the final
+    one INFEASIBLE; otherwise ``complete`` is false and the points found so
+    far are returned with their individual ``proven`` flags.
+    """
+    from .evaluation import evaluate
+
+    started = perf_counter()
+    points: list[BiObjectivePoint] = []
+    solves = 0
+    complete = False
+    bound: int | None = None
+    gap_scale = room_scale = 0
+    statuses: list[str] = []
+    while len(points) < max_points:
+        first = cp_sat(problem, "gaps", time_limit_per_solve, seed,
+                       epsilon_objective="room", epsilon_bound_units=bound)
+        solves += 1
+        statuses.append(first.status)
+        if first.status == "INFEASIBLE":
+            complete = all(p.proven for p in points)
+            break
+        if first.schedule is None:
+            break
+        gap_units = first.metadata["gap_units"]
+        second = cp_sat(problem, "room", time_limit_per_solve, seed,
+                        epsilon_objective="gaps", epsilon_bound_units=gap_units)
+        solves += 1
+        statuses.append(second.status)
+        if second.schedule is None:
+            break
+        gap_scale, room_scale = second.metadata["gap_scale"], second.metadata["room_scale"]
+        proven = first.proven_optimal and second.proven_optimal
+        points.append(BiObjectivePoint(
+            second.schedule, evaluate(problem, second.schedule).objectives,
+            second.metadata["gap_units"], second.metadata["room_units"], proven))
+        if not proven:
+            break
+        bound = second.metadata["room_units"] - 1
+        if bound < 0:
+            complete = True
+            break
+    points.sort(key=lambda p: (p.gap_units, p.room_units))
+    return BiObjectiveFront(points, complete, solves, perf_counter() - started, gap_scale, room_scale,
+                            "lexicographic_epsilon_constraint",
+                            {"statuses": statuses, "time_limit_per_solve": time_limit_per_solve, "seed": seed})
+
+
+def weighted_sum_cp_sat(
+    problem: Problem,
+    steps: int = 9,
+    time_limit_per_solve: float = 20.0,
+    seed: int = 0,
+) -> BiObjectiveFront:
+    """Weighted-sum CP-SAT runs over the (gaps, room wastage) objectives.
+
+    The two single-objective optima give the ranges of both objectives; each
+    run then minimizes ``lambda * gaps/range + (1 - lambda) * room/range`` for
+    ``lambda = k / (steps + 1)``, written with integer coefficients.  An optimum
+    of a positive weighted sum is Pareto-optimal for (f1, f2), but only
+    *supported* points (those on the convex hull of the front) can be optima,
+    which is exactly the limitation the epsilon-constraint method avoids.
+    """
+    from math import gcd
+
+    from .evaluation import evaluate
+
+    if isinstance(steps, bool) or not isinstance(steps, int) or steps < 1:
+        raise ValueError("steps must be a positive integer")
+    started = perf_counter()
+    anchors = [cp_sat(problem, "gaps", time_limit_per_solve, seed, epsilon_objective="room"),
+               cp_sat(problem, "room", time_limit_per_solve, seed, epsilon_objective="gaps")]
+    solves = 2
+    statuses = [a.status for a in anchors]
+    if any(a.schedule is None for a in anchors):
+        return BiObjectiveFront([], False, solves, perf_counter() - started, 0, 0, "weighted_sum",
+                                {"statuses": statuses, "error": "no anchor solution"})
+    gap_scale, room_scale = anchors[0].metadata["gap_scale"], anchors[0].metadata["room_scale"]
+    gap_range = max(1, abs(anchors[1].metadata["gap_units"] - anchors[0].metadata["gap_units"]))
+    room_range = max(1, abs(anchors[0].metadata["room_units"] - anchors[1].metadata["room_units"]))
+    found: dict[tuple[int, int], BiObjectivePoint] = {}
+    weights_used = []
+    for k in range(1, steps + 1):
+        # lambda * G / gap_range + (1 - lambda) * R / room_range, multiplied by the common denominator
+        a, b = k * room_range, (steps + 1 - k) * gap_range
+        common = gcd(a, b)
+        a, b = a // common, b // common
+        result = cp_sat(problem, "weighted", time_limit_per_solve, seed, weights=(a, b))
+        solves += 1
+        statuses.append(result.status)
+        weights_used.append({"lambda": k / (steps + 1), "gap_weight": a, "room_weight": b, "status": result.status})
+        if result.schedule is None:
+            continue
+        key = (result.metadata["gap_units"], result.metadata["room_units"])
+        if key not in found or (result.proven_optimal and not found[key].proven):
+            found[key] = BiObjectivePoint(result.schedule, evaluate(problem, result.schedule).objectives,
+                                          key[0], key[1], result.proven_optimal)
+    keys = list(found)
+    points = [found[k] for k in keys
+              if not any(o != k and o[0] <= k[0] and o[1] <= k[1] for o in keys)]
+    points.sort(key=lambda p: (p.gap_units, p.room_units))
+    return BiObjectiveFront(points, False, solves, perf_counter() - started, gap_scale, room_scale, "weighted_sum",
+                            {"statuses": statuses, "weights": weights_used,
+                             "all_proven": all(p.proven for p in points),
+                             "time_limit_per_solve": time_limit_per_solve, "seed": seed})
+
+
+def supported_points(units: list[tuple[int, int]]) -> list[bool]:
+    """Exact supportedness of each point of a two-objective minimization front.
+
+    A point is supported when it minimizes some positive weighted sum over the
+    given points, i.e. it is a vertex or lies on an edge of the lower-left
+    convex hull.  Integer cross products make the test exact.
+    """
+    front = sorted(p for p in set(units)
+                   if not any(q != p and q[0] <= p[0] and q[1] <= p[1] for q in set(units)))
+    hull: list[tuple[int, int]] = []
+    for point in front:
+        while len(hull) >= 2:
+            (x1, y1), (x2, y2) = hull[-2], hull[-1]
+            if (x2 - x1) * (point[1] - y1) - (y2 - y1) * (point[0] - x1) < 0:
+                hull.pop()  # hull[-1] lies strictly above the chord: unsupported
+            else:
+                break
+        hull.append(point)
+    return [u in hull for u in units]

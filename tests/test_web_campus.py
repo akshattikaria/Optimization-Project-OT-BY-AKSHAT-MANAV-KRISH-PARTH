@@ -213,6 +213,22 @@ class TestCampus(unittest.TestCase):
         self.assertEqual(client.post("/api/me/password", json={"current": self.pw["f3"], "new": "secret1"}, headers=h).status_code, 200)
         login("f3", "secret1")
 
+    def test_decision_support(self):
+        front = [[0.0, 0.30, 0.20], [2.0, 0.20, 0.10], [5.0, 0.10, 0.15], [9.0, 0.05, 0.05]]
+        teacher = login("f2", self.pw["f2"])
+        self.assertEqual(client.post("/api/mcdm", json={"objectives": front}, headers=teacher).status_code, 403)
+        r = client.post("/api/mcdm", json={"objectives": front, "weights": [1, 0, 0]}, headers=self.admin)
+        self.assertEqual(r.status_code, 200, r.text)
+        out = r.json()
+        self.assertEqual(out["recommended"], 0)  # all weight on gaps -> the zero-gap timetable
+        self.assertEqual(len(out["ranking"]), 4)
+        self.assertAlmostEqual(sum(w["share"] for w in out["sensitivity"]["weight_space"]), 1.0)
+        ahp = client.post("/api/mcdm", json={"objectives": front, "ahp": [9, 1 / 9, 9]}, headers=self.admin).json()
+        self.assertEqual(ahp["weightSource"], "ahp")
+        self.assertFalse(ahp["ahp"]["consistent"])  # intransitive judgements are reported, not hidden
+        for bad in ({"objectives": front, "weights": [0, 0, 0]}, {"objectives": front, "ahp": [1, 1]}, {"objectives": [[1, 2]]}):
+            self.assertEqual(client.post("/api/mcdm", json=bad, headers=self.admin).status_code, 400)
+
 
 if __name__ == "__main__":
     unittest.main()
