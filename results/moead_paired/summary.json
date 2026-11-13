@@ -1,0 +1,502 @@
+{
+  "protocol": {
+    "population": 24,
+    "scenarios": [
+      {
+        "size": "small",
+        "instance_seeds": [
+          3010
+        ],
+        "solver_seeds": [
+          0,
+          1,
+          2
+        ],
+        "budget": 720,
+        "note": "Sanity scenario: the 40-event instances usually have a one-point front."
+      },
+      {
+        "size": "medium",
+        "instance_seeds": [
+          3010,
+          3020,
+          3030
+        ],
+        "solver_seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "budget": 360
+      },
+      {
+        "size": "large",
+        "instance_seeds": [
+          3010,
+          3020
+        ],
+        "solver_seeds": [
+          0,
+          1,
+          2
+        ],
+        "budget": 240
+      }
+    ]
+  },
+  "methods": {
+    "greedy": "Repeated greedy",
+    "memetic": "Memetic NSGA-II (final method)",
+    "moead_tchebycheff": "MOEA/D, Tchebycheff",
+    "moead_weighted_sum": "MOEA/D, weighted sum"
+  },
+  "sizes": {
+    "small": {
+      "budget": 720,
+      "note": "Sanity scenario: the 40-event instances usually have a one-point front.",
+      "methods": {
+        "greedy": {
+          "runs": 3,
+          "feasible_runs": 3,
+          "mean_hypervolume": 0.9353187591328681,
+          "median_hypervolume": 0.9353187591328681,
+          "min_hypervolume": 0.9353187591328681,
+          "max_hypervolume": 0.9353187591328681,
+          "mean_front_size": 1,
+          "mean_runtime_seconds": 14.223266399999071
+        },
+        "memetic": {
+          "runs": 3,
+          "feasible_runs": 3,
+          "mean_hypervolume": 0.9353187591328681,
+          "median_hypervolume": 0.9353187591328681,
+          "min_hypervolume": 0.9353187591328681,
+          "max_hypervolume": 0.9353187591328681,
+          "mean_front_size": 1,
+          "mean_runtime_seconds": 3.165475233331866
+        },
+        "moead_tchebycheff": {
+          "runs": 3,
+          "feasible_runs": 3,
+          "mean_hypervolume": 0.9353187591328681,
+          "median_hypervolume": 0.9353187591328681,
+          "min_hypervolume": 0.9353187591328681,
+          "max_hypervolume": 0.9353187591328681,
+          "mean_front_size": 1,
+          "mean_runtime_seconds": 5.436693933334027
+        },
+        "moead_weighted_sum": {
+          "runs": 3,
+          "feasible_runs": 3,
+          "mean_hypervolume": 0.9353187591328681,
+          "median_hypervolume": 0.9353187591328681,
+          "min_hypervolume": 0.9353187591328681,
+          "max_hypervolume": 0.9353187591328681,
+          "mean_front_size": 1,
+          "mean_runtime_seconds": 5.017361399998966
+        }
+      },
+      "paired": {
+        "moead_tchebycheff_vs_memetic": {
+          "pairs": 3,
+          "wins": 0,
+          "losses": 0,
+          "ties": 3,
+          "median_difference": 0.0,
+          "mean_difference": 0.0,
+          "paired_superiority": 0.5,
+          "sign_test_p_two_sided": 1.0
+        },
+        "moead_tchebycheff_vs_greedy": {
+          "pairs": 3,
+          "wins": 0,
+          "losses": 0,
+          "ties": 3,
+          "median_difference": 0.0,
+          "mean_difference": 0.0,
+          "paired_superiority": 0.5,
+          "sign_test_p_two_sided": 1.0
+        },
+        "memetic_vs_greedy": {
+          "pairs": 3,
+          "wins": 0,
+          "losses": 0,
+          "ties": 3,
+          "median_difference": 0.0,
+          "mean_difference": 0.0,
+          "paired_superiority": 0.5,
+          "sign_test_p_two_sided": 1.0
+        },
+        "moead_tchebycheff_vs_moead_weighted_sum": {
+          "pairs": 3,
+          "wins": 0,
+          "losses": 0,
+          "ties": 3,
+          "median_difference": 0.0,
+          "mean_difference": 0.0,
+          "paired_superiority": 0.5,
+          "sign_test_p_two_sided": 1.0
+        },
+        "moead_weighted_sum_vs_memetic": {
+          "pairs": 3,
+          "wins": 0,
+          "losses": 0,
+          "ties": 3,
+          "median_difference": 0.0,
+          "mean_difference": 0.0,
+          "paired_superiority": 0.5,
+          "sign_test_p_two_sided": 1.0
+        }
+      }
+    },
+    "medium": {
+      "budget": 360,
+      "note": null,
+      "methods": {
+        "greedy": {
+          "runs": 15,
+          "feasible_runs": 15,
+          "mean_hypervolume": 1.0079934121339682,
+          "median_hypervolume": 1.0091632664073975,
+          "min_hypervolume": 0.9826586215582905,
+          "max_hypervolume": 1.02178717089004,
+          "mean_front_size": 12.6,
+          "mean_runtime_seconds": 32.490130300001084
+        },
+        "memetic": {
+          "runs": 15,
+          "feasible_runs": 15,
+          "mean_hypervolume": 1.0602147419501262,
+          "median_hypervolume": 1.0617018657405821,
+          "min_hypervolume": 1.0500121687844044,
+          "max_hypervolume": 1.0666127845913027,
+          "mean_front_size": 22.333333333333332,
+          "mean_runtime_seconds": 4.431185780000912
+        },
+        "moead_tchebycheff": {
+          "runs": 15,
+          "feasible_runs": 15,
+          "mean_hypervolume": 1.060221890330356,
+          "median_hypervolume": 1.060692344342708,
+          "min_hypervolume": 1.0496685364410447,
+          "max_hypervolume": 1.066316534518949,
+          "mean_front_size": 13,
+          "mean_runtime_seconds": 4.047757986666693
+        },
+        "moead_weighted_sum": {
+          "runs": 15,
+          "feasible_runs": 15,
+          "mean_hypervolume": 1.0601777541032262,
+          "median_hypervolume": 1.0607068885185862,
+          "min_hypervolume": 1.0517577314682616,
+          "max_hypervolume": 1.065363989015347,
+          "mean_front_size": 11.933333333333334,
+          "mean_runtime_seconds": 4.060789940000784
+        }
+      },
+      "paired": {
+        "moead_tchebycheff_vs_memetic": {
+          "pairs": 15,
+          "wins": 7,
+          "losses": 8,
+          "ties": 0,
+          "median_difference": -0.00029625007235378753,
+          "mean_difference": 7.148380229748952e-06,
+          "paired_superiority": 0.4666666666666667,
+          "sign_test_p_two_sided": 1.0
+        },
+        "moead_tchebycheff_vs_greedy": {
+          "pairs": 15,
+          "wins": 15,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.05180306100317722,
+          "mean_difference": 0.05222847819638786,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 6.103515625e-05
+        },
+        "memetic_vs_greedy": {
+          "pairs": 15,
+          "wins": 15,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.049825051420703925,
+          "mean_difference": 0.05222132981615811,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 6.103515625e-05
+        },
+        "moead_tchebycheff_vs_moead_weighted_sum": {
+          "pairs": 15,
+          "wins": 6,
+          "losses": 9,
+          "ties": 0,
+          "median_difference": -0.00015895303420254692,
+          "mean_difference": 4.413622712968745e-05,
+          "paired_superiority": 0.4,
+          "sign_test_p_two_sided": 0.60723876953125
+        },
+        "moead_weighted_sum_vs_memetic": {
+          "pairs": 15,
+          "wins": 5,
+          "losses": 10,
+          "ties": 0,
+          "median_difference": -0.001085315901777184,
+          "mean_difference": -3.69878468999385e-05,
+          "paired_superiority": 0.3333333333333333,
+          "sign_test_p_two_sided": 0.3017578125
+        }
+      }
+    },
+    "large": {
+      "budget": 240,
+      "note": null,
+      "methods": {
+        "greedy": {
+          "runs": 6,
+          "feasible_runs": 6,
+          "mean_hypervolume": 0.9410940406565959,
+          "median_hypervolume": 0.94126449877096,
+          "min_hypervolume": 0.9325223541222871,
+          "max_hypervolume": 0.9483218853115309,
+          "mean_front_size": 16.5,
+          "mean_runtime_seconds": 79.8978027000024
+        },
+        "memetic": {
+          "runs": 6,
+          "feasible_runs": 6,
+          "mean_hypervolume": 0.9735392778876634,
+          "median_hypervolume": 0.9754956802776291,
+          "min_hypervolume": 0.9632511292235056,
+          "max_hypervolume": 0.9777307341237692,
+          "mean_front_size": 31.166666666666668,
+          "mean_runtime_seconds": 11.57795283333447
+        },
+        "moead_tchebycheff": {
+          "runs": 6,
+          "feasible_runs": 6,
+          "mean_hypervolume": 1.0116393806412156,
+          "median_hypervolume": 1.0103077294427028,
+          "min_hypervolume": 1.0063783667886566,
+          "max_hypervolume": 1.019422963922468,
+          "mean_front_size": 31.5,
+          "mean_runtime_seconds": 10.540012550000634
+        },
+        "moead_weighted_sum": {
+          "runs": 6,
+          "feasible_runs": 6,
+          "mean_hypervolume": 1.0115041380525083,
+          "median_hypervolume": 1.0122470053305248,
+          "min_hypervolume": 1.00741892870235,
+          "max_hypervolume": 1.0148072098828063,
+          "mean_front_size": 31.166666666666668,
+          "mean_runtime_seconds": 10.510788149999522
+        }
+      },
+      "paired": {
+        "moead_tchebycheff_vs_memetic": {
+          "pairs": 6,
+          "wins": 6,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.03690016474269836,
+          "mean_difference": 0.038100102753552266,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 0.03125
+        },
+        "moead_tchebycheff_vs_greedy": {
+          "pairs": 6,
+          "wins": 6,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.06904323067174278,
+          "mean_difference": 0.07054533998461977,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 0.03125
+        },
+        "memetic_vs_greedy": {
+          "pairs": 6,
+          "wins": 6,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.032985677044603645,
+          "mean_difference": 0.032445237231067514,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 0.03125
+        },
+        "moead_tchebycheff_vs_moead_weighted_sum": {
+          "pairs": 6,
+          "wins": 2,
+          "losses": 4,
+          "ties": 0,
+          "median_difference": -0.0006204949498199719,
+          "mean_difference": 0.00013524258870734052,
+          "paired_superiority": 0.3333333333333333,
+          "sign_test_p_two_sided": 0.6875
+        },
+        "moead_weighted_sum_vs_memetic": {
+          "pairs": 6,
+          "wins": 6,
+          "losses": 0,
+          "ties": 0,
+          "median_difference": 0.03766019137129423,
+          "mean_difference": 0.037964860164844925,
+          "paired_superiority": 1.0,
+          "sign_test_p_two_sided": 0.03125
+        }
+      }
+    }
+  },
+  "support": {
+    "small-3010": {
+      "reference_front_size": 1,
+      "supported": 1,
+      "unsupported": 0,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 1,
+          "unsupported_reference_points": 0
+        },
+        "memetic": {
+          "reference_points": 1,
+          "unsupported_reference_points": 0
+        },
+        "moead_tchebycheff": {
+          "reference_points": 1,
+          "unsupported_reference_points": 0
+        },
+        "moead_weighted_sum": {
+          "reference_points": 1,
+          "unsupported_reference_points": 0
+        }
+      }
+    },
+    "medium-3010": {
+      "reference_front_size": 19,
+      "supported": 6,
+      "unsupported": 13,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 8,
+          "unsupported_reference_points": 7
+        },
+        "memetic": {
+          "reference_points": 6,
+          "unsupported_reference_points": 4
+        },
+        "moead_tchebycheff": {
+          "reference_points": 0,
+          "unsupported_reference_points": 0
+        },
+        "moead_weighted_sum": {
+          "reference_points": 5,
+          "unsupported_reference_points": 2
+        }
+      }
+    },
+    "medium-3020": {
+      "reference_front_size": 10,
+      "supported": 5,
+      "unsupported": 5,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 2,
+          "unsupported_reference_points": 2
+        },
+        "memetic": {
+          "reference_points": 3,
+          "unsupported_reference_points": 2
+        },
+        "moead_tchebycheff": {
+          "reference_points": 3,
+          "unsupported_reference_points": 1
+        },
+        "moead_weighted_sum": {
+          "reference_points": 4,
+          "unsupported_reference_points": 2
+        }
+      }
+    },
+    "medium-3030": {
+      "reference_front_size": 21,
+      "supported": 8,
+      "unsupported": 13,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 4,
+          "unsupported_reference_points": 3
+        },
+        "memetic": {
+          "reference_points": 9,
+          "unsupported_reference_points": 6
+        },
+        "moead_tchebycheff": {
+          "reference_points": 6,
+          "unsupported_reference_points": 3
+        },
+        "moead_weighted_sum": {
+          "reference_points": 6,
+          "unsupported_reference_points": 4
+        }
+      }
+    },
+    "large-3010": {
+      "reference_front_size": 47,
+      "supported": 16,
+      "unsupported": 31,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 15,
+          "unsupported_reference_points": 11
+        },
+        "memetic": {
+          "reference_points": 11,
+          "unsupported_reference_points": 9
+        },
+        "moead_tchebycheff": {
+          "reference_points": 8,
+          "unsupported_reference_points": 4
+        },
+        "moead_weighted_sum": {
+          "reference_points": 13,
+          "unsupported_reference_points": 7
+        }
+      }
+    },
+    "large-3020": {
+      "reference_front_size": 69,
+      "supported": 14,
+      "unsupported": 55,
+      "weight_grid_divisions": 80,
+      "by_method": {
+        "greedy": {
+          "reference_points": 8,
+          "unsupported_reference_points": 4
+        },
+        "memetic": {
+          "reference_points": 21,
+          "unsupported_reference_points": 18
+        },
+        "moead_tchebycheff": {
+          "reference_points": 39,
+          "unsupported_reference_points": 32
+        },
+        "moead_weighted_sum": {
+          "reference_points": 3,
+          "unsupported_reference_points": 3
+        }
+      }
+    }
+  },
+  "total_runtime_seconds": 1437.6629201999967,
+  "environment": {
+    "python": "3.13.7",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

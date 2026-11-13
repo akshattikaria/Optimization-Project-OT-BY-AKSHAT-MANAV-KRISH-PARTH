@@ -188,3 +188,30 @@ def test_recommend_prefers_ahp_over_weights():
     assert recommend(FRONT, weights=[0, 0, 1])["recommended"] == 3
     with pytest.raises(ValueError):
         recommend([(1.0, 2.0)])
+
+
+# --- ITC-inspired instance and CLI ----------------------------------------------
+
+def test_itc_inspired_instance_is_reproducible_and_labelled_synthetic():
+    import json
+
+    from timetable.itc_inspired import generate_itc_inspired_instance
+    from timetable.model import problem_to_dict, schedule_from_dict
+
+    problem, certificate = generate_itc_inspired_instance()
+    assert evaluate(problem, certificate).feasible
+    saved = json.loads((ROOT / "data/itc_inspired/itc_inspired_01.json").read_text(encoding="utf-8"))
+    assert json.loads(json.dumps(problem_to_dict(problem))) == saved
+    assert "not an official ITC" in saved["metadata"]["source"] and "inspired" in saved["name"]
+    stored = json.loads((ROOT / "data/itc_inspired/certificates/itc_inspired_01.json").read_text(encoding="utf-8"))
+    assert evaluate(problem, schedule_from_dict(stored.get("schedule", stored))).feasible
+
+
+def test_mcdm_cli_reports_ahp_and_sensitivity(capsys):
+    from timetable.cli import main
+
+    code = main(["mcdm", str(ROOT / "data/itc_inspired/itc_inspired_01.json"),
+                 str(ROOT / "results/itc_inspired_moead/run.json"), "--ahp", "3,5,2", "--sensitivity"])
+    out = capsys.readouterr().out
+    assert code == 0
+    assert "weights from ahp" in out and "AHP consistency ratio" in out and "Sensitivity over 231 weight combinations" in out
