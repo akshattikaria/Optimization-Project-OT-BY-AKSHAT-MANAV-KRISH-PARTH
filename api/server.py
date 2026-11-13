@@ -67,7 +67,8 @@ class RunRequest(BaseModel):
     budget: int = Field(360, ge=10, le=100_000, description="full evaluations (the validation study's budget unit)")
     population: int = Field(24, ge=2, le=300)
     searchSeconds: float | None = Field(6.0, gt=0, le=1800, description="wall-time cap; null = evaluations only")
-    compareBaseline: bool = True
+    compareBaseline: bool = Field(True, description="also run the repeated greedy baseline")
+    advancedBenchmark: bool = Field(False, description="also run MOEA/D, AMOSA and standard NSGA-II (slower)")
     instance: dict | None = Field(None, description="custom instance (website or optimizer JSON format)")
 
 
@@ -147,7 +148,8 @@ def start_run(req: RunRequest, user=Depends(ADMIN)):
     except (ValueError, KeyError, TypeError) as e:
         raise HTTPException(400, f"Invalid instance: {e}") from e
     cfg = RunConfig(seed=req.seed, budget=req.budget, population=req.population,
-                    search_seconds=req.searchSeconds, compare_baseline=req.compareBaseline, label=req.scenario)
+                    search_seconds=req.searchSeconds, compare_baseline=req.compareBaseline,
+                    advanced_benchmark=req.advancedBenchmark, label=req.scenario)
     job_id = datetime.now().strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
     with _lock:
         if len(_jobs) >= MAX_JOBS_KEPT:  # forget the oldest finished jobs

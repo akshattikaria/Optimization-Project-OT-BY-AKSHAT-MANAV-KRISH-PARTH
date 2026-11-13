@@ -156,7 +156,9 @@ The project also runs as a website: the Clockwork frontend and its application l
 views, Pareto explorer, calendar, teacher availability, leave, substitute requests, quizzes/extra classes, online
 assessments, holidays, syllabus completion, notifications) on top of **this repository's final memetic NSGA-II**.
 Website runs also execute the repeated-greedy baseline with the same evaluations and seed, re-check every timetable
-with the independent evaluator, and refuse to publish an infeasible one.
+with the independent evaluator, and refuse to publish an infeasible one. MOEA/D, AMOSA and standard NSGA-II run
+only when the optional *Advanced benchmark* is ticked; the website shows measured values only and marks anything else
+"Not run".
 
 ```bash
 python -m pip install -r requirements.txt

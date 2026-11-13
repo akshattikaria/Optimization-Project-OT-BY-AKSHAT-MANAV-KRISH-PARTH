@@ -687,7 +687,7 @@ function RunPanel() {
             </label>
           </div>
           <details className="advanced">
-            <summary>Advanced: time cap, seeds and baseline</summary>
+            <summary>Advanced: time cap, seeds, baseline and algorithm benchmark</summary>
             <div className="row" style={{ gap: 14, marginTop: 10, flexWrap: 'wrap' }}>
               <label className="field" style={{ width: 130 }}>
                 Time cap (s)
@@ -715,6 +715,19 @@ function RunPanel() {
               <input type="checkbox" checked={runParams.compareBaseline} disabled={running} onChange={(e) => setRunParams({ compareBaseline: e.target.checked })} />
               Also run the repeated greedy baseline with the same number of evaluations and seed
             </label>
+            <label className="check" style={{ marginTop: 8 }}>
+              <input
+                type="checkbox"
+                checked={!!runParams.advancedBenchmark}
+                disabled={running}
+                onChange={(e) => setRunParams({ advancedBenchmark: e.target.checked })}
+              />
+              Advanced benchmark: also run MOEA/D, AMOSA and standard NSGA-II with the same evaluations and seed
+            </label>
+            <p className="tiny" style={{ margin: '4px 0 0' }}>
+              The advanced benchmark is for comparing algorithms. It makes each run several times longer and does not change the timetables you
+              get, which always come from the final memetic method.
+            </p>
             <p className="tiny" style={{ marginBottom: 0 }}>
               Defaults are the held-out validation study&apos;s budgets and time caps. Leave the time cap empty for a pure equal-evaluation run.
             </p>

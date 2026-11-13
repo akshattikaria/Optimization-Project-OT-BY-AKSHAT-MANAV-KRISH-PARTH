@@ -14,8 +14,20 @@ def test_run_without_comparison_reports_only_the_final_method():
     assert stats["baselineMethod"] is None and stats["baselineFront"] == []
 
 
+def test_normal_run_is_final_method_plus_greedy_only():
+    """MOEA/D, AMOSA and standard NSGA-II belong to the optional advanced benchmark, not to a normal run."""
+    result = run_optimizer(demo_problem(), RunConfig(budget=40, search_seconds=None), save=False)
+    stats = result["stats"]
+    assert result["params"]["advancedBenchmark"] is False and stats["advancedBenchmark"] is False
+    assert [a["id"] for a in stats["algorithmComparison"]] == ["memetic", "greedy"]
+    assert set(stats["multiConvergence"]) == {"memetic", "greedy"}
+    assert not any(f"{key}Front" in stats for key in COMPARED)
+    assert stats["baselineEvaluations"] == stats["evaluations"]
+
+
 def test_comparison_curves_are_measured_history_points():
-    result = run_optimizer(demo_problem(), RunConfig(budget=60, search_seconds=None), save=False)
+    result = run_optimizer(demo_problem(), RunConfig(budget=60, search_seconds=None, advanced_benchmark=True), save=False)
+    assert result["params"]["advancedBenchmark"] is True
     stats = result["stats"]
     rows = {a["id"]: a for a in stats["algorithmComparison"]}
     assert set(rows) == {"memetic", "greedy", *COMPARED}
@@ -37,7 +49,7 @@ def test_failed_comparison_is_reported_not_replaced(monkeypatch):
         raise RuntimeError("deliberate test failure")
 
     monkeypatch.setattr(optimizer, "moead", broken)
-    stats = run_optimizer(demo_problem(), RunConfig(budget=40, search_seconds=None), save=False)["stats"]
+    stats = run_optimizer(demo_problem(), RunConfig(budget=40, search_seconds=None, advanced_benchmark=True), save=False)["stats"]
     row = next(a for a in stats["algorithmComparison"] if a["id"] == "moead")
     assert row["status"] == "failed" and row["hv"] is None and row["frontSize"] == 0
     assert "deliberate test failure" in row["error"]

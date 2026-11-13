@@ -52,6 +52,14 @@ holiday, syllabus, requests
   memetic run used and the same seed (equal-evaluation protocol). The Overview shows both hypervolumes; the Pareto
   page overlays the greedy front and tabulates both. A single website run is an illustration; the evidence remains
   the paired multi-seed study in the report.
+* **Advanced benchmark (optional).** A normal "Run optimiser" executes only the final memetic method and the greedy
+  baseline. Ticking *Advanced benchmark* under the advanced run options (`advancedBenchmark: true` in
+  `POST /api/runs`) additionally runs MOEA/D, AMOSA and standard NSGA-II with the same evaluations and seed. It is
+  off by default because it makes every run several times longer and never changes the timetables offered, which
+  always come from the memetic method.
+* **Measured values only.** The convergence chart and the comparison table show what the last run measured. An
+  algorithm that was not run is listed as "Not run" with no curve, points or numbers; one that ran without finding a
+  feasible timetable, or that raised an error, is reported as exactly that.
 * **Provenance.** Each run is saved in the CLI's own format under `results/web/<run id>/` (`instance.json`,
   `run.json`, `baseline.json`, `compromise_schedule.json`), so it can be re-validated with
   `python main.py evaluate results/web/<run id>/instance.json results/web/<run id>/compromise_schedule.json`.

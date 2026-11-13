@@ -1,6 +1,8 @@
-"""Website optimisation run: multi-algorithm benchmark comparing Memetic NSGA-II, MOEA/D, AMOSA, Standard NSGA-II and Greedy.
+"""Website optimisation run.
 
-All algorithms are run under the exact same evaluation budget and seed (the equal-evaluation protocol).
+A normal run executes the final method (feasible memetic NSGA-II) and, by default, the repeated greedy baseline.
+The optional advanced benchmark additionally runs MOEA/D, AMOSA and standard NSGA-II. Every algorithm that runs
+gets the same evaluation budget and seed as the final method (the equal-evaluation protocol).
 Every timetable is independently verified outside search with the common checker.
 """
 from __future__ import annotations
@@ -37,7 +39,8 @@ class RunConfig:
     budget: int = 360
     population: int = 24
     search_seconds: float | None = 6.0
-    compare_baseline: bool = True
+    compare_baseline: bool = True  # also run the repeated greedy baseline
+    advanced_benchmark: bool = False  # also run MOEA/D, AMOSA and standard NSGA-II
     label: str = "web"
 
 
@@ -121,7 +124,7 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
             "history": result.history,
         }
 
-    if cfg.compare_baseline:
+    if cfg.advanced_benchmark:
         cmp_time = cfg.search_seconds
         compare("moead", lambda: moead(problem, seed=cfg.seed, population_size=cfg.population,
                                        max_evaluations=eval_budget, time_limit=cmp_time))
@@ -130,6 +133,7 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
         compare("nsga2", lambda: nsga2(problem, seed=cfg.seed, population_size=cfg.population,
                                        generations=eval_budget, max_evaluations=eval_budget))
 
+    if cfg.compare_baseline:
         # Greedy / DSatur baseline under the same evaluation budget
         report({"phase": "baseline", "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
         baseline_result = greedy_search(problem, cfg.seed, eval_budget)
@@ -212,6 +216,7 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
     stats = {
         "method": METHOD,
         "baselineMethod": BASELINE if cfg.compare_baseline else None,
+        "advancedBenchmark": cfg.advanced_benchmark,
         "runtime": run["runtime"],
         "evaluations": run["evaluations"],
         "budget": cfg.budget,
@@ -260,7 +265,7 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
     return {
         "runId": run_id,
         "params": {"seed": cfg.seed, "budget": cfg.budget, "population": cfg.population,
-                   "searchSeconds": cfg.search_seconds, "compareBaseline": cfg.compare_baseline, "label": cfg.label},
+                   "searchSeconds": cfg.search_seconds, "compareBaseline": cfg.compare_baseline, "advancedBenchmark": cfg.advanced_benchmark, "label": cfg.label},
         "instance": problem_to_web(problem),
         "solutions": solutions,
         "baseline": baseline,

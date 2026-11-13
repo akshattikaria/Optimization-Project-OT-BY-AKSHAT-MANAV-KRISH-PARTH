@@ -97,7 +97,8 @@ export interface RunParams {
   budget: number; // full evaluations
   population: number;
   searchSeconds: number | null; // wall-time cap; null = evaluations only
-  compareBaseline: boolean; // also run multi-algorithm comparison benchmark
+  compareBaseline: boolean; // also run the repeated greedy baseline
+  advancedBenchmark: boolean; // also run MOEA/D, AMOSA and standard NSGA-II (slower)
 }
 
 export interface MultiConvergencePoint {
@@ -130,6 +131,7 @@ export interface AlgorithmBenchmark {
 export interface RunStats {
   method: string;
   baselineMethod: string | null;
+  advancedBenchmark?: boolean;
   runtime: number;
   evaluations: number;
   budget: number;
