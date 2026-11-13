@@ -123,3 +123,18 @@ of the corresponding instance. Do not substitute a regenerated or edited
 instance when evaluating an archived timetable. The exact conflict examples
 created by `prove-tradeoffs` are separate deliberately tiny synthetic models,
 not measurements of college-scale data.
+
+## ITC-inspired instance
+
+`data/itc_inspired/itc_inspired_01.json` is a **synthetic** instance produced by
+`timetable.itc_inspired.generate_itc_inspired_instance` (seed 2007). It borrows
+the structure of ITC-2007 Track 3 curriculum-based course timetabling: five
+curricula, courses with three or four weekly lectures, two courses shared by
+adjacent curricula, and six rooms of different capacities.
+
+It is **not** the official ITC-2007 `comp01` instance. No competition `.ctt` file
+is converted, the data are different, and it is solved with this project's own
+constraints and objectives instead of the competition's penalty function. Do
+not present results on it as ITC-2007 benchmark results or compare them with
+published ITC scores. Its certificate in `data/itc_inspired/certificates/` shows
+feasibility only.

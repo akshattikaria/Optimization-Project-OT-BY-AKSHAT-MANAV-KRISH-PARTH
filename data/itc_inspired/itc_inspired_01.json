@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "name": "ITC2007_CBCTT_Comp01",
+  "name": "ITC_inspired_CBCTT_01",
   "days": [
     "Monday",
     "Tuesday",
@@ -529,8 +529,8 @@
     }
   ],
   "metadata": {
-    "source": "ITC-2007 CB-CTT Benchmark",
-    "type": "Curriculum-Based Course Timetabling",
+    "source": "Synthetic instance in the style of ITC-2007 CB-CTT; not an official ITC benchmark instance",
+    "type": "Curriculum-based course timetabling (ITC-inspired structure)",
     "curricula": 5,
     "courses": 27,
     "teaching_periods_per_week": 30,
