@@ -89,65 +89,48 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
     run = serialize_run(problem, memetic_res, "memetic", cfg.seed)
     eval_budget = memetic_res.evaluations
 
-    # Front collections for all algorithms
     memetic_front = [{"f1": v[0], "f2": v[1], "f3": v[2]} for v in run["objectives"]]
-    moead_front = []
-    amosa_front = []
-    nsga2_front = []
-    baseline_front = []
-    moead_res = amosa_res = nsga2_res = None
+
+    # Comparison algorithms. Only algorithms that were actually run appear in the result: a run that was not
+    # requested, or that failed, is reported as such and never replaced by an estimate.
+    comparisons: dict[str, dict] = {}
     baseline_run = baseline_result = None
     baseline = None
+    baseline_front: list[dict] = []
 
-    moead_hv = 0.0
-    moead_time = 0.0
-    amosa_hv = 0.0
-    amosa_time = 0.0
-    nsga2_hv = 0.0
-    nsga2_time = 0.0
+    def compare(key: str, search: Callable[[], object]) -> None:
+        report({"phase": key, "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
+        t0 = perf_counter()
+        try:
+            result = search()
+        except Exception as error:  # the comparison is optional; say that it failed instead of inventing a result
+            comparisons[key] = {"status": "failed", "error": f"{type(error).__name__}: {error}",
+                                "runtime": perf_counter() - t0, "front": [], "hv": None, "history": []}
+            return
+        objectives = []
+        for schedule in result.archive:
+            ev = evaluate(problem, schedule)
+            if ev.feasible:  # independent check of every reported point
+                objectives.append(ev.objectives)
+        normalized = [normalize(v, scales) for v in objectives]
+        comparisons[key] = {
+            "status": "ok" if objectives else "no_feasible",
+            "runtime": perf_counter() - t0,
+            "front": [{"f1": v[0], "f2": v[1], "f3": v[2]} for v in objectives],
+            "hv": hypervolume(normalized) if normalized else 0.0,
+            "history": result.history,
+        }
 
     if cfg.compare_baseline:
         cmp_time = cfg.search_seconds
-        # 2. MOEA/D (Decomposition with Tchebycheff)
-        report({"phase": "moead", "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
-        try:
-            t0 = perf_counter()
-            moead_res = moead(problem, seed=cfg.seed, population_size=cfg.population, max_evaluations=eval_budget, time_limit=cmp_time)
-            moead_time = perf_counter() - t0
-            moead_objs = [evaluate(problem, s).objectives for s in moead_res.archive]
-            moead_front = [{"f1": v[0], "f2": v[1], "f3": v[2]} for v in moead_objs]
-            moead_norm = [normalize(v, scales) for v in moead_objs]
-            moead_hv = hypervolume(moead_norm) if moead_norm else 0.0
-        except Exception:
-            pass
+        compare("moead", lambda: moead(problem, seed=cfg.seed, population_size=cfg.population,
+                                       max_evaluations=eval_budget, time_limit=cmp_time))
+        compare("amosa", lambda: amosa(problem, seed=cfg.seed, population_size=cfg.population,
+                                       max_evaluations=eval_budget, time_limit=cmp_time))
+        compare("nsga2", lambda: nsga2(problem, seed=cfg.seed, population_size=cfg.population,
+                                       generations=eval_budget, max_evaluations=eval_budget))
 
-        # 3. AMOSA (Simulated Annealing)
-        report({"phase": "amosa", "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
-        try:
-            t0 = perf_counter()
-            amosa_res = amosa(problem, seed=cfg.seed, population_size=cfg.population, max_evaluations=eval_budget, time_limit=cmp_time)
-            amosa_time = perf_counter() - t0
-            amosa_objs = [evaluate(problem, s).objectives for s in amosa_res.archive]
-            amosa_front = [{"f1": v[0], "f2": v[1], "f3": v[2]} for v in amosa_objs]
-            amosa_norm = [normalize(v, scales) for v in amosa_objs]
-            amosa_hv = hypervolume(amosa_norm) if amosa_norm else 0.0
-        except Exception:
-            pass
-
-        # 4. Standard NSGA-II (Deb et al., 2002)
-        report({"phase": "nsga2", "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
-        try:
-            t0 = perf_counter()
-            nsga2_res = nsga2(problem, seed=cfg.seed, population_size=cfg.population, generations=eval_budget, max_evaluations=eval_budget)
-            nsga2_time = perf_counter() - t0
-            nsga2_objs = [evaluate(problem, s).objectives for s in nsga2_res.archive]
-            nsga2_front = [{"f1": v[0], "f2": v[1], "f3": v[2]} for v in nsga2_objs]
-            nsga2_norm = [normalize(v, scales) for v in nsga2_objs]
-            nsga2_hv = hypervolume(nsga2_norm) if nsga2_norm else 0.0
-        except Exception:
-            pass
-
-        # 5. Greedy / DSatur Baseline
+        # Greedy / DSatur baseline under the same evaluation budget
         report({"phase": "baseline", "evaluations": eval_budget, "budget": eval_budget, "seconds": perf_counter() - started})
         baseline_result = greedy_search(problem, cfg.seed, eval_budget)
         baseline_run = serialize_run(problem, baseline_result, "greedy", cfg.seed)
@@ -175,53 +158,56 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
 
     meta = memetic_res.metadata
 
-    # Summary table of all 5 algorithms
+    # Summary table: the final method plus every comparison algorithm that was run
+    look = {"moead": ("MOEA/D (Tchebycheff)", "#059669", "triangle"),
+            "amosa": ("AMOSA (Simulated Annealing)", "#7c3aed", "diamond"),
+            "nsga2": ("Standard NSGA-II", "#ea580c", "square")}
     algorithm_comparison = [
-        {"id": "memetic", "name": "Memetic NSGA-II", "hv": round(run["hypervolume"], 4), "runtime": round(run["runtime"], 2), "frontSize": len(memetic_front), "feasible": True, "color": "#2563eb", "marker": "circle"},
-        {"id": "moead", "name": "MOEA/D (Tchebycheff)", "hv": round(moead_hv, 4), "runtime": round(moead_time, 2), "frontSize": len(moead_front), "feasible": len(moead_front) > 0, "color": "#059669", "marker": "triangle"},
-        {"id": "amosa", "name": "AMOSA (Simulated Annealing)", "hv": round(amosa_hv, 4), "runtime": round(amosa_time, 2), "frontSize": len(amosa_front), "feasible": len(amosa_front) > 0, "color": "#7c3aed", "marker": "diamond"},
-        {"id": "nsga2", "name": "Standard NSGA-II", "hv": round(nsga2_hv, 4), "runtime": round(nsga2_time, 2), "frontSize": len(nsga2_front), "feasible": len(nsga2_front) > 0, "color": "#ea580c", "marker": "square"},
-        {"id": "greedy", "name": "Repeated Greedy", "hv": round(baseline_run["hypervolume"], 4) if baseline_run else 0.0, "runtime": round(baseline_run["runtime"], 2) if baseline_run else 0.0, "frontSize": len(baseline_front), "feasible": bool(baseline_run and baseline_run["feasible_run"]), "color": "#d97706", "marker": "rhombus"},
+        {"id": "memetic", "name": "Memetic NSGA-II", "status": "ok", "hv": round(run["hypervolume"], 4),
+         "runtime": round(run["runtime"], 2), "frontSize": len(memetic_front), "feasible": True,
+         "color": "#2563eb", "marker": "circle"},
     ]
+    for key, c in comparisons.items():
+        name, color, marker = look[key]
+        row = {"id": key, "name": name, "status": c["status"], "hv": None if c["hv"] is None else round(c["hv"], 4),
+               "runtime": round(c["runtime"], 2), "frontSize": len(c["front"]), "feasible": bool(c["front"]),
+               "color": color, "marker": marker}
+        if "error" in c:
+            row["error"] = c["error"]
+        algorithm_comparison.append(row)
+    if baseline_run:
+        algorithm_comparison.append(
+            {"id": "greedy", "name": "Repeated Greedy", "status": "ok" if baseline_front else "no_feasible",
+             "hv": round(baseline_run["hypervolume"], 4), "runtime": round(baseline_run["runtime"], 2),
+             "frontSize": len(baseline_front), "feasible": bool(baseline_run["feasible_run"]),
+             "color": "#d97706", "marker": "rhombus"})
 
-    # Trajectory extraction for all 5 algorithms
-    def _extract_curve(history_list, scales, final_hv):
+    # Measured hypervolume trajectories only: no points are added, extended or smoothed.
+    def _measured_curve(history_list):
+        if not history_list:
+            return []
+        step = max(1, len(history_list) // 30)
+        sampled = [history_list[i] for i in range(0, len(history_list), step)]
+        if history_list[-1] is not sampled[-1]:
+            sampled.append(history_list[-1])
         pts = []
-        if history_list:
-            step = max(1, len(history_list) // 30)
-            sampled = [history_list[i] for i in range(0, len(history_list), step)]
-            if history_list[-1] not in sampled:
-                sampled.append(history_list[-1])
-            for h in sampled:
-                ev = h.get("evaluations", 0)
-                if "hypervolume" in h:
-                    hv = h["hypervolume"]
-                else:
-                    front = h.get("front", [])
-                    norm = [normalize(v, scales) for v in front]
-                    hv = hypervolume(norm) if norm else 0.0
-                pts.append({"evaluations": ev, "hypervolume": round(float(hv), 5)})
-        if pts and pts[0]["evaluations"] > 0 and pts[0]["hypervolume"] > 0:
-            pts.insert(0, {"evaluations": 0, "hypervolume": pts[0]["hypervolume"]})
-        if not pts and final_hv:
-            pts = [{"evaluations": 0, "hypervolume": round(float(final_hv), 5)}, {"evaluations": eval_budget, "hypervolume": round(float(final_hv), 5)}]
-        elif not pts:
-            pts = [{"evaluations": 0, "hypervolume": 0.0}, {"evaluations": eval_budget, "hypervolume": 0.0}]
+        for h in sampled:
+            if "hypervolume" in h:
+                hv = h["hypervolume"]
+            else:
+                norm = [normalize(v, scales) for v in h.get("front", [])]
+                hv = hypervolume(norm) if norm else 0.0
+            pts.append({"evaluations": h.get("evaluations", 0), "hypervolume": round(float(hv), 5)})
         return pts
 
-    memetic_curve = [{"evaluations": h["evaluations"], "hypervolume": round(float(h["hypervolume"]), 5)} for h in run["history"]]
-    moead_curve = _extract_curve(getattr(moead_res, "history", []), scales, moead_hv)
-    amosa_curve = _extract_curve(getattr(amosa_res, "history", []), scales, amosa_hv)
-    nsga2_curve = _extract_curve(getattr(nsga2_res, "history", []), scales, nsga2_hv)
-    greedy_curve = _extract_curve(baseline_run.get("history", []) if baseline_run else [], scales, baseline_run.get("hypervolume", 0.0) if baseline_run else 0.0)
-
     multi_convergence = {
-        "memetic": memetic_curve,
-        "moead": moead_curve,
-        "amosa": amosa_curve,
-        "nsga2": nsga2_curve,
-        "greedy": greedy_curve,
+        "memetic": [{"evaluations": h["evaluations"], "hypervolume": round(float(h["hypervolume"]), 5)} for h in run["history"]],
     }
+    for key, c in comparisons.items():
+        if c["status"] != "failed":
+            multi_convergence[key] = _measured_curve(c["history"])
+    if baseline_run:
+        multi_convergence["greedy"] = _measured_curve(baseline_run.get("history", []))
 
     stats = {
         "method": METHOD,
@@ -237,9 +223,7 @@ def run_optimizer(problem: Problem, cfg: RunConfig, progress: Callable[[dict], N
         "hypervolume": run["hypervolume"],
         "spacing": run["spacing"] or 0.0,
         "memeticFront": memetic_front,
-        "moeadFront": moead_front,
-        "amosaFront": amosa_front,
-        "nsga2Front": nsga2_front,
+        **{f"{key}Front": c["front"] for key, c in comparisons.items() if c["status"] != "failed"},
         "baselineFront": baseline_front,
         "algorithmComparison": algorithm_comparison,
         "multiConvergence": multi_convergence,

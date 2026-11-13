@@ -116,7 +116,10 @@ export interface MultiConvergence {
 export interface AlgorithmBenchmark {
   id: string;
   name: string;
-  hv: number;
+  /** ok: feasible front found; no_feasible: ran but found none; failed: the run raised an error. Algorithms that were not run are absent. */
+  status?: 'ok' | 'no_feasible' | 'failed';
+  error?: string;
+  hv: number | null;
   runtime: number;
   frontSize: number;
   feasible: boolean;
