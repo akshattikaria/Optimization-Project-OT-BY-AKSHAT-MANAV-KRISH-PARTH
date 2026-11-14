@@ -13,6 +13,8 @@
 Fill actual registered member/course details and authentic contribution records
 after the group meeting. The report does not claim approval or weekly history.
 
+`report.md` was updated after the last PDF build: Section 14 gained *Supplementary methods and features* and Sections 16-17 were brought in line with it. **`final_report.pdf` predates those edits; rebuild it before submission.**
+
 To rebuild the PDF from reviewed Markdown:
 
 ```bash

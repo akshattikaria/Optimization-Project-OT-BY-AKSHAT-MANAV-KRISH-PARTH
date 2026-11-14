@@ -1,6 +1,6 @@
 # Final presentation
 
-The finished technical presentation has **21 slides: 18 main slides and 3 backups**.
+The slide sources define **22 slides: 18 main slides and 4 backups**. The fourth backup, *Supplementary methods and website*, was added to the sources (`build_presentation.py`, `slides.md`, `presenter_notes.md`) after the last build. **The committed PPTX, PDF, `preview.png` and `build_checks.json` are still the 21-slide build and do not contain it; rebuild them with the command below before presenting.**
 Suggested duration: 15–18 minutes plus the optional short live demonstration.
 It presents the final **mutation-only feasible memetic NSGA-II**, the completed
 168-run held-out comparison, all four medium/large gains, unfavorable small

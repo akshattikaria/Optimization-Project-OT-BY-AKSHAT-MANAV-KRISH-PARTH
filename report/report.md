@@ -330,6 +330,32 @@ Scalar-local has a slightly higher mean on medium wall-time and large equal-eval
 
 Each primary condition has only three independent instances. Instance-mean sign tests give p=0.25 for final NSGA-II versus greedy even though all nine paired runs favor it. Smaller run-level p-values are descriptive because runs share instances. These results support bounded improvement on the declared synthetic cases; they do not establish broad statistical, institutional, or universal superiority.
 
+### Supplementary methods and features (added after the validated study)
+
+The held-out validation above was frozen before the work in this subsection existed. **The validated final method of this report is still the feasible-domain memetic NSGA-II**, and every headline claim refers to it. The items below were added afterwards. They are implemented and tested, but their evidence is narrower, and none of them changes the results reported in Sections 12-14.
+
+| Addition | Where | What it is, and the evidence behind it |
+|---|---|---|
+| MOEA/D (decomposition; Tchebycheff or weighted-sum scalarization) | `src/timetable/moead.py` | Reuses the feasibility-preserving moves and faculty search. Matched comparison in `results/moead_paired` (below). |
+| AMOSA (archived multi-objective simulated annealing) | `src/timetable/amosa.py` | Runs and returns feasible archives. Only single-run demonstrations exist; no multi-seed comparison is claimed. |
+| CP-SAT weighted-sum and epsilon-constraint runs | `src/timetable/exact.py` | Certify the two-objective (gaps, room wastage) front of small instances. Workload balance is not in the CP-SAT model, so this is not a three-objective front. |
+| TOPSIS with AHP-derived weights and weight sensitivity | `src/timetable/mcdm.py` | Picks one recommended timetable from a front and reports how the choice changes with the weights. A decision aid, not an optimizer. |
+| Disruption re-optimisation | `src/timetable/disruption.py` | Minimal-change repair and epsilon-constraint re-optimisation after an absence or room closure ([details](../docs/disruption.md)). |
+| Clockwork website | `api/`, `frontend/` | Runs the final method and the greedy baseline, shows measured results only, and adds accounts, calendar, leave and publishing. The other algorithms run only as an optional advanced benchmark. |
+
+**MOEA/D against the final method.** On fresh synthetic instances (generator seeds 3010/3020/3030), with the same instance, solver seed and evaluation cap for every method:
+
+| Size (budget) | Pairs | Memetic vs greedy (wins/losses) | MOEA/D-Tchebycheff vs memetic (wins/losses/ties) | Median HV difference, MOEA/D − memetic | Sign test p |
+|---|---:|:---:|:---:|---:|---:|
+| Medium (360 evaluations) | 15 | 15/0 | 7/8/0 | -0.00030 | 1.000 |
+| Large (240 evaluations) | 6 | 6/0 | 6/0/0 | +0.03690 | 0.031 |
+
+Both methods beat repeated greedy in every pair, which is consistent with the validated study. On medium instances MOEA/D and the memetic method cannot be told apart. On the two large instances MOEA/D had the higher hypervolume in all 6 pairs. We report this plainly: it is a result in MOEA/D's favour. It is also a small supplementary experiment (two large instances, three seeds, evaluation budget only, no wall-time protocol, not pre-declared), so it does not replace the frozen study's conclusion; it identifies MOEA/D as the first candidate for a properly declared follow-up comparison. Tchebycheff and weighted-sum scalarization gave no detectable hypervolume difference (medium 6/9, large 2/4 wins/losses), because this MOEA/D returns an external non-dominated archive rather than only the scalar optima.
+
+**Heuristics against certified fronts.** For a 10-event synthetic family with a deliberate gaps-versus-room conflict, CP-SAT certified the complete (gaps, room wastage) front of 6 of 8 instances: 16 points in total, 2 of them unsupported. Exact weighted-sum runs found 0 of the unsupported points; the epsilon-constraint method found all of them. With 300 evaluations the memetic method attained 37 of 80 certified points over 30 runs (minimum gaps in 30 runs, minimum room wastage in 5). The heuristics are therefore not optimal on this adversarial family, and the exact proofs did not finish within the time limit for two of the eight 10-event instances; they were not attempted at 150 or 400 events. Full tables: `results/exact_gap/summary.md` and `docs/ot_advanced_methods.md`.
+
+The instance in `data/itc_inspired` is a synthetic instance in the style of ITC-2007 curriculum timetabling. It is not an official ITC benchmark instance, and no ITC validation is claimed.
+
 ### Exact reference results and guarantee boundaries
 
 The optional CP-SAT reference uses OR-Tools 9.15.6755, one worker, seed 0, and a 20-second solver limit excluding model build. On reference small seed 10 it independently proved:
@@ -385,9 +411,9 @@ The displayed examples and their original preferences were selected from the leg
 - Equal complete evaluations are not equal compute. Wall allocations permit bounded overshoot with late results excluded. Hardware/load, common instrumentation, and caching policy affect times.
 - Hypervolume's conservative fixed gap scale can underweight compactness. No indicator/reference-scale sensitivity study has been completed, and HV is not a coordinator utility.
 - Relative teaching load omits research, administration, and preparation effort. Individual unavailability inside a teaching span counts as teaching-free time. Specialized room kinds/shared cohorts are supported in custom data but not generated by default.
-- The repeating week omits individual elective enrollment, travel, rotating weeks, fixed starts, team teaching, uncertainty, minimum faculty loads, and disruption stability.
+- The repeating week omits individual elective enrollment, travel, rotating weeks, fixed starts, team teaching, uncertainty, and minimum faculty loads. Stability after a disruption is handled only by the supplementary re-optimisation module, outside the validated study.
 - Structured faculty search supports equal weekly allowances; it safely returns unchanged for unequal allowances. General exact workload optimization and college-scale Pareto enumeration are not implemented.
-- The larger five-instance/30-solver-seed study, extensive sensitivity/disruption tests, real-data adapters, NSGA-III/MOEA/D/SA/weighted GA, Excel-specific export, and an interactive frontend are not claimed. These are additional opportunities, not substitutes for authentic contribution evidence.
+- The larger five-instance/30-solver-seed study, indicator/reference-scale sensitivity, real-data adapters, NSGA-III, a weighted GA and Excel-specific export are not done. MOEA/D, AMOSA, CP-SAT weighted-sum/epsilon-constraint runs, TOPSIS/AHP decision support, disruption re-optimisation and the website now exist as supplementary work (Section 14). They were added after the held-out study was frozen: MOEA/D has one small matched study, AMOSA has single-run demonstrations only, and the CP-SAT fronts cover two objectives on 10-event instances. None of this is a substitute for authentic contribution evidence.
 - Approval, group identities, private access, and eight weeks of individual contribution history cannot be inferred from generated artifacts, local tests, or one publication commit.
 
 ## 17. Future work
@@ -396,7 +422,7 @@ First validate atomic cohorts, qualification sets, lab equipment, teaching allow
 
 Next run the larger configured study and reference/scale sensitivity; add component-specific ablations, independent initialization/selection/variation RNG streams for variance control, and profiling-driven incremental checks. Study whether strong scalar-local search should be the practical default when population selection adds little.
 
-Then consider unequal-allowance structured assignment, exact epsilon-constraint fronts on tiny cases, standard benchmark import with faithful rule mapping, and genuine minimum-disruption rescheduling. New algorithms should answer observed limitations rather than expand a name list.
+Exact epsilon-constraint fronts on tiny cases and minimum-disruption rescheduling, listed here in the earlier version of this report, now exist as supplementary work (Section 14). What remains: a pre-declared held-out comparison of MOEA/D with the memetic method under both evaluation and wall-time protocols, prompted by its lead on the two large supplementary instances; a multi-seed evaluation of AMOSA; an exact treatment of the workload objective so that three-objective fronts can be certified; unequal-allowance structured assignment; and import of the official ITC-2007 instances with a faithful rule mapping (the current ITC-style instance is synthetic). New algorithms should answer observed limitations rather than expand a name list.
 
 ## 18. Individual contributions
 

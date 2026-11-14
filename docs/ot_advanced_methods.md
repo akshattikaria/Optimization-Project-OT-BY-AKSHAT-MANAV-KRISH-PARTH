@@ -127,7 +127,7 @@ $$\begin{aligned}
 * `exact_gaps_room_front` removes both gaps in that argument. For each point it minimizes $f_1$ under the bound and then minimizes $f_2$ with $f_1$ fixed at that optimum (lexicographic step), and it tightens the bound by one exact integer unit each time until the model is proven infeasible. If every solve ends with a proof, the result is the **complete Pareto front of the two-objective problem $(f_1, f_2)$**.
 * Neither routine optimizes $f_3$. The $f_3$ value of each returned schedule is reported, but **this is not a certified three-objective Pareto front**, and a schedule on the $(f_1, f_2)$ front can be improved in $f_3$ at no cost in the other two.
 * The method does reach unsupported points of the $(f_1, f_2)$ front, which a weighted sum cannot (measured in section 6).
-* It is practical only for small instances; proofs for the 150- and 400-event instances are out of reach.
+* It is practical only for small instances: two of the eight 10-event test instances in section 6 already exceeded the time limit, and the 150- and 400-event instances were not attempted.
 
 Complete three-objective fronts are available only for the two-event micro instances, by exhaustive enumeration (`enumerate_pareto`), and the three-objective *ideal point* of the 40-event instances is certified separately (see [exact.md](exact.md)).
 

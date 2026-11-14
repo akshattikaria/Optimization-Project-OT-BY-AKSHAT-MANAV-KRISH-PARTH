@@ -404,9 +404,28 @@ python main.py evaluate work/presentation_demo/instance.json work/presentation_d
 
 ---
 
+# Backup: supplementary methods and website
+
+<!-- APPENDIX C / ADDED AFTER VALIDATION -->
+
+- Validated final method: memetic NSGA-II. Nothing below changes its results.
+- MOEA/D: ties memetic on medium (7–8); ahead in 6 of 6 large pairs (2 instances, 3 seeds).
+- AMOSA: runs and stays feasible; single-run demonstrations only.
+- CP-SAT ε-constraint: complete (gaps, room) fronts on 10-event cases; f3 not modeled.
+- Exact weighted sum found 0 of 2 unsupported points; ε-constraint found all.
+- TOPSIS + AHP weights + sensitivity pick one timetable; website shows measured results only.
+
+**Supplementary work is implemented and tested; its evidence is narrower than the held-out study.**
+
+<!-- Speaker notes: These items were added after the held-out validation was frozen. MOEA/D reuses the feasible moves; in a matched study on fresh instances it was indistinguishable from the memetic method on medium instances (7 wins, 8 losses) and had the higher hypervolume in all 6 large pairs (sign test p = 0.031). That is two instances and three seeds under the evaluation protocol only, so it is a lead for a declared follow-up study, not a new headline. Tchebycheff and weighted-sum MOEA/D did not differ measurably because the returned archive keeps every non-dominated point visited. With an exact solver the difference is real: weighted-sum CP-SAT runs found 0 of 2 unsupported points on the certified fronts. CP-SAT models gaps and room wastage only, so those are two-objective fronts. On that adversarial 10-event family the memetic method attained 37 of 80 certified points. The ITC-style instance is synthetic, not an official ITC benchmark. The website runs the final method and greedy by default; the other algorithms are an optional advanced benchmark. -->
+
+<!-- Evidence: docs/ot_advanced_methods.md; results/moead_paired/summary.md; results/exact_gap/summary.md -->
+
+---
+
 # Backup: references and viva checkpoints
 
-<!-- APPENDIX C / SOURCES -->
+<!-- APPENDIX D / SOURCES -->
 
 - Deb et al. (2002), NSGA-II. IEEE TEC. DOI: 10.1109/4235.996017.
 - Brélaz (1979), New Methods to Color the Vertices of a Graph. DOI: 10.1145/359094.359101.
