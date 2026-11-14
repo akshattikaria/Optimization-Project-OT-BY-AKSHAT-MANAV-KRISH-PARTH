@@ -4,6 +4,7 @@ import { useSelectedSolution, useStore } from '../store';
 import { pickLabels, representativePicks, type PickKind } from '../mock/solutions';
 import type { Objectives, Solution } from '../types';
 import { ObjectiveBars } from './Dashboard';
+import DecisionPanel from '../components/DecisionPanel';
 
 interface AxisMeta {
   short: string;
@@ -279,73 +280,43 @@ export default function ParetoExplorer() {
   const front = useMemo(() => solutions.filter((s) => s.onFront).sort((a, b) => a.objectives.f1 - b.objectives.f1), [solutions]);
   const picks = useMemo(() => representativePicks(front), [front]);
 
-  // Extract fronts for all algorithms
-  const fronts = useMemo(() => {
-    const mem = front.map((s) => s.objectives);
-    const grd = stats?.baselineFront ?? [];
-    const moe = stats?.moeadFront ?? (stats ? [] : mem.map((o) => ({ f1: Math.max(0, o.f1 + 0.2), f2: Math.max(0, o.f2 - 0.02), f3: Math.max(0, o.f3 - 0.01) })));
-    const amo = stats?.amosaFront ?? (stats ? [] : mem.map((o) => ({ f1: Math.max(0, o.f1 - 0.1), f2: Math.max(0, o.f2 + 0.015), f3: Math.max(0, o.f3 + 0.02) })));
-    const nsg = stats?.nsga2Front ?? (stats ? [] : []);
-    return {
-      memetic: mem,
-      moead: moe,
-      amosa: amo,
-      nsga2: nsg,
-      greedy: grd,
-    };
-  }, [front, stats]);
+  // Fronts measured in the last run. An algorithm that was not run has no points; nothing is estimated.
+  const fronts = useMemo(
+    () => ({
+      memetic: front.map((s) => s.objectives),
+      moead: stats?.moeadFront ?? [],
+      amosa: stats?.amosaFront ?? [],
+      nsga2: stats?.nsga2Front ?? [],
+      greedy: stats?.baselineFront ?? [],
+    }),
+    [front, stats],
+  );
 
-  // Multi-algorithm comparison metrics
+  // One row per algorithm. `status` says whether it was run in the last optimiser run and what happened.
   const comparisonRows = useMemo(() => {
-    const list = [
-      {
-        id: 'memetic',
-        name: 'Memetic NSGA-II (Flagship)',
-        color: '#2563eb',
-        shape: '● Circle',
-        pts: fronts.memetic,
-        hv: stats?.hypervolume ?? 1.0152,
-        time: stats?.runtime ?? 1.13,
-      },
-      {
-        id: 'moead',
-        name: 'MOEA/D (Tchebycheff Decomposition)',
-        color: '#059669',
-        shape: '▲ Triangle',
-        pts: fronts.moead,
-        hv: stats?.algorithmComparison?.find((a) => a.id === 'moead')?.hv ?? 1.0087,
-        time: stats?.algorithmComparison?.find((a) => a.id === 'moead')?.runtime ?? 1.18,
-      },
-      {
-        id: 'amosa',
-        name: 'AMOSA (Simulated Annealing)',
-        color: '#7c3aed',
-        shape: '◆ Diamond',
-        pts: fronts.amosa,
-        hv: stats?.algorithmComparison?.find((a) => a.id === 'amosa')?.hv ?? 1.0078,
-        time: stats?.algorithmComparison?.find((a) => a.id === 'amosa')?.runtime ?? 2.44,
-      },
-      {
-        id: 'nsga2',
-        name: 'Standard NSGA-II',
-        color: '#ea580c',
-        shape: '■ Square',
-        pts: fronts.nsga2,
-        hv: stats?.algorithmComparison?.find((a) => a.id === 'nsga2')?.hv ?? 0.0,
-        time: stats?.algorithmComparison?.find((a) => a.id === 'nsga2')?.runtime ?? 0.12,
-      },
-      {
-        id: 'greedy',
-        name: 'Repeated Greedy (DSatur Baseline)',
-        color: '#d97706',
-        shape: '◇ Rhombus',
-        pts: fronts.greedy,
-        hv: stats?.baselineHypervolume ?? 0.9868,
-        time: stats?.baselineRuntime ?? 4.45,
-      },
-    ];
-    return list;
+    const names: Record<string, string> = {
+      memetic: 'Memetic NSGA-II (final method)',
+      moead: 'MOEA/D (Tchebycheff decomposition)',
+      amosa: 'AMOSA (simulated annealing)',
+      nsga2: 'Standard NSGA-II',
+      greedy: 'Repeated greedy (DSatur baseline)',
+    };
+    return ALGORITHMS.map((algo) => {
+      const row = stats?.algorithmComparison?.find((a) => a.id === algo.id);
+      const pts = fronts[algo.id as keyof typeof fronts];
+      const greedyRan = algo.id === 'greedy' && stats?.baselineMethod != null;
+      let status: 'ok' | 'no_feasible' | 'failed' | 'not_run' | 'demo' = 'ok';
+      if (!stats) status = algo.id === 'memetic' ? 'demo' : 'not_run';
+      else if (algo.id !== 'memetic' && !row && !greedyRan) status = 'not_run';
+      else if (row?.status === 'failed') status = 'failed';
+      else if (!pts.length) status = 'no_feasible';
+      const measured = status === 'ok' || status === 'no_feasible';
+      const hv = !measured ? null : algo.id === 'memetic' ? stats!.hypervolume : row?.hv ?? (greedyRan ? stats!.baselineHypervolume : null);
+      const time = !measured ? null : algo.id === 'memetic' ? stats!.runtime : row?.runtime ?? (greedyRan ? stats!.baselineRuntime : null);
+      return { id: algo.id, name: names[algo.id], color: algo.color, pts, hv, time, status, error: row?.error };
+    });
   }, [fronts, stats]);
+  const ranCount = comparisonRows.filter((r) => r.status === 'ok' || r.status === 'no_feasible').length;
 
   return (
     <>
@@ -353,8 +324,17 @@ export default function ParetoExplorer() {
         <div>
           <h1>Multi-Objective Pareto Trade-Off Explorer</h1>
           <p>
-            Comparison of <b>5 Optimization Algorithms</b> on the timetable trade-off surface.
-            Every point is an independently certified, clash-free timetable.
+            {stats ? (
+              <>
+                Trade-offs found by the last optimiser run ({ranCount} of {ALGORITHMS.length} algorithms run). Every point is an independently
+                checked, clash-free timetable.
+              </>
+            ) : (
+              <>
+                <b>Offline demo data.</b> These sample timetables are not optimiser output. Run the optimiser on the dashboard to see measured
+                results.
+              </>
+            )}
           </p>
         </div>
         <div className="spacer" />
@@ -388,7 +368,10 @@ export default function ParetoExplorer() {
                   style={{ accentColor: algo.color }}
                 />
                 <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: algo.shape === 'circle' ? 99 : 2, background: algo.color }} />
-                <span>{algo.name}</span>
+                <span>
+                  {algo.name}
+                  {comparisonRows.find((r) => r.id === algo.id)?.status === 'not_run' && ' (not run)'}
+                </span>
               </label>
             ))}
           </div>
@@ -429,9 +412,11 @@ export default function ParetoExplorer() {
 
       {/* Full 5-Algorithm Benchmark Comparison Table */}
       <div className="card table-wrap" style={{ marginBottom: 24 }}>
-        <h2 style={{ marginBottom: 6 }}>Algorithmic Comparison: Metaheuristics vs. Greedy Baseline</h2>
+        <h2 style={{ marginBottom: 6 }}>Algorithm comparison (last run)</h2>
         <p className="tiny" style={{ marginTop: 0, color: '#6b655c' }}>
-          Tested under an identical evaluation budget on the same problem instance. Lower is better for objectives f1–f3; higher is better for Hypervolume (HV).
+          Measured values only, all under the same evaluation budget on the same instance. Lower is better for f1–f3; higher is better for
+          hypervolume (HV). Algorithms that were not part of the run show “Not run”: turn on the comparison options on the dashboard to include
+          them.
         </p>
         <table className="table">
           <thead>
@@ -462,24 +447,27 @@ export default function ParetoExplorer() {
                     </div>
                   </td>
                   <td>
-                    {row.pts.length > 0 ? (
-                      <span className="chip" style={{ background: '#dcfce7', color: '#15803d' }}>Feasible</span>
-                    ) : (
-                      <span className="chip" style={{ background: '#fee2e2', color: '#b91c1c' }}>0 Feasible</span>
-                    )}
+                    {row.status === 'ok' && <span className="chip" style={{ background: '#dcfce7', color: '#15803d' }}>Feasible</span>}
+                    {row.status === 'no_feasible' && <span className="chip" style={{ background: '#fee2e2', color: '#b91c1c' }}>No feasible timetable</span>}
+                    {row.status === 'failed' && <span className="chip" style={{ background: '#fee2e2', color: '#b91c1c' }} title={row.error}>Run failed</span>}
+                    {row.status === 'not_run' && <span className="chip">Not run</span>}
+                    {row.status === 'demo' && <span className="chip">Demo data</span>}
                   </td>
-                  <td><b>{row.hv > 0 ? row.hv.toFixed(4) : '0.0000'}</b></td>
-                  <td>{row.pts.length}</td>
+                  <td><b>{row.hv != null ? row.hv.toFixed(4) : 'No data'}</b></td>
+                  <td>{row.status === 'not_run' || row.status === 'failed' ? '—' : row.pts.length}</td>
                   <td>{f1b != null ? AXES.f1.fmt(f1b) : '—'}</td>
                   <td>{f2b != null ? AXES.f2.fmt(f2b) : '—'}</td>
                   <td>{f3b != null ? AXES.f3.fmt(f3b) : '—'}</td>
-                  <td>{row.time.toFixed(2)}s</td>
+                  <td>{row.time != null ? `${row.time.toFixed(2)}s` : '—'}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+
+      {/* TOPSIS / AHP decision support on the memetic front */}
+      <DecisionPanel front={front} selectedId={selectedId} onSelect={select} />
 
       {/* Selected Timetable Inspector */}
       <div className="grid split">

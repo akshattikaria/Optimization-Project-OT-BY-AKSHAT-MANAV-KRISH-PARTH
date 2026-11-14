@@ -35,6 +35,60 @@ where:
 
 **Why Tchebycheff Works:** The level sets (contours) of the Tchebycheff function are **L-shaped orthogonal cones** centered at the ideal point $z^*$. Because an L-shaped cone can tuck into any non-convex pocket, **every Pareto-optimal point is a global minimum of $g^{te}$ for some $\lambda$**, regardless of the shape or non-convexity of the Pareto front.
 
+### 1.3 Measured: paired comparison with memetic NSGA-II and greedy
+
+[`experiments/moead_paired_study.py`](../experiments/moead_paired_study.py) runs repeated greedy, the final memetic NSGA-II, MOEA/D with Tchebycheff scalarization and MOEA/D with weighted-sum scalarization on fresh synthetic instances (generator seeds 3010/3020/3030, not used by any earlier study). Each (instance, solver seed) is one matched pair: same instance, same seed, same cap on complete evaluator calls. Quality is the hypervolume under the fixed a-priori normalization. Results are in [`results/moead_paired/`](../results/moead_paired/summary.md).
+
+**Medium instances** (150 events, 15 pairs, budget 360 evaluations):
+
+| Method | Runs | Mean HV | Median HV | Mean front size |
+|---|---:|---:|---:|---:|
+| Repeated greedy | 15 | 1.00799 | 1.00916 | 12.6 |
+| Memetic NSGA-II (final method) | 15 | 1.06021 | 1.06170 | 22.3 |
+| MOEA/D, Tchebycheff | 15 | 1.06022 | 1.06069 | 13.0 |
+| MOEA/D, weighted sum | 15 | 1.06018 | 1.06071 | 11.9 |
+
+| Paired comparison (A vs B) | A wins / B wins / ties | Median HV difference (A − B) | Sign test p |
+|---|:---:|---:|---:|
+| MOEA/D, Tchebycheff vs Memetic NSGA-II (final method) | 7 / 8 / 0 | -0.00030 | 1.0000 |
+| MOEA/D, Tchebycheff vs Repeated greedy | 15 / 0 / 0 | +0.05180 | 0.0001 |
+| Memetic NSGA-II (final method) vs Repeated greedy | 15 / 0 / 0 | +0.04983 | 0.0001 |
+| MOEA/D, Tchebycheff vs MOEA/D, weighted sum | 6 / 9 / 0 | -0.00016 | 0.6072 |
+
+**Large instances** (400 events, 6 pairs, budget 240 evaluations):
+
+| Method | Runs | Mean HV | Median HV | Mean front size |
+|---|---:|---:|---:|---:|
+| Repeated greedy | 6 | 0.94109 | 0.94126 | 16.5 |
+| Memetic NSGA-II (final method) | 6 | 0.97354 | 0.97550 | 31.2 |
+| MOEA/D, Tchebycheff | 6 | 1.01164 | 1.01031 | 31.5 |
+| MOEA/D, weighted sum | 6 | 1.01150 | 1.01225 | 31.2 |
+
+| Paired comparison (A vs B) | A wins / B wins / ties | Median HV difference (A − B) | Sign test p |
+|---|:---:|---:|---:|
+| MOEA/D, Tchebycheff vs Memetic NSGA-II (final method) | 6 / 0 / 0 | +0.03690 | 0.0312 |
+| MOEA/D, Tchebycheff vs Repeated greedy | 6 / 0 / 0 | +0.06904 | 0.0312 |
+| Memetic NSGA-II (final method) vs Repeated greedy | 6 / 0 / 0 | +0.03299 | 0.0312 |
+| MOEA/D, Tchebycheff vs MOEA/D, weighted sum | 2 / 4 / 0 | -0.00062 | 0.6875 |
+
+What the measurements say:
+
+1. **Both evolutionary methods beat repeated greedy in every pair**, on medium and large instances.
+2. **Medium: MOEA/D and memetic NSGA-II are indistinguishable** (7 wins, 8 losses, 0 ties for MOEA/D; median difference -0.00030; p = 1.00).
+3. **Large: MOEA/D had the higher hypervolume in 6 of 6 pairs** (median difference +0.03690; p = 0.031, the smallest value a two-sided sign test can give with 6 pairs). This is a real result in MOEA/D's favour at this evaluation budget. It rests on two instances and three seeds, uses the evaluation-count protocol only, and was not part of the pre-declared held-out study, so it is a supplementary finding and a lead for future work, not a replacement of the validated conclusion.
+4. **Small instances** (one instance, three seeds) give every method the same single point; they cannot separate the algorithms.
+5. Runtimes in the result files were recorded while other jobs were running on the same machine. Treat them as indicative; the comparison is by evaluation budget.
+
+### 1.4 Measured: does the scalarization matter here?
+
+The theory in 1.2 says a weighted sum cannot single out unsupported points. The measurement asks whether that costs anything on these instances.
+
+* Tchebycheff versus weighted-sum MOEA/D: medium 6 wins / 9 losses (p = 0.61); large 2 wins / 4 losses (p = 0.69). **No detectable hypervolume difference.**
+* The pooled reference fronts of the six instances hold 167 points, of which 117 are unsupported (no positive weight vector on an 80-division simplex grid selects them). So the fronts are strongly non-convex, exactly the situation in which weighted sums are expected to fail.
+* Even so, the weighted-sum variant contributed 18 of those unsupported reference points (Tchebycheff: 40).
+
+The reason is in the implementation, and it is worth stating in a viva: in this MOEA/D the scalarization only decides which solution each subproblem *keeps*. Every feasible solution that is evaluated is also offered to an external non-dominated archive, and the archive is what is returned. A weighted-sum subproblem will never *prefer* an unsupported point, but the search still passes through such points and the archive retains them. The limitation of weighted sums applies in full when the scalar optimum is the only thing returned, which is the case for the exact weighted-sum runs in section 6: there, the unsupported points are never found.
+
 ---
 
 ## 2. Archived Multi-Objective Simulated Annealing (AMOSA)
@@ -56,21 +110,26 @@ Implemented in [`src/timetable/amosa.py`](../src/timetable/amosa.py):
 
 ## 3. The $\epsilon$-Constraint Method in CP-SAT
 
-Implemented in [`src/timetable/exact.py`](../src/timetable/exact.py):
+Implemented in [`src/timetable/exact.py`](../src/timetable/exact.py).
 
-Unlike metaheuristics which find *empirical* fronts, the $\epsilon$-constraint method coupled with Google OR-Tools CP-SAT yields **mathematically proven Pareto boundaries**.
+A metaheuristic returns the best front it happened to find. CP-SAT can instead *prove* an optimum, but only for what its model contains. The CP-SAT model here contains two of the three objectives: weighted gaps ($f_1$) and room seat wastage ($f_2$). The workload standard deviation ($f_3$) is nonlinear and is **not** modeled.
 
-### Mathematical Formulation
+### Formulation
 $$\begin{aligned}
-\min \quad & f_1(\text{Gaps}) \\
-\text{s.t.} \quad & f_2(\text{Room Seat Wastage}) \le \epsilon_k \\
-& \text{All Hard Constraints Satisfied (no clashes, availability, daily/weekly limits)}
+\min \quad & f_1(\text{gaps}) \\
+\text{s.t.} \quad & f_2(\text{room seat wastage}) \le \epsilon_k \\
+& \text{all hard constraints (no clashes, availability, daily/weekly limits)}
 \end{aligned}$$
 
-By systematically dividing the range of $f_2$ into a grid $[\epsilon_1, \epsilon_2, \dots, \epsilon_K]$ and solving each constrained MIP to `OPTIMAL`, CP-SAT guarantees:
-1. No heuristic search bias.
-2. Complete capture of unsupported non-convex trade-offs.
-3. Proven lower bounds and optimality certificates.
+### What it certifies, precisely
+
+* `epsilon_constraint_cp_sat` solves this model for a grid $\epsilon_1, \dots, \epsilon_K$. A step that ends with status `OPTIMAL` proves the minimum of $f_1$ for that bound on $f_2$. A step that stops at the time limit proves nothing. The grid can step over front points, so the output is a set of **gaps-versus-room trade-off points**, in general a subset of the $(f_1, f_2)$ front.
+* `exact_gaps_room_front` removes both gaps in that argument. For each point it minimizes $f_1$ under the bound and then minimizes $f_2$ with $f_1$ fixed at that optimum (lexicographic step), and it tightens the bound by one exact integer unit each time until the model is proven infeasible. If every solve ends with a proof, the result is the **complete Pareto front of the two-objective problem $(f_1, f_2)$**.
+* Neither routine optimizes $f_3$. The $f_3$ value of each returned schedule is reported, but **this is not a certified three-objective Pareto front**, and a schedule on the $(f_1, f_2)$ front can be improved in $f_3$ at no cost in the other two.
+* The method does reach unsupported points of the $(f_1, f_2)$ front, which a weighted sum cannot (measured in section 6).
+* It is practical only for small instances: two of the eight 10-event test instances in section 6 already exceeded the time limit, and the 150- and 400-event instances were not attempted.
+
+Complete three-objective fronts are available only for the two-event micro instances, by exhaustive enumeration (`enumerate_pareto`), and the three-objective *ideal point* of the 40-event instances is certified separately (see [exact.md](exact.md)).
 
 ---
 
@@ -100,19 +159,68 @@ A university coordinator must deploy a **single** operational timetable from the
 
 ---
 
-## 5. Experimental Results: Multi-Algorithm Benchmark
+### AHP-derived weights
 
-Run with identical evaluation budget ($120$ evaluations) and seed ($0$) on `data/demo.json` via [`experiments/compare_all_methods.py`](../experiments/compare_all_methods.py):
+`ahp_weights` / `ahp_from_judgements` turn three pairwise judgements on Saaty's 1-9 scale (gaps vs room fit, gaps vs workload, room fit vs workload) into weights. For the reciprocal comparison matrix $A$ the weights are the normalized principal eigenvector, $A w = \lambda_{\max} w$. The consistency index $CI = (\lambda_{\max} - n)/(n - 1)$ and ratio $CR = CI / RI$ (with $RI = 0.58$ for $n = 3$) measure how far the judgements are from a transitive set; $CR \le 0.10$ is the usual acceptance rule, and the interface reports when it is violated instead of silently using contradictory judgements.
 
-| Algorithm | Feasible? | Discovered Archive | Hypervolume | Runtime (s) | TOPSIS Compromise Vector `[Gaps, Room, SD]` |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Greedy (DSatur Baseline)** | Yes | 1 | 0.935319 | 2.34s | `[0.0, 0.2545, 0.0471]` |
-| **Standard NSGA-II** | No | 0 | 0.000000 | 0.04s | Infeasible (Random crossover breaks hard constraints) |
-| **Memetic NSGA-II** | Yes | 1 | 0.935319 | 0.55s | `[0.0, 0.2545, 0.0471]` |
-| **MOEA/D (Tchebycheff)** | Yes | 1 | 0.935319 | 0.61s | `[0.0, 0.2545, 0.0471]` |
-| **AMOSA (Simulated Annealing)** | Yes | 1 | 0.935319 | 1.18s | `[0.0, 0.2545, 0.0471]` |
+### Sensitivity of the recommendation
 
-### Key Findings
-1. **Constraint Resilience:** Standard NSGA-II with categorical gene crossover fails to discover any feasible schedule within small evaluation budgets (0% feasibility), proving the essential need for feasibility-preserving variation.
-2. **Decomposition Efficiency:** MOEA/D converges rapidly ($0.61$s), attaining the proven optimal objective vector `[0.0, 0.2545, 0.0471]` through structured neighborhood updates.
-3. **Trajectory Search Success:** AMOSA successfully navigates the complex constrained landscape without population crossovers, confirming the value of dominance-energy transitions.
+`weight_sensitivity` answers "how much would the weights have to change before a different timetable is recommended?" with three measured views:
+
+1. **Weight-space shares.** Every weight vector on a regular simplex grid (231 points for step 0.05) is ranked with TOPSIS; each timetable gets the share of the grid on which it ranks first.
+2. **One-at-a-time sweeps.** One weight moves from 0 to 1 while the other two keep their ratio; every change of the top choice is reported with the interval in which it happens.
+3. **Stability.** The smallest single-weight change that makes the current recommendation lose first place.
+
+All of it is available from the CLI (`python main.py mcdm INSTANCE RUN --ahp 3,5,2 --sensitivity`), from `POST /api/mcdm`, and on the website's Pareto page ("Recommended timetable"), where the weights can be set directly or derived by AHP.
+
+---
+
+## 5. Single-run demonstration (not evidence)
+
+[`experiments/compare_all_methods.py`](../experiments/compare_all_methods.py) runs the five algorithms once, with one seed, on one instance. It is used in the live demo to show that everything executes. On the 40-event demo instance every feasible method returns the same single objective vector `[0.0, 0.2545, 0.0471]`, which matches the lower-bound vector $(0,\ 14/55,\ \sqrt{1/450})$ derived for this preset in [exact.md](exact.md); standard NSGA-II finds no feasible timetable at that budget. An instance on which all methods tie cannot rank them, so no comparative claim is drawn from this run. The evidence is the paired study in section 1.3 and the exact comparison below.
+
+---
+
+## 6. Exact reference versus heuristics
+
+[`experiments/exact_gap_study.py`](../experiments/exact_gap_study.py); results in [`results/exact_gap/`](../results/exact_gap/summary.md).
+
+**Tier 1, three objectives, micro instances.** The two-event conflict instances are enumerated exhaustively, so their complete three-objective fronts are known:
+
+- `exact_room_conflict` (exact front of 2 points, 64 candidates enumerated): runs recovering the whole front: Repeated greedy 0/5, Memetic NSGA-II (final method) 0/5, MOEA/D, Tchebycheff 0/5, MOEA/D, weighted sum 0/5.
+- `exact_workload_conflict` (exact front of 2 points, 9 candidates enumerated): runs recovering the whole front: Repeated greedy 5/5, Memetic NSGA-II (final method) 5/5, MOEA/D, Tchebycheff 5/5, MOEA/D, weighted sum 5/5.
+
+On the room micro-instance every method returned one of the two exact points and never both; on the workload micro-instance every run recovered the whole front.
+
+**Tier 2, two objectives, 10-event instances.** For the `room_conflict` family (best-fit rooms are often unavailable, so compact days need oversized rooms) CP-SAT certifies the complete $(f_1, f_2)$ front with the lexicographic $\epsilon$-constraint method, and a separate sweep minimizes 9 weighted sums in addition to the two lexicographic extreme points. For `room_conflict_2x5_s7`, `room_conflict_2x5_s8` at least one solve reached the 60 s limit without a proof, so those instances are listed but excluded from the gap statistics.
+
+| Instance | Certified | Exact (f1, f2) points | Supported | Unsupported | Distinct weighted-sum optima | Unsupported found by weighted sum |
+|---|:---:|---:|---:|---:|---:|---:|
+| room_conflict_2x5_s1 | yes | 2 | 2 | 0 | 2 | 0 |
+| room_conflict_2x5_s2 | yes | 3 | 3 | 0 | 3 | 0 |
+| room_conflict_2x5_s3 | yes | 3 | 3 | 0 | 3 | 0 |
+| room_conflict_2x5_s4 | yes | 1 | 1 | 0 | 1 | 0 |
+| room_conflict_2x5_s5 | yes | 3 | 3 | 0 | 3 | 0 |
+| room_conflict_2x5_s6 | yes | 4 | 2 | 2 | 2 | 0 |
+| room_conflict_2x5_s7 | no (time limit) | 1 found, not certified | n/a | n/a | not run | n/a |
+| room_conflict_2x5_s8 | no (time limit) | 2 found, not certified | n/a | n/a | not run | n/a |
+
+Across the 6 certified instances the exact fronts hold **16 points, 2 of them unsupported**. The weighted-sum sweep returned 14 distinct points and **0 of the unsupported ones**: with an exact solver, where the scalar optimum is all that comes back, the weighted sum misses every point in the non-convex parts of the front, and the $\epsilon$-constraint method finds them.
+
+**How close the heuristics get** (budget 300 evaluations, 5 solver seeds per certified instance; heuristic archives projected onto $(f_1, f_2)$):
+
+| Method | Runs | Whole front attained | Exact points attained | Unsupported points attained | Mean IGD | Mean HV ratio | Runs with optimal f1 | Runs with optimal f2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Repeated greedy | 30 | 5 | 34/80 | 0/10 | 0.516 | 0.505 | 30 | 5 |
+| Memetic NSGA-II (final method) | 30 | 5 | 37/80 | 0/10 | 0.464 | 0.594 | 30 | 5 |
+| MOEA/D, Tchebycheff | 30 | 5 | 33/80 | 0/10 | 0.551 | 0.473 | 30 | 5 |
+| MOEA/D, weighted sum | 30 | 5 | 33/80 | 0/10 | 0.551 | 0.473 | 30 | 5 |
+
+IGD is the mean distance from each certified point to the nearest heuristic point after scaling both objectives by the certified front's range (0 = front reproduced). The hypervolume ratio is heuristic area / exact area in that plane.
+
+Reading the table honestly:
+
+* Every method reaches the certified minimum of $f_1$ in all of its runs (memetic: 30/30), but the certified minimum of $f_2$ far less often (memetic: 5/30).
+* The memetic method attains 37 of 80 certified points; MOEA/D attains 33 (Tchebycheff) and 33 (weighted sum); repeated greedy 34. No heuristic attained any of the unsupported points (memetic 0/10), and none reproduces the certified fronts reliably at this budget.
+* This family was built to make gaps and room fit conflict, so it is harder for the heuristics than the generated college instances. Why they stop short of the low-wastage end was not investigated. It is also a two-objective reference for methods that spend effort on a third objective, so a heuristic point off the $(f_1, f_2)$ front can still be non-dominated in three objectives.
+* The exact method costs 4.8 s per certified 10-event instance on average and did not finish its proofs within 60 s per solve for 2 of the 8 10-event instances; exploratory runs on 18- and 24-event instances of the same family did not finish within 15 s per solve. The heuristics take about 0.2 s and scale to 400 events. That is the exact-versus-heuristic trade-off in one line: proofs on tiny instances, good unproven answers on real sizes.

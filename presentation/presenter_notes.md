@@ -1,6 +1,6 @@
 # Complete presenter notes
 
-Main talk: slides 1–18. Backups: slides 19–21. Suggested duration: 15–18 minutes plus demo.
+Main talk: slides 1–18. Backups: slides 19–22. Suggested duration: 15–18 minutes plus demo.
 
 ## Slide 1 — Multi-Objective College Timetable Optimization
 
@@ -122,7 +122,13 @@ Each relaxation bound remains valid for the original constrained problem. Equal 
 
 **Evidence:** small_ideal_certificates.json; experiments/certify_small_ideal.py
 
-## Slide 21 — Backup: references and viva checkpoints
+## Slide 21 — Backup: supplementary methods and website
+
+These items were added after the held-out validation was frozen. MOEA/D reuses the feasible moves; in a matched study on fresh instances it was indistinguishable from the memetic method on medium instances (7 wins, 8 losses) and had the higher hypervolume in all 6 large pairs (sign test p = 0.031). That is two instances and three seeds under the evaluation protocol only, so it is a lead for a declared follow-up study, not a new headline. Tchebycheff and weighted-sum MOEA/D did not differ measurably because the returned archive keeps every non-dominated point visited. With an exact solver the difference is real: weighted-sum CP-SAT runs found 0 of 2 unsupported points on the certified fronts. CP-SAT models gaps and room wastage only, so those are two-objective fronts. On that adversarial 10-event family the memetic method attained 37 of 80 certified points. The ITC-style instance is synthetic, not an official ITC benchmark. The website runs the final method and greedy by default; the other algorithms are an optional advanced benchmark.
+
+**Evidence:** docs/ot_advanced_methods.md; results/moead_paired/summary.md; results/exact_gap/summary.md
+
+## Slide 22 — Backup: references and viva checkpoints
 
 Full references and exact roles are in literature/README.md. Every member should explain why teacher choice changes workload, why labs reserve all periods, constraint domination among infeasible candidates, why equal evaluation counts are not equal computation, what makes the final algorithm an NSGA-II variant, the scopes of exact guarantees, and why workload balance can hurt students. The mandatory front-cleanup command is python experiments/exact_fronts.py --study enhancement_validation. It leaves frozen search/timing records unchanged and writes exact rational reporting fronts separately. The presentation builder reads saved artifacts only and runs no optimizer. The source hash of measured validation is 7ad242177abf49f65dfd192b3ecad6fe614644abf76413b39099aa897ddd854c.
 

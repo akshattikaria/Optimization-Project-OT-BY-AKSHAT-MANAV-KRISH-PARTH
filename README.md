@@ -2,7 +2,7 @@
 
 A tested Python system for assigning weekly college sessions to time blocks, compatible rooms and eligible faculty, with explicit hard constraints and three quality objectives.
 
-**Final audit:** 209 tests pass. Clean installation, all three CLI problem sizes, saved measurements, report and slides were checked. The [audit report](docs/final_audit.md) includes an exact-arithmetic correction for reported fronts; printed hypervolume comparisons are unchanged.
+**Pre-freeze audit (2026-11-14):** 267 tests pass in the working tree and in a fresh clone, and the website passes 61/61 end-to-end checks ([details](docs/freeze_audit.md)). **Earlier final audit:** 209 tests pass. Clean installation, all three CLI problem sizes, saved measurements, report and slides were checked. The [audit report](docs/final_audit.md) includes an exact-arithmetic correction for reported fronts; printed hypervolume comparisons are unchanged.
 
 The supplied proposal and professor's assignment are primary references. The [reference review](docs/reference_review.md) explains corrections and scope decisions. **All college datasets and experimental results are synthetic.** No institutional measurements, student contribution history or professor approval are invented.
 
@@ -38,7 +38,12 @@ Teacher selection makes workload genuinely variable. Room wastage measures seat 
 | Feasible-domain memetic NSGA-II (`memetic`) | `src/timetable/memetic.py`, `feasible.py`, `faculty_search.py` | Fully feasible initialization, resource-checked mutation, bounded batch faculty reassignment and genuine NSGA-II selection/survival |
 | Follow-up comparison | `src/timetable/comparison.py` | Paired evaluation/time protocols, timestamped cutoff archives and scalar-local ablation |
 | Disruption re-optimisation | `src/timetable/disruption.py` | Minimal-change repair with a broken-session lower bound, and ε-constraint NSGA-II trading changed sessions against f₁–f₃ after a teacher absence/departure or room closure ([details](docs/disruption.md)) |
-| Exact references | `src/timetable/exact.py` | Optional CP-SAT feasibility/gaps/room models; exhaustive tiny Pareto fronts without a solver dependency |
+| Exact references | `src/timetable/exact.py` | Optional CP-SAT feasibility/gaps/room models, weighted-sum and ε-constraint runs for the two-objective (gaps, room) front; exhaustive tiny Pareto fronts without a solver dependency |
+| MOEA/D *(supplementary)* | `src/timetable/moead.py` | Decomposition with Tchebycheff or weighted-sum scalarization on the same feasible moves; matched study in `results/moead_paired` |
+| AMOSA *(supplementary)* | `src/timetable/amosa.py` | Archived multi-objective simulated annealing; single-run demonstrations only |
+| Decision support *(supplementary)* | `src/timetable/mcdm.py` | TOPSIS ranking, AHP-derived weights with consistency ratio, weight-sensitivity analysis |
+
+**The validated final method is the memetic NSGA-II.** The rows marked *supplementary* were added after the held-out study was frozen; their narrower evidence, including a small matched study in which MOEA/D led on two large instances, is in [advanced methods](docs/ot_advanced_methods.md). The `data/itc_inspired` instance is synthetic, not an official ITC benchmark.
 
 Every full evaluator call counts, including initialization, repaired candidates and local-search proposals. Internal constructive checks are timed but do not count as complete objective evaluations. Equal evaluation budgets do not imply equal compute; runtime is also reported. No solver receives the separate feasibility certificate. The enhancement is a hypothesis to evaluate, not an assumption of superiority. An exact integer load-partition relaxation in `experiments/certify_small_ideal.py` certifies all three default small-instance ideal vectors. See [method rationale](literature/README.md) and [exact guarantee boundaries](docs/exact.md).
 
@@ -156,7 +161,9 @@ The project also runs as a website: the Clockwork frontend and its application l
 views, Pareto explorer, calendar, teacher availability, leave, substitute requests, quizzes/extra classes, online
 assessments, holidays, syllabus completion, notifications) on top of **this repository's final memetic NSGA-II**.
 Website runs also execute the repeated-greedy baseline with the same evaluations and seed, re-check every timetable
-with the independent evaluator, and refuse to publish an infeasible one.
+with the independent evaluator, and refuse to publish an infeasible one. MOEA/D, AMOSA and standard NSGA-II run
+only when the optional *Advanced benchmark* is ticked; the website shows measured values only and marks anything else
+"Not run".
 
 ```bash
 python -m pip install -r requirements.txt

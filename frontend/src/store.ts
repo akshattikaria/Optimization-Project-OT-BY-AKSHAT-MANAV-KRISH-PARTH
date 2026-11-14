@@ -146,6 +146,7 @@ export const defaultRunParams: RunParams = {
   population: 24,
   searchSeconds: 6,
   compareBaseline: true,
+  advancedBenchmark: false,
 };
 
 const uid = () => Math.random().toString(36).slice(2, 9);

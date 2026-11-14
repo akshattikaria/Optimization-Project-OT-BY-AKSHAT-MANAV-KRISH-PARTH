@@ -45,7 +45,7 @@ def parser() -> argparse.ArgumentParser:
     solve.add_argument("--search-seconds", type=float, help="Optional total search deadline for the memetic/moead/amosa method")
     solve.add_argument("--scalarization", choices=["tchebycheff", "augmented_tchebycheff", "weighted_sum"], default="tchebycheff", help="MOEA/D scalarization function")
     solve.add_argument("--neighborhood", type=int, default=6, help="MOEA/D subproblem neighborhood size")
-    solve.add_argument("--eps-steps", type=int, default=5, help="Number of epsilon grid points for CP-SAT epsilon-constraint")
+    solve.add_argument("--eps-steps", type=int, default=5, help="Number of epsilon grid points for the CP-SAT gaps-versus-room trade-off (workload balance is not optimized)")
 
     val = sub.add_parser("evaluate", aliases=["validate"], help="Independently check a schedule (nonzero exit if infeasible)")
     val.add_argument("instance")
@@ -55,6 +55,10 @@ def parser() -> argparse.ArgumentParser:
     mcdm.add_argument("instance")
     mcdm.add_argument("run", help="Path to run.json containing Pareto archive")
     mcdm.add_argument("--profile", choices=["balanced", "student_first", "admin_room_fit", "faculty_fairness"], default="balanced")
+    mcdm.add_argument("--weights", help="comma-separated weights for gaps,room,workload (overrides --profile)")
+    mcdm.add_argument("--ahp", help="comma-separated AHP judgements: gaps-vs-room,gaps-vs-workload,room-vs-workload "
+                                    "(Saaty 1-9 scale, fractions like 1/3 allowed; overrides --weights)")
+    mcdm.add_argument("--sensitivity", action="store_true", help="also print how the choice changes with the weights")
 
     exp = sub.add_parser("experiment", help="Run/resume a saved paired benchmark configuration")
     exp.add_argument("--config", default="experiments/benchmark.json")
@@ -109,6 +113,30 @@ def main(argv=None) -> int:
             if not objectives:
                 print("Error: No objectives found in run file.", file=sys.stderr)
                 return 1
+            if args.weights or args.ahp or args.sensitivity:
+                from fractions import Fraction
+                from .mcdm import STAKEHOLDER_PROFILES, recommend
+                parse = lambda text: [float(Fraction(x.strip())) for x in text.split(",")]  # noqa: E731
+                out = recommend(objectives, parse(args.weights) if args.weights else list(STAKEHOLDER_PROFILES[args.profile]),
+                                parse(args.ahp) if args.ahp else None)
+                print(f"--- TOPSIS decision analysis (weights from {out['weightSource']}) ---")
+                print("Weights (gaps, room, workload): " + ", ".join(f"{w:.4f}" for w in out["weights"]))
+                if out["ahp"]:
+                    print(f"AHP consistency ratio: {out['ahp']['consistencyRatio']:.4f} "
+                          f"({'acceptable' if out['ahp']['consistent'] else 'INCONSISTENT judgements (> 0.10)'})")
+                for item in out["ranking"]:
+                    print(f"  Rank {item['rank']}: Sol #{item['index']} | Score: {item['score']} | Obj: {item['objectives']}")
+                sens = out["sensitivity"]
+                print()
+                print(f"Sensitivity over {sens['grid_points']} weight combinations: {sens['distinct_choices']} different top choice(s)")
+                for row in sens["weight_space"]:
+                    print(f"  Sol #{row['index']} ranks first for {100 * row['share']:.1f}% of the weight space")
+                for sweep in sens["sweeps"]:
+                    path = " -> ".join(f"#{seg['index']} [{seg['from']:.2f}-{seg['to']:.2f}]" for seg in sweep["segments"])
+                    print(f"  weight on {sweep['objective']} from 0 to 1: {path}")
+                print("  Smallest single-weight change that alters the recommendation: "
+                      + ("none (stable)" if sens["stability"] is None else f"{sens['stability']:.3f}"))
+                return 0
             analysis = analyze_stakeholder_profiles(objectives)
             print(f"--- TOPSIS Decision Analysis ({args.profile.upper()} profile) ---")
             profile_data = analysis[args.profile]
@@ -210,6 +238,8 @@ def main(argv=None) -> int:
                 )
                 payload = {
                     "method": "cpsat_epsilon_constraint",
+                    "scope": "Trade-off points for (f1 gaps, f2 room wastage). f3 is reported, not optimized; "
+                             "not a certified three-objective Pareto front.",
                     "runtime": eps_res.runtime,
                     "evaluated_steps": eps_res.evaluated_steps,
                     "optimal_steps": eps_res.optimal_steps,
@@ -219,9 +249,9 @@ def main(argv=None) -> int:
                     "epsilons": eps_res.epsilons,
                     "metadata": eps_res.metadata,
                 }
-                _write(out / "exact_pareto.json", payload)
+                _write(out / "gaps_room_tradeoff.json", payload)
                 export_representatives(problem, eps_res.archive, out / "timetables", figures)
-                plot_fronts([{"method": "cpsat_eps", "objectives": v} for v in eps_res.objectives], figures / "exact_pareto.png", "Exact Pareto Front via Epsilon-Constraint CP-SAT", certified=True)
+                plot_fronts([{"method": "cpsat_eps", "objectives": v} for v in eps_res.objectives], figures / "gaps_room_tradeoff.png", "Gaps vs room-wastage trade-off (CP-SAT epsilon-constraint; f3 not optimized)", certified=True)
                 print(json.dumps({key: payload[key] for key in ["method", "runtime", "archive_size", "objectives"]}, indent=2))
                 return 0 if eps_res.archive else 2
 

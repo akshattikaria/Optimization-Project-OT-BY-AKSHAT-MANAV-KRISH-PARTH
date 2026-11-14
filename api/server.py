@@ -9,6 +9,7 @@ Optimisation runs take seconds to minutes, so they run as background jobs:
   POST /api/runs           start a run (admin), returns {"runId": ...}
   GET  /api/runs/latest    the most recent finished run, kept in the database
   GET  /api/runs/{id}      status + live progress; includes the result when done
+  POST /api/mcdm           TOPSIS recommendation for a front (optional AHP weights) + weight sensitivity
 Everything else (accounts, published timetable, calendar, leave, substitutes, quizzes, assessments, holidays,
 syllabus, requests, notifications, teacher constraints) is in api/campus/routes.py.
 """
@@ -66,7 +67,8 @@ class RunRequest(BaseModel):
     budget: int = Field(360, ge=10, le=100_000, description="full evaluations (the validation study's budget unit)")
     population: int = Field(24, ge=2, le=300)
     searchSeconds: float | None = Field(6.0, gt=0, le=1800, description="wall-time cap; null = evaluations only")
-    compareBaseline: bool = True
+    compareBaseline: bool = Field(True, description="also run the repeated greedy baseline")
+    advancedBenchmark: bool = Field(False, description="also run MOEA/D, AMOSA and standard NSGA-II (slower)")
     instance: dict | None = Field(None, description="custom instance (website or optimizer JSON format)")
 
 
@@ -146,7 +148,8 @@ def start_run(req: RunRequest, user=Depends(ADMIN)):
     except (ValueError, KeyError, TypeError) as e:
         raise HTTPException(400, f"Invalid instance: {e}") from e
     cfg = RunConfig(seed=req.seed, budget=req.budget, population=req.population,
-                    search_seconds=req.searchSeconds, compare_baseline=req.compareBaseline, label=req.scenario)
+                    search_seconds=req.searchSeconds, compare_baseline=req.compareBaseline,
+                    advanced_benchmark=req.advancedBenchmark, label=req.scenario)
     job_id = datetime.now().strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
     with _lock:
         if len(_jobs) >= MAX_JOBS_KEPT:  # forget the oldest finished jobs
@@ -157,6 +160,27 @@ def start_run(req: RunRequest, user=Depends(ADMIN)):
                          "progress": {"phase": "queued", "evaluations": 0, "budget": req.budget}}
     _executor.submit(_work, job_id, problem, cfg, user["username"], req.scenario, changes)
     return {"runId": job_id, "events": len(problem.events), "constraintChanges": changes}
+
+
+class DecisionRequest(BaseModel):
+    objectives: list[list[float]] = Field(..., max_length=2000, description="one [f1, f2, f3] row per timetable of the front")
+    weights: list[float] | None = Field(None, description="importance of gaps, room fit, workload balance")
+    ahp: list[float] | None = Field(None, description="AHP judgements: gaps vs room, gaps vs workload, room vs workload")
+
+
+@app.post("/api/mcdm")
+def decision_support(req: DecisionRequest, user=Depends(ADMIN)):
+    """TOPSIS recommendation from a Pareto front, with AHP weights and a weight-sensitivity analysis."""
+    from timetable.mcdm import recommend
+
+    try:
+        if req.weights is not None and (len(req.weights) != 3 or min(req.weights) < 0 or sum(req.weights) <= 0):
+            raise ValueError("weights must be three nonnegative numbers with a positive sum")
+        if req.ahp is not None and len(req.ahp) != 3:
+            raise ValueError("ahp needs three pairwise judgements")
+        return recommend([tuple(v) for v in req.objectives], req.weights, req.ahp)
+    except (ValueError, TypeError) as e:
+        raise HTTPException(400, str(e)) from e
 
 
 @app.get("/api/runs/latest")

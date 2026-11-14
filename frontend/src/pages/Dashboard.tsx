@@ -54,142 +54,69 @@ const PHASE: Record<RunProgress['phase'], string> = {
   export: 'Checking and saving timetables',
 };
 
+type CurveStatus = 'ok' | 'no_feasible' | 'failed' | 'not_run';
+
 interface CurveData {
   id: string;
   name: string;
+  short: string;
   color: string;
   dash?: string;
   width: number;
+  /** Measured hypervolume after each recorded number of evaluations. Empty when the algorithm was not run. */
   points: { evaluations: number; hypervolume: number }[];
-  finalHv: number;
+  finalHv: number | null;
+  status: CurveStatus;
 }
 
+const CURVES: Pick<CurveData, 'id' | 'name' | 'short' | 'color' | 'dash' | 'width'>[] = [
+  { id: 'memetic', name: 'Memetic NSGA-II', short: 'Memetic', color: '#2563eb', width: 2.8 },
+  { id: 'moead', name: 'MOEA/D (Decomposition)', short: 'MOEA/D', color: '#059669', width: 2.2 },
+  { id: 'amosa', name: 'AMOSA (Sim. Annealing)', short: 'AMOSA', color: '#7c3aed', width: 2.2 },
+  { id: 'nsga2', name: 'Standard NSGA-II', short: 'NSGA-II', color: '#ea580c', width: 2.2 },
+  { id: 'greedy', name: 'Repeated Greedy', short: 'Greedy', color: '#d97706', dash: '5 3', width: 2.2 },
+];
+
+const STATUS_TEXT: Record<Exclude<CurveStatus, 'ok'>, string> = {
+  not_run: 'Not run',
+  no_feasible: 'No feasible timetable',
+  failed: 'Run failed',
+};
+
+/** Convergence of every algorithm that was actually run. Nothing is estimated: an algorithm without measured
+ *  data is listed as "Not run" and gets no curve. */
 function Convergence({ stats }: { stats: RunStats }) {
   const [hoveredAlgo, setHoveredAlgo] = useState<string | null>(null);
   const [focusView, setFocusView] = useState<boolean>(true);
   const [hoverEval, setHoverEval] = useState<number | null>(null);
 
-  const curves: CurveData[] = useMemo(() => {
-    const memeticPts =
-      stats.multiConvergence?.memetic ||
-      (stats.convergence?.length ? stats.convergence.map((p) => ({ evaluations: p.evaluations, hypervolume: p.hypervolume })) : []);
-
-    const maxEval = stats.evaluations || stats.budget || 360;
-    const memeticFinalHv = stats.hypervolume || 1.018;
-    const greedyFinalHv = stats.baselineHypervolume || (stats.algorithmComparison?.find((a) => a.id === 'greedy')?.hv ?? 1.009);
-    const moeadFinalHv = stats.algorithmComparison?.find((a) => a.id === 'moead')?.hv ?? (memeticFinalHv * 0.998);
-    const amosaFinalHv = stats.algorithmComparison?.find((a) => a.id === 'amosa')?.hv ?? (memeticFinalHv * 1.002);
-    const nsga2FinalHv = stats.algorithmComparison?.find((a) => a.id === 'nsga2')?.hv ?? 0.0;
-
-    // Smooth trajectory generator if an algorithm curve is not populated
-    const generateTrajectory = (targetFinal: number, shape: 'memetic' | 's_curve' | 'anneal' | 'greedy' | 'zero') => {
-      const steps = 24;
-      if (shape === 'zero' || targetFinal <= 0) {
-        return [
-          { evaluations: 0, hypervolume: 0.0 },
-          { evaluations: maxEval, hypervolume: 0.0 },
-        ];
-      }
-      const pts: { evaluations: number; hypervolume: number }[] = [];
-      for (let i = 0; i <= steps; i++) {
-        const frac = i / steps;
-        const ev = Math.round(frac * maxEval);
-        let hv = 0;
-        if (shape === 'memetic') {
-          // Starts high (~0.965) from initial DSatur population, reaches top within 15% evals
-          const start = +(targetFinal * 0.965).toFixed(4);
-          const factor = Math.min(1, 1 - Math.exp(-12 * frac));
-          hv = start + (targetFinal - start) * factor;
-        } else if (shape === 'greedy') {
-          // Repeated Greedy: starts low at ~0.25 (1 solution), climbs slowly through random restarts
-          // Visibly requires significantly more evaluations to catch up
-          const start = +(targetFinal * 0.25).toFixed(4);
-          const factor = Math.pow(frac, 0.72);
-          hv = start + (targetFinal - start) * factor;
-        } else if (shape === 's_curve') {
-          // MOEA/D: starts around 0.30, climbs via decomposition S-curve
-          const start = +(targetFinal * 0.30).toFixed(4);
-          const factor = 1 / (1 + Math.exp(-8 * (frac - 0.40)));
-          hv = start + (targetFinal - start) * factor;
-        } else if (shape === 'anneal') {
-          // AMOSA: starts around 0.26, simulated annealing exploration with cooling
-          const start = +(targetFinal * 0.26).toFixed(4);
-          const smooth = Math.pow(frac, 0.82);
-          const ripple = 0.025 * Math.sin(frac * 12) * (1 - frac);
-          const factor = Math.min(1, Math.max(0, smooth + ripple));
-          hv = start + (targetFinal - start) * factor;
+  const curves: CurveData[] = useMemo(
+    () =>
+      CURVES.map((spec) => {
+        const row = stats.algorithmComparison?.find((a) => a.id === spec.id);
+        let points = stats.multiConvergence?.[spec.id as keyof NonNullable<RunStats['multiConvergence']>] ?? [];
+        if (!points.length && spec.id === 'memetic') {
+          points = (stats.convergence ?? []).map((c) => ({ evaluations: c.evaluations, hypervolume: c.hypervolume }));
         }
-        pts.push({ evaluations: ev, hypervolume: +hv.toFixed(4) });
-      }
-      return pts;
-    };
+        const greedyRan = spec.id === 'greedy' && stats.baselineMethod != null;
+        const ran = spec.id === 'memetic' || row != null || points.length > 0 || greedyRan;
+        let status: CurveStatus = 'ok';
+        if (!ran) status = 'not_run';
+        else if (row?.status === 'failed') status = 'failed';
+        else if (row?.status === 'no_feasible' || (row != null && !row.feasible) || (greedyRan && !stats.baselineFeasible)) status = 'no_feasible';
+        const finalHv =
+          status === 'not_run' || status === 'failed'
+            ? null
+            : spec.id === 'memetic'
+              ? stats.hypervolume
+              : row?.hv ?? (points.length ? points[points.length - 1].hypervolume : greedyRan ? stats.baselineHypervolume : null);
+        return { ...spec, points: status === 'failed' ? [] : points, finalHv, status };
+      }),
+    [stats],
+  );
+  const plotted = curves.filter((c) => c.points.length > 0);
 
-    const moeadPts =
-      stats.multiConvergence?.moead && stats.multiConvergence.moead.length > 1
-        ? stats.multiConvergence.moead
-        : generateTrajectory(moeadFinalHv, 's_curve');
-
-    const amosaPts =
-      stats.multiConvergence?.amosa && stats.multiConvergence.amosa.length > 1
-        ? stats.multiConvergence.amosa
-        : generateTrajectory(amosaFinalHv, 'anneal');
-
-    const nsga2Pts =
-      stats.multiConvergence?.nsga2 && stats.multiConvergence.nsga2.length > 1
-        ? stats.multiConvergence.nsga2
-        : generateTrajectory(nsga2FinalHv, 'zero');
-
-    const greedyPts =
-      stats.multiConvergence?.greedy && stats.multiConvergence.greedy.length > 1
-        ? stats.multiConvergence.greedy
-        : generateTrajectory(greedyFinalHv, 'greedy');
-
-    return [
-      {
-        id: 'memetic',
-        name: 'Memetic NSGA-II',
-        color: '#2563eb',
-        width: 2.8,
-        points: memeticPts,
-        finalHv: memeticPts[memeticPts.length - 1]?.hypervolume ?? memeticFinalHv,
-      },
-      {
-        id: 'moead',
-        name: 'MOEA/D (Decomposition)',
-        color: '#059669',
-        width: 2.2,
-        points: moeadPts,
-        finalHv: moeadPts[moeadPts.length - 1]?.hypervolume ?? moeadFinalHv,
-      },
-      {
-        id: 'amosa',
-        name: 'AMOSA (Sim. Annealing)',
-        color: '#7c3aed',
-        width: 2.2,
-        points: amosaPts,
-        finalHv: amosaPts[amosaPts.length - 1]?.hypervolume ?? amosaFinalHv,
-      },
-      {
-        id: 'nsga2',
-        name: 'Standard NSGA-II',
-        color: '#ea580c',
-        width: 2.2,
-        points: nsga2Pts,
-        finalHv: nsga2Pts[nsga2Pts.length - 1]?.hypervolume ?? nsga2FinalHv,
-      },
-      {
-        id: 'greedy',
-        name: 'Repeated Greedy',
-        color: '#d97706',
-        dash: '5 3',
-        width: 2.2,
-        points: greedyPts,
-        finalHv: greedyPts[greedyPts.length - 1]?.hypervolume ?? greedyFinalHv,
-      },
-    ];
-  }, [stats]);
-
-  const allPoints = curves.flatMap((c) => c.points);
+  const allPoints = plotted.flatMap((c) => c.points);
   if (allPoints.length < 2) return null;
 
   const W = 560;
@@ -209,7 +136,7 @@ function Convergence({ stats }: { stats: RunStats }) {
   const highestHv = Math.max(...allPoints.map((p) => p.hypervolume), 1.0);
 
   // In Focus View, zoom into active convergence band (e.g. 0.70 to 1.05)
-  // This provides 4x-5x greater vertical resolution so 0.986, 0.990, 1.009, 1.018 are distinctly un-bunched!
+  // The narrower range separates curves whose hypervolumes differ only in the second or third decimal.
   const focusMinHv = Math.max(0.50, Math.floor(Math.min(0.75, lowestFeasibleHv) * 20) / 20);
   const focusMaxHv = +(highestHv + 0.03).toFixed(2);
 
@@ -275,7 +202,7 @@ function Convergence({ stats }: { stats: RunStats }) {
         }}
       >
         <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink-2, #64748b)' }}>
-          Paradigms: Feasible Memetic, Decomposition, Annealing, Plain GA, Repeated Greedy
+          Measured hypervolume of each algorithm run with this budget ({plotted.length} of {curves.length} run)
         </span>
         <div
           style={{
@@ -361,7 +288,9 @@ function Convergence({ stats }: { stats: RunStats }) {
                 }}
               />
               <span>{c.name}</span>
-              <span style={{ color: 'var(--ink-2, #64748b)', fontSize: 10 }}>({c.finalHv.toFixed(3)})</span>
+              <span style={{ color: 'var(--ink-2, #64748b)', fontSize: 10 }}>
+                ({c.status === 'ok' && c.finalHv != null ? c.finalHv.toFixed(3) : STATUS_TEXT[c.status === 'ok' ? 'not_run' : c.status]})
+              </span>
             </div>
           );
         })}
@@ -385,24 +314,19 @@ function Convergence({ stats }: { stats: RunStats }) {
         }}
       >
         <span style={{ fontWeight: 600, color: 'var(--ink, #1e293b)' }}>
-          ⚡ Search Effort to ≥{targetMilestone.toFixed(2)} HV:
+          Evaluations needed to reach HV ≥ {targetMilestone.toFixed(2)}:
         </span>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <span style={{ color: '#2563eb', fontWeight: 600 }}>
-            Memetic: {getEvalsToReach(curves[0].points) ?? '~18'} evals (Fastest)
-          </span>
-          <span style={{ color: '#059669' }}>
-            MOEA/D: {getEvalsToReach(curves[1].points) ?? '~75'} evals
-          </span>
-          <span style={{ color: '#7c3aed' }}>
-            AMOSA: {getEvalsToReach(curves[2].points) ?? '~140'} evals
-          </span>
-          <span style={{ color: '#d97706', fontWeight: 600 }}>
-            Repeated Greedy: {getEvalsToReach(curves[4].points) ?? '~280'} evals (needs 15× more search)
-          </span>
-          <span style={{ color: '#ea580c' }}>
-            NSGA-II: Infeasible
-          </span>
+          {curves.map((c) => {
+            const reached = c.points.length ? getEvalsToReach(c.points) : null;
+            const text =
+              c.status !== 'ok' ? STATUS_TEXT[c.status].toLowerCase() : !c.points.length ? 'no data' : reached != null ? `${reached} evals` : 'not reached';
+            return (
+              <span key={c.id} style={{ color: c.color }}>
+                {c.short}: {text}
+              </span>
+            );
+          })}
         </div>
       </div>
 
@@ -419,7 +343,7 @@ function Convergence({ stats }: { stats: RunStats }) {
           cursor: 'crosshair',
         }}
         role="img"
-        aria-label="Single convergence graph with 5 curves: Memetic, MOEA/D, AMOSA, Standard NSGA-II vs Repeated Greedy"
+        aria-label={`Measured convergence of ${plotted.map((c) => c.name).join(', ')}`}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -497,7 +421,7 @@ function Convergence({ stats }: { stats: RunStats }) {
         </text>
 
         {/* Standard NSGA-II Floor Baseline Notice in Focus View */}
-        {focusView && (
+        {focusView && curves.find((c) => c.id === 'nsga2')?.status === 'no_feasible' && (
           <g
             style={{ cursor: 'pointer' }}
             onMouseEnter={() => setHoveredAlgo('nsga2')}
@@ -521,14 +445,14 @@ function Convergence({ stats }: { stats: RunStats }) {
               fontWeight="600"
               pointerEvents="none"
             >
-              ▼ Standard NSGA-II: 0.000 (Infeasible — all chromosomes fail constraints)
+              ▼ Standard NSGA-II: hypervolume 0 (no feasible timetable found in this run)
             </text>
           </g>
         )}
 
         {/* 5 Curves Clipped to Plot Area */}
         <g clipPath="url(#chart-plot-area)">
-          {curves.map((c) => {
+          {plotted.map((c) => {
             if (!c.points.length) return null;
             const isDim = hoveredAlgo && hoveredAlgo !== c.id;
             const isHovered = hoveredAlgo === c.id;
@@ -585,7 +509,7 @@ function Convergence({ stats }: { stats: RunStats }) {
         {/* Floating Tooltip inside SVG - zero DOM reflow */}
         {hoverEval !== null && (() => {
           const tooltipW = 155;
-          const tooltipH = 96;
+          const tooltipH = 33.5 + plotted.length * 12.5;
           const curX = x(hoverEval);
           const leftSide = curX > padL + plotW - tooltipW - 12;
           const boxX = leftSide ? curX - tooltipW - 10 : curX + 10;
@@ -603,7 +527,7 @@ function Convergence({ stats }: { stats: RunStats }) {
                 strokeWidth="1.2"
                 opacity="0.6"
               />
-              {curves.map((c) => {
+              {plotted.map((c) => {
                 const val = getHvAt(c.points, hoverEval);
                 return (
                   <circle
@@ -631,19 +555,10 @@ function Convergence({ stats }: { stats: RunStats }) {
               <text x={boxX + 8} y={boxY + 16} fontSize="10" fontWeight="700" fill="#f8fafc">
                 Eval {hoverEval} of {maxEval}
               </text>
-              {curves.map((c, idx) => {
+              {plotted.map((c, idx) => {
                 const val = getHvAt(c.points, hoverEval);
                 const rowY = boxY + 31 + idx * 12.5;
-                const shortName =
-                  c.id === 'memetic'
-                    ? 'Memetic'
-                    : c.id === 'moead'
-                      ? 'MOEA/D'
-                      : c.id === 'amosa'
-                        ? 'AMOSA'
-                        : c.id === 'greedy'
-                          ? 'Greedy'
-                          : 'NSGA-II';
+                const shortName = c.short;
                 return (
                   <g key={'tip-' + c.id}>
                     <circle cx={boxX + 12} cy={rowY - 3} r={3} fill={c.color} />
@@ -772,7 +687,7 @@ function RunPanel() {
             </label>
           </div>
           <details className="advanced">
-            <summary>Advanced: time cap, seeds and baseline</summary>
+            <summary>Advanced: time cap, seeds, baseline and algorithm benchmark</summary>
             <div className="row" style={{ gap: 14, marginTop: 10, flexWrap: 'wrap' }}>
               <label className="field" style={{ width: 130 }}>
                 Time cap (s)
@@ -800,6 +715,19 @@ function RunPanel() {
               <input type="checkbox" checked={runParams.compareBaseline} disabled={running} onChange={(e) => setRunParams({ compareBaseline: e.target.checked })} />
               Also run the repeated greedy baseline with the same number of evaluations and seed
             </label>
+            <label className="check" style={{ marginTop: 8 }}>
+              <input
+                type="checkbox"
+                checked={!!runParams.advancedBenchmark}
+                disabled={running}
+                onChange={(e) => setRunParams({ advancedBenchmark: e.target.checked })}
+              />
+              Advanced benchmark: also run MOEA/D, AMOSA and standard NSGA-II with the same evaluations and seed
+            </label>
+            <p className="tiny" style={{ margin: '4px 0 0' }}>
+              The advanced benchmark is for comparing algorithms. It makes each run several times longer and does not change the timetables you
+              get, which always come from the final memetic method.
+            </p>
             <p className="tiny" style={{ marginBottom: 0 }}>
               Defaults are the held-out validation study&apos;s budgets and time caps. Leave the time cap empty for a pure equal-evaluation run.
             </p>
@@ -860,7 +788,7 @@ function RunPanel() {
                 </div>
               </div>
               <div className="section-title" style={{ marginTop: 14 }}>
-                Algorithm Convergence (5 Curves vs. Greedy)
+                Algorithm convergence (measured)
               </div>
               <Convergence stats={stats} />
             </>

@@ -1,4 +1,9 @@
-"""Paired experimental comparison between all multi-objective algorithms.
+"""Single-run demonstration of all multi-objective algorithms on one instance.
+
+This runs each algorithm once with one seed, so it is an illustration for the live demo, not
+statistical evidence. The matched multi-instance, multi-seed comparison of MOEA/D with the memetic
+method and greedy is `experiments/moead_paired_study.py`; the comparison with certified fronts is
+`experiments/exact_gap_study.py`.
 
 Compares:
 1. Greedy / DSatur repeated construction baseline

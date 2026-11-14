@@ -1,0 +1,30 @@
+{
+  "method": "cpsat_epsilon_constraint",
+  "scope": "Trade-off points for (f1 gaps, f2 room wastage). f3 is reported, not optimized; not a certified three-objective Pareto front.",
+  "runtime": 40.90277269999933,
+  "evaluated_steps": 5,
+  "optimal_steps": 5,
+  "feasible_steps": 5,
+  "archive_size": 1,
+  "objectives": [
+    [
+      0.0,
+      0.2545454545454546,
+      0.1343709624716425
+    ]
+  ],
+  "epsilons": [
+    0.2545454545454545,
+    0.29886363636363633,
+    0.34318181818181814,
+    0.3875,
+    0.4318181818181818
+  ],
+  "metadata": {
+    "primary_objective": "gaps",
+    "epsilon_objective": "room",
+    "min_eps": 0.2545454545454545,
+    "max_eps": 0.4318181818181818,
+    "grid_points": 5
+  }
+}
