@@ -153,3 +153,15 @@ python experiments/report_enhancement.py --study enhancement_validation
 For fresh measurements, copy the configuration and change `name` before running `compare`. The common observer retains genotype hashes, feasible-evaluation counts, raw objectives, duplicates and actual elapsed prefixes; it includes native search bookkeeping and initialization in runtime. The comparison clears constructor caches and rotates method order. The scalar-local comparator shares the initial construction prefix but later random streams/states diverge. It removes the NSGA-II selection/survival bundle, not one isolated component.
 
 Full methodology is in `docs/enhancement_study.md`; operator invariants and workload mathematics are in `docs/feasible_variation.md`. The measured follow-up report is generated only after complete-run verification. Original datasets, benchmarks and the original model/indicator/algorithm implementation files are preserved.
+
+## Supplementary studies
+
+These were added after the held-out validation and do not change it.
+
+```bash
+python experiments/moead_paired_study.py     # MOEA/D vs memetic NSGA-II vs greedy, matched pairs -> results/moead_paired
+python experiments/exact_gap_study.py        # heuristics vs CP-SAT certified (gaps, room) fronts -> results/exact_gap (needs OR-Tools)
+```
+
+Both accept `--quick` for a tiny smoke run and `--output` for another folder. `compare_all_methods.py` is a
+single-run demonstration, not a study. Findings are discussed in [advanced methods](../docs/ot_advanced_methods.md).
