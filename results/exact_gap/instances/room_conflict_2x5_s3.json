@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "name": "room_conflict_2x5_s3",
+  "days": [
+    "Day1",
+    "Day2"
+  ],
+  "periods_per_day": 5,
+  "lunch_periods": [],
+  "groups": [
+    {
+      "id": "G1",
+      "size": 20
+    },
+    {
+      "id": "G2",
+      "size": 24
+    }
+  ],
+  "rooms": [
+    {
+      "id": "R1",
+      "capacity": 20,
+      "kind": "classroom",
+      "unavailable": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "R2",
+      "capacity": 24,
+      "kind": "classroom",
+      "unavailable": [
+        1,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "id": "R3",
+      "capacity": 40,
+      "kind": "classroom",
+      "unavailable": [
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R4",
+      "capacity": 50,
+      "kind": "classroom",
+      "unavailable": []
+    }
+  ],
+  "faculty": [
+    {
+      "id": "F1",
+      "max_weekly": 10,
+      "max_daily": 5,
+      "unavailable": []
+    },
+    {
+      "id": "F2",
+      "max_weekly": 10,
+      "max_daily": 5,
+      "unavailable": []
+    },
+    {
+      "id": "F3",
+      "max_weekly": 10,
+      "max_daily": 5,
+      "unavailable": []
+    }
+  ],
+  "offerings": [
+    {
+      "id": "G1-S1",
+      "groups": [
+        "G1"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G1-S2",
+      "groups": [
+        "G1"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G1-S3",
+      "groups": [
+        "G1"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G1-S4",
+      "groups": [
+        "G1"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G1-S5",
+      "groups": [
+        "G1"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G2-S1",
+      "groups": [
+        "G2"
+      ],
+      "eligible_faculty": [
+        "F1",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G2-S2",
+      "groups": [
+        "G2"
+      ],
+      "eligible_faculty": [
+        "F1",
+        "F2"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G2-S3",
+      "groups": [
+        "G2"
+      ],
+      "eligible_faculty": [
+        "F1",
+        "F2"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G2-S4",
+      "groups": [
+        "G2"
+      ],
+      "eligible_faculty": [
+        "F2",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    },
+    {
+      "id": "G2-S5",
+      "groups": [
+        "G2"
+      ],
+      "eligible_faculty": [
+        "F1",
+        "F3"
+      ],
+      "sessions": 1,
+      "duration": 1,
+      "room_kind": "classroom",
+      "distinct_days": false
+    }
+  ],
+  "metadata": {
+    "source": "synthetic analytical room-availability conflict family; small enough for CP-SAT proofs"
+  }
+}

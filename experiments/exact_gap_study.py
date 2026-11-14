@@ -137,11 +137,13 @@ def study(protocol: dict, output: Path, log=print) -> dict:
     for instance_seed in protocol["instance_seeds"]:
         problem = room_conflict_instance(instance_seed)
         exact = exact_gaps_room_front(problem, protocol["time_limit_per_solve"])
-        weighted = weighted_sum_cp_sat(problem, protocol["weighted_sum_steps"], protocol["time_limit_per_solve"])
+        # The weighted-sum sweep is compared with a certified front only, so it is skipped when the proofs did not finish.
+        weighted = (weighted_sum_cp_sat(problem, protocol["weighted_sum_steps"], protocol["time_limit_per_solve"])
+                    if exact.complete else None)
         units = [(p.gap_units, p.room_units) for p in exact.points]
         flags = supported_points(units)
         exact_xy = [(p.objectives[0], p.objectives[1]) for p in exact.points]
-        weighted_units = {(p.gap_units, p.room_units) for p in weighted.points}
+        weighted_units = {(p.gap_units, p.room_units) for p in weighted.points} if weighted else set()
         record = {
             "instance": problem.name, "instance_seed": instance_seed, "events": len(problem.events),
             "complete": exact.complete, "exact_solves": exact.solves, "exact_runtime_seconds": exact.runtime,
@@ -153,9 +155,11 @@ def study(protocol: dict, output: Path, log=print) -> dict:
                              "supported": ok, "found_by_weighted_sum": (p.gap_units, p.room_units) in weighted_units}
                             for p, ok in zip(exact.points, flags)],
             "supported": sum(flags), "unsupported": flags.count(False),
-            "weighted_sum_solves": weighted.solves, "weighted_sum_runtime_seconds": weighted.runtime,
-            "weighted_sum_distinct_points": len(weighted.points),
-            "weighted_sum_all_proven": weighted.metadata.get("all_proven", False),
+            "weighted_sum_run": weighted is not None,
+            "weighted_sum_solves": weighted.solves if weighted else 0,
+            "weighted_sum_runtime_seconds": weighted.runtime if weighted else 0.0,
+            "weighted_sum_distinct_points": len(weighted.points) if weighted else 0,
+            "weighted_sum_all_proven": weighted.metadata.get("all_proven", False) if weighted else False,
             "weighted_sum_found_unsupported": sum((u in weighted_units) and not ok for u, ok in zip(units, flags)),
         }
         instances.append(record)
@@ -163,7 +167,7 @@ def study(protocol: dict, output: Path, log=print) -> dict:
         (output / "instances" / f"{problem.name}.json").write_text(
             json.dumps(problem_to_dict(problem), indent=2) + "\n", encoding="utf-8")
         log(f"{problem.name}: complete={exact.complete} points={len(units)} unsupported={flags.count(False)} "
-            f"weighted-sum points={len(weighted.points)} ({exact.runtime + weighted.runtime:.1f}s)")
+            f"weighted-sum points={len(weighted.points) if weighted else 'not run'} ({exact.runtime:.1f}s exact)")
         if not exact.complete or not exact_xy:
             continue
         unsupported_xy = [xy for xy, ok in zip(exact_xy, flags) if not ok]
@@ -241,9 +245,13 @@ def markdown(s: dict) -> str:
               "| Instance | Events | Certified | Exact points | Supported | Unsupported | Distinct weighted-sum optima | Unsupported points found by weighted sum | Exact runtime (s) |",
               "|---|---:|:---:|---:|---:|---:|---:|---:|---:|"]
     for i in s["instances"]:
-        lines.append(f"| {i['instance']} | {i['events']} | {'yes' if i['complete'] else 'no'} | {len(i['exact_front'])} | "
-                     f"{i['supported']} | {i['unsupported']} | {i['weighted_sum_distinct_points']} | "
-                     f"{i['weighted_sum_found_unsupported']} | {i['exact_runtime_seconds']:.1f} |")
+        if i["complete"]:
+            lines.append(f"| {i['instance']} | {i['events']} | yes | {len(i['exact_front'])} | "
+                         f"{i['supported']} | {i['unsupported']} | {i['weighted_sum_distinct_points']} | "
+                         f"{i['weighted_sum_found_unsupported']} | {i['exact_runtime_seconds']:.1f} |")
+        else:
+            lines.append(f"| {i['instance']} | {i['events']} | no (time limit) | {len(i['exact_front'])} found, front not certified | "
+                         f"n/a | n/a | not run | n/a | {i['exact_runtime_seconds']:.1f} |")
     lines += ["", f"Across the {s['certified_instances']} certified instances the exact fronts hold "
               f"{s['exact_points_total']} points, {s['unsupported_points_total']} of them unsupported. The weighted-sum "
               f"sweep returned {s['weighted_sum_points_total']} distinct points and "

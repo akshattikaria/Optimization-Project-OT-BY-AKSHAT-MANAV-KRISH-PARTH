@@ -1,0 +1,668 @@
+{
+  "protocol": {
+    "instance_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "solver_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "budget": 300,
+    "population": 24,
+    "time_limit_per_solve": 60.0,
+    "weighted_sum_steps": 9
+  },
+  "methods_labels": {
+    "greedy": "Repeated greedy",
+    "memetic": "Memetic NSGA-II (final method)",
+    "moead_tchebycheff": "MOEA/D, Tchebycheff",
+    "moead_weighted_sum": "MOEA/D, weighted sum"
+  },
+  "scope": "Certified front of (f1 weighted gaps, f2 room wastage) only; f3 is not modeled by CP-SAT.",
+  "instances": [
+    {
+      "instance": "room_conflict_2x5_s1",
+      "instance_seed": 1,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 5,
+      "exact_runtime_seconds": 1.3843199999973876,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.056666666666666664,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "0",
+          "f2_exact": "17/300",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 2.0,
+          "f2": 0.05,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "2",
+          "f2_exact": "1/20",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 2,
+      "unsupported": 0,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 2.2322878999984823,
+      "weighted_sum_distinct_points": 2,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s2",
+      "instance_seed": 2,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 7,
+      "exact_runtime_seconds": 1.551534799997171,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.142,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "0",
+          "f2_exact": "71/500",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 1.0,
+          "f2": 0.092,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "1",
+          "f2_exact": "23/250",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 2.0,
+          "f2": 0.08,
+          "f3_of_schedule": 0.20548046676563253,
+          "f1_exact": "2",
+          "f2_exact": "2/25",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 3,
+      "unsupported": 0,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 4.031305899996369,
+      "weighted_sum_distinct_points": 3,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s3",
+      "instance_seed": 3,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 7,
+      "exact_runtime_seconds": 5.651405700002215,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.10666666666666666,
+          "f3_of_schedule": 0.09428090415820635,
+          "f1_exact": "0",
+          "f2_exact": "8/75",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 1.0,
+          "f2": 0.07333333333333333,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "1",
+          "f2_exact": "11/150",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 2.0,
+          "f2": 0.06666666666666667,
+          "f3_of_schedule": 0.18856180831641267,
+          "f1_exact": "2",
+          "f2_exact": "1/15",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 3,
+      "unsupported": 0,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 11.18354709999403,
+      "weighted_sum_distinct_points": 3,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s4",
+      "instance_seed": 4,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 3,
+      "exact_runtime_seconds": 15.839786699994875,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.13999999999999999,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "0",
+          "f2_exact": "7/50",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 1,
+      "unsupported": 0,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 30.506819199996244,
+      "weighted_sum_distinct_points": 1,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s5",
+      "instance_seed": 5,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 7,
+      "exact_runtime_seconds": 1.500963500002399,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.144,
+          "f3_of_schedule": 0.24944382578492943,
+          "f1_exact": "0",
+          "f2_exact": "18/125",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 1.0,
+          "f2": 0.132,
+          "f3_of_schedule": 0.20548046676563253,
+          "f1_exact": "1",
+          "f2_exact": "33/250",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 3.0,
+          "f2": 0.12000000000000002,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "3",
+          "f2_exact": "3/25",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 3,
+      "unsupported": 0,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 2.5076810999962618,
+      "weighted_sum_distinct_points": 3,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s6",
+      "instance_seed": 6,
+      "events": 10,
+      "complete": true,
+      "exact_solves": 9,
+      "exact_runtime_seconds": 2.6280000999977347,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.09666666666666666,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "0",
+          "f2_exact": "29/300",
+          "supported": true,
+          "found_by_weighted_sum": true
+        },
+        {
+          "f1": 1.0,
+          "f2": 0.09,
+          "f3_of_schedule": 0.18856180831641267,
+          "f1_exact": "1",
+          "f2_exact": "9/100",
+          "supported": false,
+          "found_by_weighted_sum": false
+        },
+        {
+          "f1": 2.0,
+          "f2": 0.08,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "2",
+          "f2_exact": "2/25",
+          "supported": false,
+          "found_by_weighted_sum": false
+        },
+        {
+          "f1": 3.0,
+          "f2": 0.04,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "3",
+          "f2_exact": "1/25",
+          "supported": true,
+          "found_by_weighted_sum": true
+        }
+      ],
+      "supported": 2,
+      "unsupported": 2,
+      "weighted_sum_run": true,
+      "weighted_sum_solves": 13,
+      "weighted_sum_runtime_seconds": 3.3897552999987965,
+      "weighted_sum_distinct_points": 2,
+      "weighted_sum_all_proven": true,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s7",
+      "instance_seed": 7,
+      "events": 10,
+      "complete": false,
+      "exact_solves": 2,
+      "exact_runtime_seconds": 60.09403939999902,
+      "exact_statuses": [
+        "OPTIMAL",
+        "FEASIBLE"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.3086666666666667,
+          "f3_of_schedule": 0.1247219128924647,
+          "f1_exact": "0",
+          "f2_exact": "463/1500",
+          "supported": true,
+          "found_by_weighted_sum": false
+        }
+      ],
+      "supported": 1,
+      "unsupported": 0,
+      "weighted_sum_run": false,
+      "weighted_sum_solves": 0,
+      "weighted_sum_runtime_seconds": 0.0,
+      "weighted_sum_distinct_points": 0,
+      "weighted_sum_all_proven": false,
+      "weighted_sum_found_unsupported": 0
+    },
+    {
+      "instance": "room_conflict_2x5_s8",
+      "instance_seed": 8,
+      "events": 10,
+      "complete": false,
+      "exact_solves": 4,
+      "exact_runtime_seconds": 71.73414989999583,
+      "exact_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "FEASIBLE",
+        "OPTIMAL"
+      ],
+      "gap_scale": 2,
+      "room_scale": 6000,
+      "exact_front": [
+        {
+          "f1": 0.0,
+          "f2": 0.242,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "0",
+          "f2_exact": "121/500",
+          "supported": true,
+          "found_by_weighted_sum": false
+        },
+        {
+          "f1": 1.0,
+          "f2": 0.192,
+          "f3_of_schedule": 0.04714045207910319,
+          "f1_exact": "1",
+          "f2_exact": "24/125",
+          "supported": true,
+          "found_by_weighted_sum": false
+        }
+      ],
+      "supported": 2,
+      "unsupported": 0,
+      "weighted_sum_run": false,
+      "weighted_sum_solves": 0,
+      "weighted_sum_runtime_seconds": 0.0,
+      "weighted_sum_distinct_points": 0,
+      "weighted_sum_all_proven": false,
+      "weighted_sum_found_unsupported": 0
+    }
+  ],
+  "certified_instances": 6,
+  "exact_points_total": 16,
+  "unsupported_points_total": 2,
+  "weighted_sum_points_total": 14,
+  "weighted_sum_found_unsupported_total": 0,
+  "mean_exact_runtime_seconds": 4.759335133331963,
+  "methods": {
+    "greedy": {
+      "runs": 30,
+      "runs_attaining_whole_front": 5,
+      "exact_points_attained": 34,
+      "exact_points_possible": 80,
+      "unsupported_attained": 0,
+      "unsupported_possible": 10,
+      "mean_igd": 0.5164616818617687,
+      "mean_additive_epsilon": 0.7258064516129032,
+      "mean_hypervolume_ratio": 0.5048652665152658,
+      "runs_with_optimal_f1": 30,
+      "runs_with_optimal_f2": 5,
+      "mean_f2_gap_relative": 0.4374999999999999,
+      "mean_runtime_seconds": 0.29162609000025747
+    },
+    "memetic": {
+      "runs": 30,
+      "runs_attaining_whole_front": 5,
+      "exact_points_attained": 37,
+      "exact_points_possible": 80,
+      "unsupported_attained": 0,
+      "unsupported_possible": 10,
+      "mean_igd": 0.4643863301734521,
+      "mean_additive_epsilon": 0.6591397849462366,
+      "mean_hypervolume_ratio": 0.5938223217299896,
+      "runs_with_optimal_f1": 30,
+      "runs_with_optimal_f2": 5,
+      "mean_f2_gap_relative": 0.4241666666666666,
+      "mean_runtime_seconds": 0.19240532999901916
+    },
+    "moead_tchebycheff": {
+      "runs": 30,
+      "runs_attaining_whole_front": 5,
+      "exact_points_attained": 33,
+      "exact_points_possible": 80,
+      "unsupported_attained": 0,
+      "unsupported_possible": 10,
+      "mean_igd": 0.5510971693116434,
+      "mean_additive_epsilon": 0.7731182795698924,
+      "mean_hypervolume_ratio": 0.4729941923093532,
+      "runs_with_optimal_f1": 30,
+      "runs_with_optimal_f2": 5,
+      "mean_f2_gap_relative": 0.4933333333333332,
+      "mean_runtime_seconds": 0.18526824333215094
+    },
+    "moead_weighted_sum": {
+      "runs": 30,
+      "runs_attaining_whole_front": 5,
+      "exact_points_attained": 33,
+      "exact_points_possible": 80,
+      "unsupported_attained": 0,
+      "unsupported_possible": 10,
+      "mean_igd": 0.5510971693116434,
+      "mean_additive_epsilon": 0.7731182795698924,
+      "mean_hypervolume_ratio": 0.4729941923093532,
+      "runs_with_optimal_f1": 30,
+      "runs_with_optimal_f2": 5,
+      "mean_f2_gap_relative": 0.4933333333333332,
+      "mean_runtime_seconds": 0.17549933333308823
+    }
+  },
+  "micro": [
+    {
+      "instance": "exact_room_conflict",
+      "method": "greedy",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 64,
+      "runs": 5,
+      "mean_points_recovered": 1,
+      "runs_recovering_whole_front": 0
+    },
+    {
+      "instance": "exact_room_conflict",
+      "method": "memetic",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 64,
+      "runs": 5,
+      "mean_points_recovered": 1,
+      "runs_recovering_whole_front": 0
+    },
+    {
+      "instance": "exact_room_conflict",
+      "method": "moead_tchebycheff",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 64,
+      "runs": 5,
+      "mean_points_recovered": 1,
+      "runs_recovering_whole_front": 0
+    },
+    {
+      "instance": "exact_room_conflict",
+      "method": "moead_weighted_sum",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 64,
+      "runs": 5,
+      "mean_points_recovered": 1,
+      "runs_recovering_whole_front": 0
+    },
+    {
+      "instance": "exact_workload_conflict",
+      "method": "greedy",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 9,
+      "runs": 5,
+      "mean_points_recovered": 2,
+      "runs_recovering_whole_front": 5
+    },
+    {
+      "instance": "exact_workload_conflict",
+      "method": "memetic",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 9,
+      "runs": 5,
+      "mean_points_recovered": 2,
+      "runs_recovering_whole_front": 5
+    },
+    {
+      "instance": "exact_workload_conflict",
+      "method": "moead_tchebycheff",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 9,
+      "runs": 5,
+      "mean_points_recovered": 2,
+      "runs_recovering_whole_front": 5
+    },
+    {
+      "instance": "exact_workload_conflict",
+      "method": "moead_weighted_sum",
+      "exact_front_size": 2,
+      "exact_front": [
+        [
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "candidates_enumerated": 9,
+      "runs": 5,
+      "mean_points_recovered": 2,
+      "runs_recovering_whole_front": 5
+    }
+  ],
+  "total_runtime_seconds": 240.4419754000046,
+  "environment": {
+    "python": "3.13.7",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

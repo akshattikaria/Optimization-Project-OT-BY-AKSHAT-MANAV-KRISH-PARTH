@@ -709,8 +709,11 @@ def weighted_sum_cp_sat(
 ) -> BiObjectiveFront:
     """Weighted-sum CP-SAT runs over the (gaps, room wastage) objectives.
 
-    The two single-objective optima give the ranges of both objectives; each
-    run then minimizes ``lambda * gaps/range + (1 - lambda) * room/range`` for
+    The two lexicographic optima (minimum gaps with the least room wastage
+    among those, and the reverse) are the extreme points of the front.  They
+    are the limits of weighted sums with a dominant weight, they are part of
+    the result, and they give the ranges of both objectives.  Each further run
+    minimizes ``lambda * gaps/range + (1 - lambda) * room/range`` for
     ``lambda = k / (steps + 1)``, written with integer coefficients.  An optimum
     of a positive weighted sum is Pareto-optimal for (f1, f2), but only
     *supported* points (those on the convex hull of the front) can be optima,
@@ -723,17 +726,33 @@ def weighted_sum_cp_sat(
     if isinstance(steps, bool) or not isinstance(steps, int) or steps < 1:
         raise ValueError("steps must be a positive integer")
     started = perf_counter()
-    anchors = [cp_sat(problem, "gaps", time_limit_per_solve, seed, epsilon_objective="room"),
-               cp_sat(problem, "room", time_limit_per_solve, seed, epsilon_objective="gaps")]
-    solves = 2
-    statuses = [a.status for a in anchors]
-    if any(a.schedule is None for a in anchors):
-        return BiObjectiveFront([], False, solves, perf_counter() - started, 0, 0, "weighted_sum",
-                                {"statuses": statuses, "error": "no anchor solution"})
+    # The two extreme points of the front: each is a lexicographic optimum, i.e. the limit of a weighted sum
+    # whose weight on one objective dominates. They give the true ranges used to scale the weights.
+    statuses: list[str] = []
+    anchors = []
+    proofs = []
+    for primary, other in (("gaps", "room"), ("room", "gaps")):
+        best = cp_sat(problem, primary, time_limit_per_solve, seed, epsilon_objective=other)
+        statuses.append(best.status)
+        if best.schedule is None:
+            return BiObjectiveFront([], False, len(statuses), perf_counter() - started, 0, 0, "weighted_sum",
+                                    {"statuses": statuses, "error": "no anchor solution"})
+        tie_break = cp_sat(problem, other, time_limit_per_solve, seed, epsilon_objective=primary,
+                           epsilon_bound_units=best.metadata[f"{'gap' if primary == 'gaps' else 'room'}_units"])
+        statuses.append(tie_break.status)
+        if tie_break.schedule is None:
+            return BiObjectiveFront([], False, len(statuses), perf_counter() - started, 0, 0, "weighted_sum",
+                                    {"statuses": statuses, "error": "no anchor solution"})
+        anchors.append(tie_break)
+        proofs.append(best.proven_optimal and tie_break.proven_optimal)
+    solves = len(statuses)
     gap_scale, room_scale = anchors[0].metadata["gap_scale"], anchors[0].metadata["room_scale"]
     gap_range = max(1, abs(anchors[1].metadata["gap_units"] - anchors[0].metadata["gap_units"]))
     room_range = max(1, abs(anchors[0].metadata["room_units"] - anchors[1].metadata["room_units"]))
     found: dict[tuple[int, int], BiObjectivePoint] = {}
+    for anchor, proven in zip(anchors, proofs):
+        key = (anchor.metadata["gap_units"], anchor.metadata["room_units"])
+        found[key] = BiObjectivePoint(anchor.schedule, evaluate(problem, anchor.schedule).objectives, key[0], key[1], proven)
     weights_used = []
     for k in range(1, steps + 1):
         # lambda * G / gap_range + (1 - lambda) * R / room_range, multiplied by the common denominator
