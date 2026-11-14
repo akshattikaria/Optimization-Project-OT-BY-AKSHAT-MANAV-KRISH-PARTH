@@ -2,7 +2,7 @@
 
 A tested Python system for assigning weekly college sessions to time blocks, compatible rooms and eligible faculty, with explicit hard constraints and three quality objectives.
 
-**Final audit:** 209 tests pass. Clean installation, all three CLI problem sizes, saved measurements, report and slides were checked. The [audit report](docs/final_audit.md) includes an exact-arithmetic correction for reported fronts; printed hypervolume comparisons are unchanged.
+**Pre-freeze audit (2026-11-14):** 267 tests pass in the working tree and in a fresh clone, and the website passes 61/61 end-to-end checks ([details](docs/freeze_audit.md)). **Earlier final audit:** 209 tests pass. Clean installation, all three CLI problem sizes, saved measurements, report and slides were checked. The [audit report](docs/final_audit.md) includes an exact-arithmetic correction for reported fronts; printed hypervolume comparisons are unchanged.
 
 The supplied proposal and professor's assignment are primary references. The [reference review](docs/reference_review.md) explains corrections and scope decisions. **All college datasets and experimental results are synthetic.** No institutional measurements, student contribution history or professor approval are invented.
 
